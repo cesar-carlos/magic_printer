@@ -75,15 +75,11 @@ class _PrintJobHistoryPageState extends State<PrintJobHistoryPage> {
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  Button(
-                    onPressed: provider.isLoading ? null : _refreshJobs,
-                    child: const Row(
-                      children: [
-                        Icon(FluentIcons.refresh, size: 16),
-                        SizedBox(width: 6),
-                        Text('Atualizar'),
-                      ],
-                    ),
+                  ActionButton(
+                    label: 'Atualizar',
+                    icon: FluentIcons.refresh,
+                    onPressed: _refreshJobs,
+                    isLoading: provider.isLoading,
                   ),
                 ],
               ),
@@ -103,37 +99,23 @@ class _PrintJobHistoryPageState extends State<PrintJobHistoryPage> {
                 runSpacing: 8,
                 children: _filters.map((filter) {
                   final isSelected = _selectedFilter == filter['value'];
-                  return FilledButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(
-                        isSelected ? theme.accentColor : Colors.transparent,
-                      ),
-                      foregroundColor: WidgetStateProperty.all(
-                        isSelected ? Colors.white : null,
-                      ),
-                    ),
+                  final count = filter['value'] != 'all'
+                      ? _getCount(
+                          provider,
+                          filter['value'] as String,
+                        ).toString()
+                      : null;
+                  
+                  return FilterButton(
+                    label: filter['label'] as String,
+                    icon: filter['icon'] as IconData,
+                    isSelected: isSelected,
+                    count: count,
                     onPressed: () {
                       setState(() {
                         _selectedFilter = filter['value'] as String;
                       });
                     },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(filter['icon'] as IconData, size: 14),
-                        const SizedBox(width: 6),
-                        Text(filter['label'] as String),
-                        if (filter['value'] != 'all') ...[
-                          const SizedBox(width: 4),
-                          Text(
-                            _getCount(
-                              provider,
-                              filter['value'] as String,
-                            ).toString(),
-                          ),
-                        ],
-                      ],
-                    ),
                   );
                 }).toList(),
               ),
@@ -471,9 +453,10 @@ class _PrintJobHistoryPageState extends State<PrintJobHistoryPage> {
               ],
             ),
           ),
-          FilledButton(
+          AppButton(
+            label: 'Tentar Novamente',
             onPressed: _refreshJobs,
-            child: const Text('Tentar Novamente'),
+            isPrimary: true,
           ),
         ],
       ),

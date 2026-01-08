@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../../core/core.dart';
+import 'action_button.dart';
 
 enum MessageType { success, info, warning, error }
 
@@ -222,9 +223,9 @@ class MessageModal extends StatelessWidget {
         ),
       ),
       actions: [
-        Button(
+        ActionButton(
+          label: buttonLabel ?? 'OK',
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(buttonLabel ?? 'OK'),
         ),
       ],
     );

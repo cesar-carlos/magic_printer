@@ -8,6 +8,7 @@ export 'centered_message.dart';
 export 'config_list_item.dart';
 export 'empty_state.dart';
 export 'error_widget.dart';
+export 'filter_button.dart';
 export 'loading_indicator.dart';
 export 'message_modal.dart';
 export 'numeric_field.dart';

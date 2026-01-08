@@ -356,35 +356,19 @@ class _NotificationsPageState extends State<NotificationsPage> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         if (_enabled)
-          Button(
+          ActionButton(
+            label: provider.isTesting ? 'Testando...' : 'Testar Conexão',
             onPressed: provider.isTesting
                 ? null
                 : () => context.read<NotificationProvider>().testConnection(),
-            child: provider.isTesting
-                ? Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: ProgressRing(),
-                      ),
-                      SizedBox(width: 8),
-                      Text('Testando...'),
-                    ],
-                  )
-                : const Text('Testar Conexão'),
+            isLoading: provider.isTesting,
           ),
         const SizedBox(width: 12),
-        FilledButton(
+        AppButton(
+          label: 'Salvar Configuração',
           onPressed: provider.isLoading ? null : _saveConfig,
-          child: provider.isLoading
-              ? const SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: ProgressRing(),
-                )
-              : const Text('Salvar Configuração'),
+          isLoading: provider.isLoading,
+          isPrimary: true,
         ),
       ],
     );

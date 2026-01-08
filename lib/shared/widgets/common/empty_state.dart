@@ -1,5 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
+import 'app_button.dart';
+
 class EmptyState extends StatelessWidget {
   final String message;
   final IconData icon;
@@ -36,7 +38,11 @@ class EmptyState extends StatelessWidget {
             ),
             if (actionLabel != null && onAction != null) ...[
               const SizedBox(height: 24),
-              FilledButton(onPressed: onAction, child: Text(actionLabel!)),
+              AppButton(
+                label: actionLabel!,
+                onPressed: onAction,
+                isPrimary: true,
+              ),
             ],
           ],
         ),

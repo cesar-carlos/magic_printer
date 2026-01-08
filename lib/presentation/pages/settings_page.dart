@@ -14,7 +14,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _darkMode = false;
   bool _soundsEnabled = true;
   bool _minimizeToTray = true;
   bool _startOnStartup = false;
@@ -37,14 +36,6 @@ class _SettingsPageState extends State<SettingsPage> {
         AppCard(
           child: Column(
             children: [
-              _buildSettingsTile(
-                context,
-                icon: FluentIcons.mail,
-                title: 'Configurar Email',
-                subtitle: 'Configure notificações por email',
-                onTap: () => context.push(RouteNames.notifications),
-              ),
-              const Divider(),
               _buildSwitchTile(
                 context,
                 icon: FluentIcons.ringer,
@@ -93,30 +84,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: _autoReconnect,
                 onChanged: (value) => setState(() => _autoReconnect = value),
               ),
-              const Divider(),
-              _buildSettingsTile(
-                context,
-                icon: FluentIcons.print,
-                title: 'Gerenciar impressoras',
-                subtitle: 'Ver e configurar impressoras conectadas',
-                onTap: () => context.go(RouteNames.printers),
-              ),
-              const Divider(),
-              _buildSettingsTile(
-                context,
-                icon: FluentIcons.all_apps,
-                title: 'Fila de impressão',
-                subtitle: 'Ver jobs na fila de impressão',
-                onTap: () => context.push(RouteNames.printQueue),
-              ),
-              const Divider(),
-              _buildSettingsTile(
-                context,
-                icon: FluentIcons.history,
-                title: 'Histórico de jobs',
-                subtitle: 'Ver histórico completo de impressões',
-                onTap: () => context.push(RouteNames.printJobHistory),
-              ),
             ],
           ),
         ),
@@ -150,15 +117,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: _startOnStartup,
                 onChanged: (value) => setState(() => _startOnStartup = value),
               ),
-              const Divider(),
-              _buildSwitchTile(
-                context,
-                icon: FluentIcons.bulleted_list,
-                title: 'Modo escuro',
-                subtitle: 'Usar tema escuro para a interface',
-                value: _darkMode,
-                onChanged: (value) => setState(() => _darkMode = value),
-              ),
             ],
           ),
         ),
@@ -180,14 +138,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 icon: FluentIcons.info,
                 title: 'Versão',
                 subtitle: '1.0.0',
-              ),
-              const Divider(),
-              _buildSettingsTile(
-                context,
-                icon: FluentIcons.view,
-                title: 'Logs do sistema',
-                subtitle: 'Ver logs de aplicação e erros',
-                onTap: () => context.push(RouteNames.logs),
               ),
             ],
           ),
@@ -228,17 +178,18 @@ class _SettingsPageState extends State<SettingsPage> {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  FilledButton(
+                  AppButton(
+                    label: 'Documentação',
                     onPressed: () {
                       // TODO: Abrir GitHub ou documentação
                     },
-                    child: const Text('Documentação'),
+                    isPrimary: true,
                   ),
-                  Button(
+                  ActionButton(
+                    label: 'Licença',
                     onPressed: () {
                       // TODO: Abrir licença
                     },
-                    child: const Text('Licença'),
                   ),
                 ],
               ),

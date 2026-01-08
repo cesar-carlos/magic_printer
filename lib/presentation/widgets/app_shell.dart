@@ -89,8 +89,10 @@ List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
   const printerIndex = 0;
   const hostIndex = 1;
   const logIndex = 2;
-  const notificationIndex = 3;
-  const settingsIndex = 4;
+  const printQueueIndex = 3;
+  const printJobHistoryIndex = 4;
+  const notificationIndex = 5;
+  const settingsIndex = 6;
 
   final items = <_BuiltPaneItem>[
     _BuiltPaneItem(
@@ -121,6 +123,26 @@ List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
         icon: Icon(FluentIcons.text_document),
         title: Text('Logs'),
         body: selectedIndex == logIndex ? child : const SizedBox.shrink(),
+      ),
+    ),
+    _BuiltPaneItem(
+      route: RouteNames.printQueue,
+      label: 'Fila de impressão',
+      paneItem: PaneItem(
+        key: ValueKey(RouteNames.printQueue),
+        icon: Icon(FluentIcons.list),
+        title: Text('Fila de impressão'),
+        body: selectedIndex == printQueueIndex ? child : const SizedBox.shrink(),
+      ),
+    ),
+    _BuiltPaneItem(
+      route: RouteNames.printJobHistory,
+      label: 'Histórico de jobs',
+      paneItem: PaneItem(
+        key: ValueKey(RouteNames.printJobHistory),
+        icon: Icon(FluentIcons.history),
+        title: Text('Histórico de jobs'),
+        body: selectedIndex == printJobHistoryIndex ? child : const SizedBox.shrink(),
       ),
     ),
     _BuiltPaneItem(
@@ -157,6 +179,8 @@ int _selectedIndexForLocation(String location) {
     RouteNames.printers,
     RouteNames.hosts,
     RouteNames.logs,
+    RouteNames.printQueue,
+    RouteNames.printJobHistory,
     RouteNames.notifications,
     RouteNames.settings,
   ];

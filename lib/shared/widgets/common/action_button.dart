@@ -21,7 +21,7 @@ class ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = FluentTheme.of(context);
-    final destructiveColor = const Color(0xFFD13438); // Red
+    const destructiveColor = Color(0xFFD13438);
 
     if (isLoading) {
       return Button(

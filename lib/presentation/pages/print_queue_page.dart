@@ -26,13 +26,14 @@ class _PrintQueuePageState extends State<PrintQueuePage> {
         title: const Text('Cancelar Todos'),
         content: const Text('Deseja cancelar todos os jobs pendentes?'),
         actions: [
-          Button(
+          ActionButton(
+            label: 'Não',
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Não'),
           ),
-          FilledButton(
+          AppButton(
+            label: 'Sim',
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Sim'),
+            isPrimary: true,
           ),
         ],
       ),
@@ -50,13 +51,14 @@ class _PrintQueuePageState extends State<PrintQueuePage> {
         title: const Text('Limpar Concluídos'),
         content: const Text('Deseja remover todos os jobs concluídos da fila?'),
         actions: [
-          Button(
+          ActionButton(
+            label: 'Não',
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Não'),
           ),
-          FilledButton(
+          AppButton(
+            label: 'Sim',
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Sim'),
+            isPrimary: true,
           ),
         ],
       ),
@@ -86,41 +88,27 @@ class _PrintQueuePageState extends State<PrintQueuePage> {
               child: Row(
                 children: [
                   if (provider.isProcessing)
-                    Button(
+                    ActionButton(
+                      label: 'Parar',
+                      icon: FluentIcons.stop,
                       onPressed: () => provider.stop(),
-                      child: const Row(
-                        children: [
-                          Icon(FluentIcons.stop, size: 16),
-                          SizedBox(width: 6),
-                          Text('Parar'),
-                        ],
-                      ),
                     )
                   else
-                    FilledButton(
+                    AppButton(
+                      label: 'Iniciar',
+                      icon: FluentIcons.play,
                       onPressed: provider.pendingCount > 0
                           ? () => provider.start()
                           : null,
-                      child: const Row(
-                        children: [
-                          Icon(FluentIcons.play, size: 16),
-                          SizedBox(width: 6),
-                          Text('Iniciar'),
-                        ],
-                      ),
+                      isPrimary: true,
                     ),
                   const SizedBox(width: 8),
-                  Button(
+                  ActionButton(
+                    label: 'Limpar',
+                    icon: FluentIcons.delete,
                     onPressed: provider.completedCount > 0
                         ? _clearCompleted
                         : null,
-                    child: const Row(
-                      children: [
-                        Icon(FluentIcons.delete, size: 16),
-                        SizedBox(width: 6),
-                        Text('Limpar'),
-                      ],
-                    ),
                   ),
                 ],
               ),
@@ -141,9 +129,9 @@ class _PrintQueuePageState extends State<PrintQueuePage> {
                 title: 'Jobs Pendentes (${provider.pendingItems.length})',
                 icon: FluentIcons.all_apps,
                 trailing: provider.pendingItems.length > 1
-                    ? Button(
+                    ? ActionButton(
+                        label: 'Cancelar Todos',
                         onPressed: _cancelAll,
-                        child: const Text('Cancelar Todos'),
                       )
                     : null,
               ),
@@ -341,27 +329,19 @@ class _PrintQueuePageState extends State<PrintQueuePage> {
               const Spacer(),
               if (item.status == PrintQueueItemStatus.pending ||
                   item.status == PrintQueueItemStatus.failed)
-                Button(
+                ActionButton(
+                  label: 'Cancelar',
+                  icon: FluentIcons.cancel,
                   onPressed: () => provider.cancel(item.id),
-                  child: const Row(
-                    children: [
-                      Icon(FluentIcons.cancel, size: 14),
-                      SizedBox(width: 4),
-                      Text('Cancelar'),
-                    ],
-                  ),
+                  iconSize: 14,
                 ),
-              if (item.status == PrintQueueItemStatus.failed)
-                FilledButton(
-                  onPressed: () => provider.retry(item.id),
-                  child: const Row(
-                    children: [
-                      Icon(FluentIcons.refresh, size: 14),
-                      SizedBox(width: 4),
-                      Text('Tentar Novamente'),
-                    ],
+                if (item.status == PrintQueueItemStatus.failed)
+                 AppButton(
+                    label: 'Tentar Novamente',
+                    icon: FluentIcons.refresh,
+                    onPressed: () => provider.retry(item.id),
+                    isPrimary: true,
                   ),
-                ),
             ],
           ),
         ],

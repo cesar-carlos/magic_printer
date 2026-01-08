@@ -161,12 +161,9 @@ class _LogsPageState extends State<LogsPage> {
   }
 
   Widget _buildDateFilter() {
-    return Button(
-      style: ButtonStyle(
-        padding: WidgetStateProperty.all(
-          const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-        ),
-      ),
+    return ActionButton(
+      label: _startDate == null ? 'Data Inicial' : _formatDate(_startDate!),
+      icon: FluentIcons.calendar,
       onPressed: () async {
         final result = await showDialog<DateTime>(
           context: context,
@@ -190,17 +187,6 @@ class _LogsPageState extends State<LogsPage> {
           _applyFilters();
         }
       },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(FluentIcons.calendar, size: 16),
-          const SizedBox(width: 6),
-          Text(
-            _startDate == null ? 'Data Inicial' : _formatDate(_startDate!),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
     );
   }
 

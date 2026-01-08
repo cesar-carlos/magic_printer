@@ -1,5 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
+import '../../shared/shared.dart';
+
 class PageAction {
   final String label;
   final IconData icon;
@@ -43,25 +45,19 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(action.icon, size: 16),
-        const SizedBox(width: 8),
-        Text(action.label),
-      ],
-    );
-
     if (action.isPrimary) {
-      return FilledButton(
+      return AppButton(
+        label: action.label,
+        icon: action.icon,
         onPressed: action.onPressed,
-        child: content,
+        isPrimary: true,
       );
     }
 
-    return Button(
+    return ActionButton(
+      label: action.label,
+      icon: action.icon,
       onPressed: action.onPressed,
-      child: content,
     );
   }
 }
