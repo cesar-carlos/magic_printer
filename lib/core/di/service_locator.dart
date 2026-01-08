@@ -57,9 +57,7 @@ void _registerRepositories() {
   );
 
   // Email Service
-  getIt.registerLazySingleton<IEmailService>(
-    () => EmailService(),
-  );
+  getIt.registerLazySingleton<IEmailService>(() => EmailService());
 }
 
 void _registerSecurity() {
@@ -153,7 +151,12 @@ void _registerApplicationServices() {
   getIt.registerLazySingleton<INotificationService>(
     () => NotificationService(
       emailService: getIt<IEmailService>(),
+      localNotificationService: getIt<ILocalNotificationService>(),
     ),
+  );
+
+  getIt.registerLazySingleton<ILocalNotificationService>(
+    () => LocalNotificationService(),
   );
 
   getIt.registerLazySingleton<AppLogService>(
@@ -178,6 +181,11 @@ void _registerApplicationServices() {
       printQueueService: getIt<IPrintQueueService>(),
     ),
   );
+
+  getIt.registerLazySingleton<PrinterStatusMonitorService>(
+    () => PrinterStatusMonitorService(
+      notificationService: getIt<ILocalNotificationService>(),
+      printerRepository: getIt<IPrinterRepository>(),
+    ),
+  );
 }
-
-

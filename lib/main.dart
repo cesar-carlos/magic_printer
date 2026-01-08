@@ -23,6 +23,11 @@ void main() async {
 
   await setupDependencies();
 
+  await getIt<ILocalNotificationService>().initialize();
+  
+  final printerStatusMonitor = getIt<PrinterStatusMonitorService>();
+  printerStatusMonitor.setEnabled(true);
+
   // Inicializar gerenciador de janela
   final windowManagerService = WindowManagerService();
   await windowManagerService.initialize(title: appName, center: true);
@@ -82,34 +87,36 @@ void main() async {
     exit(0);
   }
 
-  runApp(MagicPrinterApp(
-    onAppReady: Platform.isWindows
-        ? () async {
-            try {
-              await TrayManagerService().initialize(
-                onMenuAction: (action) async {
-                  switch (action) {
-                    case TrayMenuAction.show:
-                      await windowManagerService.show();
-                      break;
-                    case TrayMenuAction.settings:
-                      // menu pode não expor settings ainda; manter para expansão futura
-                      await windowManagerService.show();
-                      break;
-                    case TrayMenuAction.exit:
-                      await shutdownApp();
-                      break;
-                  }
-                },
-              );
-            } catch (e, stackTrace) {
-              // Log silencioso para evitar problemas durante inicialização
-              debugPrint('Erro ao inicializar TrayManager: $e');
-              debugPrint('Stack trace: $stackTrace');
+  runApp(
+    MagicPrinterApp(
+      onAppReady: Platform.isWindows
+          ? () async {
+              try {
+                await TrayManagerService().initialize(
+                  onMenuAction: (action) async {
+                    switch (action) {
+                      case TrayMenuAction.show:
+                        await windowManagerService.show();
+                        break;
+                      case TrayMenuAction.settings:
+                        // menu pode não expor settings ainda; manter para expansão futura
+                        await windowManagerService.show();
+                        break;
+                      case TrayMenuAction.exit:
+                        await shutdownApp();
+                        break;
+                    }
+                  },
+                );
+              } catch (e, stackTrace) {
+                // Log silencioso para evitar problemas durante inicialização
+                debugPrint('Erro ao inicializar TrayManager: $e');
+                debugPrint('Stack trace: $stackTrace');
+              }
             }
-          }
-        : null,
-  ));
+          : null,
+    ),
+  );
 }
 
 class MagicPrinterApp extends StatefulWidget {
@@ -167,22 +174,31 @@ class _MagicPrinterAppState extends State<MagicPrinterApp> {
           create: (_) => NotificationProvider(
             emailService: getIt<IEmailService>(),
             database: getIt<AppDatabase>(),
+            localNotificationService: getIt<ILocalNotificationService>(),
+            printerStatusMonitorService: getIt<PrinterStatusMonitorService>(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        ),
       ],
-      child: FluentApp.router(
-        title: appName,
-        debugShowCheckedModeBanner: false,
-        theme: FluentThemeData(
-          brightness: Brightness.light,
-          accentColor: Colors.blue,
-        ),
-        darkTheme: FluentThemeData(
-          brightness: Brightness.dark,
-          accentColor: Colors.blue,
-        ),
-        themeMode: ThemeMode.system,
-        routerConfig: appRouter,
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
+          return FluentApp.router(
+            title: appName,
+            debugShowCheckedModeBanner: false,
+            theme: FluentThemeData(
+              brightness: Brightness.light,
+              accentColor: Colors.blue,
+            ),
+            darkTheme: FluentThemeData(
+              brightness: Brightness.dark,
+              accentColor: Colors.blue,
+            ),
+            themeMode: themeProvider.themeMode,
+            routerConfig: appRouter,
+          );
+        },
       ),
     );
   }

@@ -1,8 +1,10 @@
 import 'package:flutter/scheduler.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/routes/route_names.dart';
+import '../providers/theme_provider.dart';
 
 class AppShell extends StatefulWidget {
   final Widget child;
@@ -29,6 +31,26 @@ class _AppShellState extends State<AppShell> {
       appBar: NavigationAppBar(
         title: Text(title),
         automaticallyImplyLeading: false,
+        actions: Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Consumer<ThemeProvider>(
+                builder: (context, themeProvider, _) {
+                  final brightness = FluentTheme.of(context).brightness;
+                  return Tooltip(
+                    message: _getThemeTooltip(themeProvider.themeMode),
+                    child: IconButton(
+                      icon: Icon(_getThemeIcon(themeProvider.themeMode, brightness)),
+                      onPressed: () => themeProvider.toggleTheme(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       pane: NavigationPane(
         selected: selectedIndex,
@@ -37,8 +59,8 @@ class _AppShellState extends State<AppShell> {
           
           if (index < 0 || index >= builtItems.length) return;
           
-          final route = _getRouteForIndex(index);
-          if (route == null) return;
+          final item = builtItems[index];
+          if (item.route == null) return;
           
           SchedulerBinding.instance.addPostFrameCallback((_) {
             if (!mounted) return;
@@ -46,7 +68,7 @@ class _AppShellState extends State<AppShell> {
             final router = GoRouter.maybeOf(context);
             if (router == null || !mounted) return;
             
-            router.go(route);
+            router.go(item.route!);
           });
         },
         items: [for (final item in builtItems) item.paneItem],
@@ -71,7 +93,6 @@ List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
   const settingsIndex = 4;
 
   final items = <_BuiltPaneItem>[
-    _BuiltPaneItem(paneItem: PaneItemHeader(header: Text('Dashboard'))),
     _BuiltPaneItem(
       route: RouteNames.printers,
       label: 'Impressoras',
@@ -92,7 +113,6 @@ List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
         body: selectedIndex == hostIndex ? child : const SizedBox.shrink(),
       ),
     ),
-    _BuiltPaneItem(paneItem: PaneItemHeader(header: Text('Sistema'))),
     _BuiltPaneItem(
       route: RouteNames.logs,
       label: 'Logs',
@@ -159,21 +179,29 @@ int _selectedIndexForLocation(String location) {
     }
   }
 
-  return 0; // Default to printers (index 0)
+  return 0;
 }
 
-String? _getRouteForIndex(int index) {
-  const routes = [
-    RouteNames.printers,
-    RouteNames.hosts,
-    RouteNames.logs,
-    RouteNames.notifications,
-    RouteNames.settings,
-  ];
-
-  if (index < 0 || index >= routes.length) {
-    return null;
+IconData _getThemeIcon(ThemeMode mode, Brightness currentBrightness) {
+  switch (mode) {
+    case ThemeMode.light:
+      return FluentIcons.settings;
+    case ThemeMode.dark:
+      return FluentIcons.info;
+    case ThemeMode.system:
+    default:
+      return FluentIcons.system;
   }
+}
 
-  return routes[index];
+String _getThemeTooltip(ThemeMode mode) {
+  switch (mode) {
+    case ThemeMode.light:
+      return 'Tema claro (próximo: escuro)';
+    case ThemeMode.dark:
+      return 'Tema escuro (próximo: sistema)';
+    case ThemeMode.system:
+    default:
+      return 'Tema do sistema (próximo: claro)';
+  }
 }

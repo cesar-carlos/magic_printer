@@ -22,9 +22,20 @@ Este guia vai te ajudar a **instalar**, **configurar** e **usar** o Magic Printe
 
 Antes de começar, certifique-se de ter:
 
-- ✅ **Windows 10** (1809+) ou **Windows 11**
+#### Sistema Operacional
+- ✅ **Windows 10** (qualquer versão) ou **Windows 11**
+- ✅ **Windows Server 2012 R2** ou superior (2016, 2019, 2022)
+- ✅ **Arquitetura x64 (64 bits)**
+
+#### Dependências de Runtime
+- ✅ **.NET Runtime 8.0** ou superior (Windows 10/11 geralmente pré-instalado)
+- ✅ **Microsoft Visual C++ 2015-2019 Redistributable (x64)** - apenas para Windows Server 2012 R2
+
+#### Ferramentas de Desenvolvimento
 - ✅ **Flutter SDK** 3.10.4+ instalado ([Download](https://flutter.dev/docs/get-started/install/windows))
 - ✅ **Git** instalado ([Download](https://git-scm.com/download/win))
+
+> **Nota**: Para mais detalhes sobre compatibilidade, consulte [docs/COMPATIBILIDADE.md](docs/COMPATIBILIDADE.md)
 
 ### Passos de Instalação
 

@@ -62,10 +62,7 @@ class PrinterProvider extends ChangeNotifier with SafeNotifierMixin {
       _isLoading = false;
     } else {
       final printers = result.getOrThrow();
-      _printers = [
-        ..._printers.where((p) => !p.isLocal),
-        ...printers,
-      ];
+      _printers = [..._printers.where((p) => !p.isLocal), ...printers];
       _isLoading = false;
     }
 
@@ -85,10 +82,7 @@ class PrinterProvider extends ChangeNotifier with SafeNotifierMixin {
       _isLoading = false;
     } else {
       final printers = result.getOrThrow();
-      _printers = [
-        ..._printers.where((p) => !p.isRemote),
-        ...printers,
-      ];
+      _printers = [..._printers.where((p) => !p.isRemote), ...printers];
       _isLoading = false;
     }
 
@@ -108,10 +102,7 @@ class PrinterProvider extends ChangeNotifier with SafeNotifierMixin {
       _isLoading = false;
     } else {
       final printers = result.getOrThrow();
-      _printers = [
-        ..._printers.where((p) => p.hostId != hostId),
-        ...printers,
-      ];
+      _printers = [..._printers.where((p) => p.hostId != hostId), ...printers];
       _isLoading = false;
     }
 
@@ -135,14 +126,12 @@ class PrinterProvider extends ChangeNotifier with SafeNotifierMixin {
       _error = exception?.toString() ?? 'Erro ao remover impressora';
       _isLoading = false;
     } else {
-      // Remover da lista local
       _printers.removeWhere((p) => p.id == printerId);
-      
-      // Se era a impressora selecionada, limpar seleção
+
       if (_selectedPrinter?.id == printerId) {
         _selectedPrinter = null;
       }
-      
+
       _isLoading = false;
     }
 
@@ -154,4 +143,3 @@ class PrinterProvider extends ChangeNotifier with SafeNotifierMixin {
     notifyListeners();
   }
 }
-

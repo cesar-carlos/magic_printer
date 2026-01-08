@@ -83,5 +83,21 @@ class PrinterService {
 
     return const Success(unit);
   }
+
+  Future<Result<Unit>> updatePrinter(
+    Printer printer,
+  ) async {
+    final result = await _printerRepository.update(
+          printer,
+          onStatusChanged: (_, oldStatus, newStatus) {
+          },
+        );
+
+    if (result.isError()) {
+      return Failure(result.exceptionOrNull()!);
+    }
+
+    return const Success(unit);
+  }
 }
 

@@ -6,11 +6,14 @@ import '../../domain/domain.dart';
 
 class NotificationService implements INotificationService {
   final IEmailService _emailService;
+  final ILocalNotificationService _localNotificationService;
   EmailConfig? _emailConfig;
 
   NotificationService({
     required IEmailService emailService,
-  }) : _emailService = emailService;
+    required ILocalNotificationService localNotificationService,
+  })  : _emailService = emailService,
+        _localNotificationService = localNotificationService;
 
   void setEmailConfig(EmailConfig? config) {
     _emailConfig = config;
@@ -18,6 +21,14 @@ class NotificationService implements INotificationService {
 
   @override
   Future<Result<Unit>> notifyLocal(AppLog log) async {
+    if (log.category == AppLogCategory.print && log.printerId != null) {
+      final printerName = log.printerId ?? 'Impressora';
+      await _localNotificationService.showPrinterError(
+        printerName: printerName,
+        error: log.message,
+      );
+    }
+
     return Success(unit);
   }
 

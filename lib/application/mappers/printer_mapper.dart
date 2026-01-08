@@ -85,7 +85,7 @@ class PrinterMapper {
     }
   }
 
-  static PrinterStatus _statusFromString(String status) {
+  static PrinterStatus statusFromString(String status) {
     switch (status) {
       case 'online':
         return PrinterStatus.online;
@@ -103,5 +103,7 @@ class PrinterMapper {
         return PrinterStatus.unknown;
     }
   }
+
+  static PrinterStatus _statusFromString(String status) => statusFromString(status);
 }
 

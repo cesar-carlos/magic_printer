@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../application/application.dart';
 import '../../domain/domain.dart';
 import '../../infrastructure/infrastructure.dart';
 import 'safe_notifier_mixin.dart';
@@ -9,10 +10,13 @@ import 'safe_notifier_mixin.dart';
 class NotificationProvider extends ChangeNotifier with SafeNotifierMixin {
   final IEmailService _emailService;
   final AppDatabase _database;
+  final ILocalNotificationService _localNotificationService;
+  final PrinterStatusMonitorService? _printerStatusMonitorService;
 
   EmailConfig? _emailConfig;
   bool _isLoading = false;
   bool _isTesting = false;
+  bool _localNotificationsEnabled = true;
   String? _error;
   String? _successMessage;
 
@@ -21,14 +25,19 @@ class NotificationProvider extends ChangeNotifier with SafeNotifierMixin {
   NotificationProvider({
     required IEmailService emailService,
     required AppDatabase database,
+    required ILocalNotificationService localNotificationService,
+    PrinterStatusMonitorService? printerStatusMonitorService,
   })  : _emailService = emailService,
-        _database = database {
+        _database = database,
+        _localNotificationService = localNotificationService,
+        _printerStatusMonitorService = printerStatusMonitorService {
     _loadConfig();
   }
 
   EmailConfig? get emailConfig => _emailConfig;
   bool get isLoading => _isLoading;
   bool get isTesting => _isTesting;
+  bool get localNotificationsEnabled => _localNotificationsEnabled;
   String? get error => _error;
   String? get successMessage => _successMessage;
 
@@ -48,6 +57,25 @@ class NotificationProvider extends ChangeNotifier with SafeNotifierMixin {
     }
 
     _isLoading = false;
+    _updateNotificationServices(_localNotificationsEnabled);
+    notifyListeners();
+  }
+
+  Future<void> saveLocalNotificationsEnabled(bool value) async {
+    _isLoading = true;
+    _error = null;
+    _successMessage = null;
+    notifyListeners();
+
+    try {
+      _localNotificationsEnabled = value;
+      _updateNotificationServices(value);
+      _isLoading = false;
+    } catch (e) {
+      _error = 'Erro ao salvar configuração: $e';
+      _isLoading = false;
+    }
+
     notifyListeners();
   }
 
@@ -74,7 +102,9 @@ class NotificationProvider extends ChangeNotifier with SafeNotifierMixin {
         notifyOnAuthFailure: Value(config.notifyOnAuthFailure),
       );
 
-      await _database.into(_database.emailConfigs).insertOnConflictUpdate(companion);
+      await _database
+          .into(_database.emailConfigs)
+          .insertOnConflictUpdate(companion);
 
       _emailConfig = config;
       _successMessage = 'Configuração salva com sucesso!';
@@ -146,5 +176,10 @@ class NotificationProvider extends ChangeNotifier with SafeNotifierMixin {
       notifyOnJobStuck: entry.notifyOnJobStuck,
       notifyOnAuthFailure: entry.notifyOnAuthFailure,
     );
+  }
+
+  void _updateNotificationServices(bool enabled) {
+    _localNotificationService.setEnabled(enabled);
+    _printerStatusMonitorService?.setEnabled(enabled);
   }
 }

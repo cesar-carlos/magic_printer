@@ -11,6 +11,31 @@ Guiar a instalação e a configuração do MVP com o mínimo de atrito, reduzind
 
 ## Pré-requisitos (antes de começar)
 
+### Sistema Operacional
+
+Ambas as máquinas (Host e Client) devem ter:
+
+- ✅ **Windows 10** (qualquer versão) ou **Windows 11**
+- ✅ **Windows Server 2012 R2** ou superior (2016, 2019, 2022)
+- ✅ **Arquitetura x64 (64 bits)**
+
+### Dependências de Runtime
+
+#### Windows 10 e Windows 11
+
+- ✅ **.NET Runtime 8.0** ou superior (geralmente pré-instalado)
+- Verificar com: `dotnet --list-runtimes`
+
+#### Windows Server 2012 R2
+
+- ✅ **.NET Runtime 8.0** ou superior
+- ✅ **Microsoft Visual C++ 2015-2019 Redistributable (x64)**
+- Link para download: [https://aka.ms/vs/17/release/vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+
+> **Nota**: Para mais detalhes, consulte [docs/COMPATIBILIDADE.md](docs/COMPATIBILIDADE.md)
+
+### Requisitos de Rede e Permissão
+
 - O **Host** deve ficar ligado e na rede enquanto a impressora for usada.
 - A impressora física deve estar funcional no **Host** (imprime localmente).
 - O **Client** deve ter o **driver correto** instalado para a impressora lógica (o MVP prioriza drivers já instalados).

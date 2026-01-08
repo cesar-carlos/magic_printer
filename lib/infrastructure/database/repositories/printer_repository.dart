@@ -94,11 +94,30 @@ class PrinterRepository implements IPrinterRepository {
   }
 
   @override
-  Future<Result<Printer>> update(Printer printer) async {
+  Future<Result<Printer>> update(
+    Printer printer, {
+    PrinterStatusCallback? onStatusChanged,
+  }) async {
     try {
+      final currentResult = await getById(printer.id);
+
+      PrinterStatus? oldStatus;
+      if (currentResult.isSuccess()) {
+        oldStatus = currentResult.getOrThrow().status;
+      }
+
       await _db
           .update(_db.printers)
           .replace(PrinterMapper.toCompanion(printer));
+
+      if (onStatusChanged != null && oldStatus != null && oldStatus != printer.status) {
+        onStatusChanged(
+          printer,
+          oldStatus,
+          printer.status,
+        );
+      }
+
       return Success(printer);
     } catch (e) {
       return StorageException.writeFailed('printer: ${printer.id}').toFailure();

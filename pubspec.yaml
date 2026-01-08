@@ -43,6 +43,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.28
   path_provider: ^2.1.5
   path: ^1.9.1
+  shared_preferences: ^2.5.4
 
   # Criptografia e Compressão
   crypto: ^3.0.6
@@ -58,11 +59,15 @@ dependencies:
 
   # Fluent UI (Windows)
   fluent_ui: ^4.13.0
+  fluentui_system_icons: ^1.1.273
   window_manager: ^0.5.1
   tray_manager: ^0.5.2
 
   # E-mail (SMTP)
   mailer: ^6.6.0
+
+  # Notificações Locais
+  flutter_local_notifications: ^19.5.0
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,10 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/routes/route_names.dart';
 import '../../shared/shared.dart';
+import '../providers/notification_provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -50,6 +52,22 @@ class _SettingsPageState extends State<SettingsPage> {
                 subtitle: 'Tocar som ao receber notificações',
                 value: _soundsEnabled,
                 onChanged: (value) => setState(() => _soundsEnabled = value),
+              ),
+              const Divider(),
+              Consumer<NotificationProvider>(
+                builder: (context, provider, _) {
+                  return _buildSwitchTile(
+                    context,
+                    icon: FluentIcons.ringer,
+                    title: 'Notificações push',
+                    subtitle:
+                        'Receber notificações do sistema para mudanças de status das impressoras',
+                    value: provider.localNotificationsEnabled,
+                    onChanged: (value) {
+                      provider.saveLocalNotificationsEnabled(value);
+                    },
+                  );
+                },
               ),
             ],
           ),

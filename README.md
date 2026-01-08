@@ -15,6 +15,7 @@
 - [Arquitetura](#-arquitetura)
 - [Tecnologias](#-tecnologias)
 - [Pré-requisitos](#-pré-requisitos)
+- [Compatibilidade e Dependências](#-compatibilidade-e-dependências)
 - [Instalação](#-instalação)
 - [Uso Rápido](#-uso-rápido)
 - [Documentação](#-documentação)
@@ -137,8 +138,29 @@
 
 ### Sistema Operacional
 
-- **Windows 10** (1809+) ou **Windows 11**
-- Arquitetura: x64
+#### Sistemas Suportados
+
+- **Windows 10** (qualquer versão) ou **Windows 11**
+- **Windows Server 2012 R2** ou superior
+  - Windows Server 2016
+  - Windows Server 2019
+  - Windows Server 2022
+
+#### Arquitetura
+
+- **x64 (64 bits)** apenas
+- ❌ Sem suporte para x86 (32 bits) ou ARM64
+
+### Dependências de Runtime
+
+#### .NET Runtime (Obrigatório)
+
+- **Windows 10/11**: .NET Runtime 8.0 ou superior
+- **Windows Server 2012 R2**: 
+  - .NET Runtime 8.0 ou superior
+  - **Microsoft Visual C++ 2015-2019 Redistributable (x64)** - obrigatório
+
+> **Nota**: O pacote `win32` e `ffi` do Dart dependem do .NET Runtime para funcionar corretamente no Windows.
 
 ### Ferramentas de Desenvolvimento
 
@@ -156,6 +178,74 @@
 - **protoc_plugin** 25.0.0+ - Dart plugin para protoc
 
 > **Nota**: Os stubs gRPC já estão gerados em `lib/infrastructure/grpc/generated/`
+
+---
+
+## 📋 Compatibilidade e Dependências
+
+### Análise de Dependências por Camada
+
+#### Core / Domain Layer
+
+| Biblioteca | Versão | Finalidade | Compatibilidade |
+| ---------- | ------ | ---------- | --------------- |
+| `go_router` | 14.6.2 | Navegação e rotas | ✅ Windows 10+/Server 2012 R2+ |
+| `get_it` | 8.0.3 | Injeção de dependências | ✅ Plataforma independente |
+| `provider` | 6.1.2 | Gerenciamento de estado | ✅ Plataforma independente |
+| `flutter_dotenv` | 5.2.1 | Variáveis de ambiente | ✅ Plataforma independente |
+| `uuid` | 4.5.1 | Geração de IDs | ✅ Plataforma independente |
+| `zard` | 0.0.25 | Validação | ✅ Plataforma independente |
+| `result_dart` | 2.1.1 | Tratamento de erros | ✅ Plataforma independente |
+| `logger` | 2.5.0 | Logging | ✅ Plataforma independente |
+
+#### Infrastructure Layer
+
+| Biblioteca | Versão | Finalidade | Compatibilidade | Requisitos Específicos |
+| ---------- | ------ | ---------- | --------------- | --------------------- |
+| `win32` | 5.15.0 | API Windows nativa | ✅ Windows 7+ (limitado a 10+/Server 2012 R2+) | Requer .NET Runtime |
+| `ffi` | 2.1.5 | Foreign Function Interface | ✅ Windows 7+ (limitado a 10+/Server 2012 R2+) | Requer .NET Runtime |
+| `drift` | 2.22.1 | Banco de dados SQLite | ✅ Plataforma independente | Nenhum |
+| `sqlite3_flutter_libs` | 0.5.28 | SQLite nativo | ✅ x64 | Apenas x64 |
+| `path_provider` | 2.1.5 | Caminhos do sistema | ✅ Windows 10+ | Nenhum |
+| `grpc` | 5.1.0 | Cliente/servidor gRPC | ✅ Windows 10+ | Nenhum |
+| `protobuf` | 6.0.0 | Serialização Protobuf | ✅ Plataforma independente | Nenhum |
+| `fixnum` | 1.1.1 | Números de precisão fixa | ✅ Plataforma independente | Nenhum |
+| `crypto` | 3.0.6 | Criptografia | ✅ Plataforma independente | Nenhum |
+| `archive` | 3.6.1 | Compressão | ✅ Plataforma independente | Nenhum |
+
+#### Presentation Layer
+
+| Biblioteca | Versão | Finalidade | Compatibilidade | Requisitos Específicos |
+| ---------- | ------ | ---------- | --------------- | --------------------- |
+| `fluent_ui` | 4.13.0 | Interface Fluent Design | ✅ Windows 10+ | Nenhum |
+| `window_manager` | 0.5.1 | Gerenciamento de janelas | ✅ Windows 10+ | Nenhum |
+| `tray_manager` | 0.5.2 | System tray | ✅ Windows 10+ | Nenhum |
+
+#### Outras
+
+| Biblioteca | Versão | Finalidade | Compatibilidade | Requisitos Específicos |
+| ---------- | ------ | ---------- | --------------- | --------------------- |
+| `mailer` | 6.6.0 | Envio de e-mail SMTP | ✅ Plataforma independente | Requer servidor SMTP configurado |
+| `cupertino_icons` | 1.0.8 | Ícones iOS | ✅ Plataforma independente | Não usado no Windows |
+
+### Dependências Incompatíveis
+
+As seguintes combinações **não são suportadas**:
+
+- ❌ **x86 (32 bits)**: O projeto é compilado apenas para x64
+- ❌ **ARM64**: Não há suporte para arquitetura ARM
+- ❌ **Windows 7/8**: Não suportado (limitado a Windows 10+ e Server 2012 R2+)
+- ❌ **macOS/Linux**: Não suportado nesta versão (apenas Windows)
+- ❌ **Sem .NET Runtime**: O pacote `win32` e `ffi` não funcionam sem o .NET Runtime instalado
+
+### Notas de Compatibilidade
+
+1. **Windows Server 2012 R2**: Requer instalação adicional do Microsoft Visual C++ 2015-2019 Redistributable (x64)
+2. **.NET Runtime**: Windows 10 e 11 já possuem .NET Runtime pré-instalado, mas certifique-se de que a versão seja 8.0 ou superior
+3. **Permissões de Administrador**: Algumas operações (como gerenciamento de impressoras) podem exigir execução como administrador
+4. **Firewall**: A porta padrão do gRPC (50051) deve estar liberada no firewall
+
+---
 
 ---
 

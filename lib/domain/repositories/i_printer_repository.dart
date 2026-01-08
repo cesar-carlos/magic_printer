@@ -2,6 +2,12 @@ import 'package:result_dart/result_dart.dart';
 
 import '../entities/printer.dart';
 
+typedef PrinterStatusCallback = void Function(
+  Printer printer,
+  PrinterStatus oldStatus,
+  PrinterStatus newStatus,
+);
+
 abstract class IPrinterRepository {
   Future<Result<List<Printer>>> getAll();
 
@@ -15,7 +21,10 @@ abstract class IPrinterRepository {
 
   Future<Result<Printer>> add(Printer printer);
 
-  Future<Result<Printer>> update(Printer printer);
+  Future<Result<Printer>> update(
+    Printer printer, {
+    PrinterStatusCallback? onStatusChanged,
+  });
 
   Future<Result<Unit>> delete(String id);
 
