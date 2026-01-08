@@ -1,0 +1,223 @@
+syntax = "proto3";
+
+package magic_printer.transport;
+
+option java_package = "com.magicprinter.transport";
+option java_outer_classname = "JobTransportProto";
+
+// Serviço de transporte de jobs de impressão
+service JobTransport {
+  // Inicia um novo job no Host
+  rpc BeginJob(BeginJobRequest) returns (BeginJobResponse);
+  
+  // Envia um chunk de dados do job
+  rpc SendChunk(SendChunkRequest) returns (SendChunkResponse);
+  
+  // Finaliza o job (todos os chunks enviados)
+  rpc EndJob(EndJobRequest) returns (EndJobResponse);
+  
+  // Cancela um job em andamento
+  rpc CancelJob(CancelJobRequest) returns (CancelJobResponse);
+  
+  // Verifica status de um job
+  rpc GetJobStatus(GetJobStatusRequest) returns (GetJobStatusResponse);
+  
+  // Stream bidirecional para envio de chunks (opcional, alta performance)
+  rpc StreamChunks(stream ChunkData) returns (stream ChunkAck);
+}
+
+// Serviço de descoberta e informações do Host
+service HostDiscovery {
+  // Retorna informações do Host
+  rpc GetHostInfo(GetHostInfoRequest) returns (GetHostInfoResponse);
+  
+  // Lista impressoras compartilhadas pelo Host
+  rpc ListPrinters(ListPrintersRequest) returns (ListPrintersResponse);
+  
+  // Verifica se o cliente tem permissão para uma impressora
+  rpc CheckPermission(CheckPermissionRequest) returns (CheckPermissionResponse);
+}
+
+// ============================================================
+// MENSAGENS - Job Transport
+// ============================================================
+
+message BeginJobRequest {
+  string job_id = 1;           // UUID gerado pelo Client (idempotência)
+  string printer_name = 2;     // Nome da impressora destino
+  string document_name = 3;    // Nome do documento
+  string client_id = 4;        // Identificador do Client
+  string auth_token = 5;       // Token de autenticação
+  JobMetadata metadata = 6;    // Metadados do job
+}
+
+message BeginJobResponse {
+  bool success = 1;
+  string error_code = 2;       // Código de erro padronizado (E_*)
+  string error_message = 3;
+  string host_job_id = 4;      // ID do job no Host (se diferente)
+}
+
+message SendChunkRequest {
+  string job_id = 1;
+  int32 chunk_index = 2;       // Índice do chunk (0-based)
+  int32 total_chunks = 3;      // Total de chunks esperados
+  bytes data = 4;              // Dados comprimidos (gzip)
+  string checksum = 5;         // SHA256 do chunk (validação)
+}
+
+message SendChunkResponse {
+  bool success = 1;
+  string error_code = 2;
+  string error_message = 3;
+  int32 chunk_index = 4;       // Confirmação do chunk recebido
+  bool checksum_valid = 5;     // Se o checksum bateu
+}
+
+message EndJobRequest {
+  string job_id = 1;
+  int32 total_chunks = 2;      // Total de chunks enviados
+  string full_checksum = 3;    // SHA256 do payload completo
+  int64 original_size = 4;     // Tamanho original (antes da compressão)
+  int64 compressed_size = 5;   // Tamanho comprimido
+}
+
+message EndJobResponse {
+  bool success = 1;
+  string error_code = 2;
+  string error_message = 3;
+  JobResult result = 4;
+}
+
+message CancelJobRequest {
+  string job_id = 1;
+  string reason = 2;           // Motivo do cancelamento (opcional)
+}
+
+message CancelJobResponse {
+  bool success = 1;
+  string error_code = 2;
+  string error_message = 3;
+}
+
+message GetJobStatusRequest {
+  string job_id = 1;
+}
+
+message GetJobStatusResponse {
+  bool found = 1;
+  JobStatus status = 2;
+  int32 chunks_received = 3;
+  int32 total_chunks = 4;
+  string error_code = 5;
+  string error_message = 6;
+}
+
+// Stream de chunks (alta performance)
+message ChunkData {
+  string job_id = 1;
+  int32 chunk_index = 2;
+  bytes data = 3;
+  string checksum = 4;
+}
+
+message ChunkAck {
+  string job_id = 1;
+  int32 chunk_index = 2;
+  bool success = 3;
+  string error_code = 4;
+}
+
+// ============================================================
+// MENSAGENS - Host Discovery
+// ============================================================
+
+message GetHostInfoRequest {
+  string client_id = 1;
+}
+
+message GetHostInfoResponse {
+  string host_id = 1;
+  string host_name = 2;
+  string version = 3;
+  int32 port = 4;
+  bool requires_auth = 5;
+  repeated string supported_features = 6;
+}
+
+message ListPrintersRequest {
+  string auth_token = 1;       // Token de autenticação
+}
+
+message ListPrintersResponse {
+  bool success = 1;
+  string error_code = 2;
+  string error_message = 3;
+  repeated PrinterInfo printers = 4;
+}
+
+message CheckPermissionRequest {
+  string auth_token = 1;
+  string printer_name = 2;
+  string permission = 3;       // "print", "manage", etc.
+}
+
+message CheckPermissionResponse {
+  bool allowed = 1;
+  string error_code = 2;
+  string error_message = 3;
+}
+
+// ============================================================
+// TIPOS COMPARTILHADOS
+// ============================================================
+
+message JobMetadata {
+  int64 total_size = 1;        // Tamanho total esperado
+  int32 total_chunks = 2;      // Número de chunks
+  string compression = 3;      // "gzip" ou "none"
+  int32 total_pages = 4;       // Páginas (se conhecido)
+  string datatype = 5;         // "RAW", "EMF", etc.
+  map<string, string> extra = 6; // Metadados extras
+}
+
+message JobResult {
+  JobStatus status = 1;
+  int32 spooler_job_id = 2;    // ID do job no spooler do Windows
+  string printer_name = 3;
+  int64 bytes_written = 4;
+}
+
+message PrinterInfo {
+  string name = 1;
+  string driver_name = 2;
+  string port_name = 3;
+  string location = 4;
+  string comment = 5;
+  PrinterStatus status = 6;
+  int32 job_count = 7;
+  bool shared = 8;
+  repeated string allowed_groups = 9;
+}
+
+enum JobStatus {
+  JOB_STATUS_UNKNOWN = 0;
+  JOB_STATUS_RECEIVING = 1;    // Recebendo chunks
+  JOB_STATUS_COMPLETE = 2;     // Todos chunks recebidos
+  JOB_STATUS_INJECTING = 3;    // Injetando no spooler
+  JOB_STATUS_SPOOLED = 4;      // No spooler, aguardando impressão
+  JOB_STATUS_PRINTING = 5;     // Imprimindo
+  JOB_STATUS_PRINTED = 6;      // Impresso com sucesso
+  JOB_STATUS_FAILED = 7;       // Falha
+  JOB_STATUS_CANCELLED = 8;    // Cancelado
+}
+
+enum PrinterStatus {
+  PRINTER_STATUS_UNKNOWN = 0;
+  PRINTER_STATUS_ONLINE = 1;
+  PRINTER_STATUS_OFFLINE = 2;
+  PRINTER_STATUS_ERROR = 3;
+  PRINTER_STATUS_PAUSED = 4;
+  PRINTER_STATUS_PRINTING = 5;
+}
+

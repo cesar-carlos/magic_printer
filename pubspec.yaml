@@ -1,0 +1,85 @@
+name: magic_printer
+description: "Sistema P2P de compartilhamento e gerenciamento de impressão em LAN"
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Navegação e Rotas
+  go_router: ^14.6.2
+
+  # Injeção de Dependências
+  get_it: ^8.0.3
+
+  # Gerenciamento de Estado
+  provider: ^6.1.2
+
+  # Variáveis de Ambiente
+  flutter_dotenv: ^5.2.1
+
+  # UUID
+  uuid: ^4.5.1
+
+  # Validação
+  zard: ^0.0.25
+
+  # Result Pattern (Error Handling)
+  result_dart: ^2.1.1
+
+  # Logging
+  logger: ^2.5.0
+
+  # Windows Integration
+  win32: ^5.15.0
+  ffi: ^2.1.5
+
+  # Persistência
+  drift: ^2.22.1
+  sqlite3_flutter_libs: ^0.5.28
+  path_provider: ^2.1.5
+  path: ^1.9.1
+
+  # Criptografia e Compressão
+  crypto: ^3.0.6
+  archive: ^3.6.1
+
+  # gRPC
+  grpc: ^5.1.0
+  protobuf: ^6.0.0
+  fixnum: ^1.1.1
+
+  # Ícones
+  cupertino_icons: ^1.0.8
+
+  # Fluent UI (Windows)
+  fluent_ui: ^4.13.0
+  window_manager: ^0.5.1
+  tray_manager: ^0.5.2
+
+  # E-mail (SMTP)
+  mailer: ^6.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  drift_dev: ^2.22.1
+  build_runner: ^2.4.13
+  protoc_plugin: ^25.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  windows:
+    generate: true
+    image_path: assets/icons/android-chrome-512x512.png
+    icon_size: 256
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/
