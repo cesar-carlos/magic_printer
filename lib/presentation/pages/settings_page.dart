@@ -1,10 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/routes/route_names.dart';
-import '../../shared/shared.dart';
 import '../providers/notification_provider.dart';
+import '../../shared/shared.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -215,22 +213,6 @@ class _SettingsPageState extends State<SettingsPage> {
         const SizedBox(width: 10),
         Text(title, style: theme.typography.title),
       ],
-    );
-  }
-
-  Widget _buildSettingsTile(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    String? subtitle,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(title),
-      subtitle: subtitle != null ? Text(subtitle) : null,
-      trailing: const Icon(FluentIcons.chevron_right),
-      onPressed: onTap,
     );
   }
 

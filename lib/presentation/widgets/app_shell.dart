@@ -21,7 +21,7 @@ class _AppShellState extends State<AppShell> {
   Widget build(BuildContext context) {
     final selectedIndex = _selectedIndexForLocation(widget.location);
     final builtItems = _buildPaneItems(widget.child, selectedIndex);
-    
+
     String title = 'Magic Printer';
     if (selectedIndex >= 0 && selectedIndex < builtItems.length) {
       title = builtItems[selectedIndex].label ?? 'Magic Printer';
@@ -42,7 +42,9 @@ class _AppShellState extends State<AppShell> {
                   return Tooltip(
                     message: _getThemeTooltip(themeProvider.themeMode),
                     child: IconButton(
-                      icon: Icon(_getThemeIcon(themeProvider.themeMode, brightness)),
+                      icon: Icon(
+                        _getThemeIcon(themeProvider.themeMode, brightness),
+                      ),
                       onPressed: () => themeProvider.toggleTheme(),
                     ),
                   );
@@ -56,18 +58,18 @@ class _AppShellState extends State<AppShell> {
         selected: selectedIndex,
         onChanged: (index) {
           if (!mounted) return;
-          
+
           if (index < 0 || index >= builtItems.length) return;
-          
+
           final item = builtItems[index];
           if (item.route == null) return;
-          
+
           SchedulerBinding.instance.addPostFrameCallback((_) {
             if (!mounted) return;
-            
+
             final router = GoRouter.maybeOf(context);
             if (router == null || !mounted) return;
-            
+
             router.go(item.route!);
           });
         },
@@ -132,7 +134,9 @@ List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
         key: ValueKey(RouteNames.printQueue),
         icon: Icon(FluentIcons.list),
         title: Text('Fila de impressão'),
-        body: selectedIndex == printQueueIndex ? child : const SizedBox.shrink(),
+        body: selectedIndex == printQueueIndex
+            ? child
+            : const SizedBox.shrink(),
       ),
     ),
     _BuiltPaneItem(
@@ -142,7 +146,9 @@ List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
         key: ValueKey(RouteNames.printJobHistory),
         icon: Icon(FluentIcons.history),
         title: Text('Histórico de jobs'),
-        body: selectedIndex == printJobHistoryIndex ? child : const SizedBox.shrink(),
+        body: selectedIndex == printJobHistoryIndex
+            ? child
+            : const SizedBox.shrink(),
       ),
     ),
     _BuiltPaneItem(
@@ -152,7 +158,9 @@ List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
         key: ValueKey(RouteNames.notifications),
         icon: Icon(FluentIcons.ringer),
         title: Text('Notificações'),
-        body: selectedIndex == notificationIndex ? child : const SizedBox.shrink(),
+        body: selectedIndex == notificationIndex
+            ? child
+            : const SizedBox.shrink(),
       ),
     ),
     _BuiltPaneItem(
@@ -213,7 +221,6 @@ IconData _getThemeIcon(ThemeMode mode, Brightness currentBrightness) {
     case ThemeMode.dark:
       return FluentIcons.info;
     case ThemeMode.system:
-    default:
       return FluentIcons.system;
   }
 }
@@ -225,7 +232,6 @@ String _getThemeTooltip(ThemeMode mode) {
     case ThemeMode.dark:
       return 'Tema escuro (próximo: sistema)';
     case ThemeMode.system:
-    default:
       return 'Tema do sistema (próximo: claro)';
   }
 }

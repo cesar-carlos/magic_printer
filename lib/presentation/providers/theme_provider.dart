@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../core/services/preferences_service.dart';
@@ -32,8 +31,8 @@ class ThemeProvider extends ChangeNotifier {
     final newMode = _themeMode == ThemeMode.light
         ? ThemeMode.dark
         : _themeMode == ThemeMode.dark
-            ? ThemeMode.system
-            : ThemeMode.light;
+        ? ThemeMode.system
+        : ThemeMode.light;
     setThemeMode(newMode);
   }
 
@@ -44,6 +43,7 @@ class ThemeProvider extends ChangeNotifier {
       case 'dark':
         return ThemeMode.dark;
       case 'system':
+        return ThemeMode.system;
       default:
         return ThemeMode.system;
     }
@@ -56,7 +56,6 @@ class ThemeProvider extends ChangeNotifier {
       case ThemeMode.dark:
         return 'dark';
       case ThemeMode.system:
-      default:
         return 'system';
     }
   }
