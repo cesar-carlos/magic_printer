@@ -50,10 +50,21 @@ void main() async {
     bindAddress: defaultBindAddress,
   );
 
+  final networkDiscoveryService = getIt<NetworkDiscoveryService>(
+    param1: localHostName,
+    param2: localHostName,
+  );
+
+  final heartbeatService = getIt<HeartbeatService>();
+
   Future<void> shutdownApp() async {
     try {
       // Permitir fechamento real (sem ir para a bandeja)
       windowManagerService.setCloseToTray(false);
+
+      // Parar serviços de descoberta
+      await networkDiscoveryService.stop();
+      await heartbeatService.stop();
 
       // Parar servidor gRPC
       await grpcServer.stop();
@@ -86,6 +97,9 @@ void main() async {
     await singleInstanceService.releaseLock();
     exit(0);
   }
+
+  await networkDiscoveryService.start();
+  await heartbeatService.start();
 
   runApp(
     MagicPrinterApp(

@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 
 import '../../application/application.dart';
+import '../../core/constants/app_constants.dart';
 import '../../domain/domain.dart';
 import '../../infrastructure/infrastructure.dart';
 
@@ -225,9 +226,7 @@ void _registerApplicationServices() {
   );
 
   getIt.registerLazySingleton<IUserService>(
-    () => UserService(
-      userRepository: getIt<IUserRepository>(),
-    ),
+    () => UserService(userRepository: getIt<IUserRepository>()),
   );
 
   getIt.registerLazySingleton<MaintenanceDetectorService>(
@@ -235,6 +234,27 @@ void _registerApplicationServices() {
       maintenanceRepository: getIt<IPrinterMaintenanceRepository>(),
       supplyRepository: getIt<IPrinterSupplyRepository>(),
       userService: getIt<IUserService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<DashboardCacheService>(
+    () => DashboardCacheService(),
+  );
+
+  getIt.registerFactoryParam<NetworkDiscoveryService, String, String>(
+    (localHostId, localHostName) => NetworkDiscoveryService(
+      hostRepository: getIt<IHostRepository>(),
+      localHostId: localHostId,
+      localHostName: localHostName,
+      grpcPort: defaultHostPort,
+      logger: getIt<Logger>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<HeartbeatService>(
+    () => HeartbeatService(
+      hostRepository: getIt<IHostRepository>(),
+      logger: getIt<Logger>(),
     ),
   );
 }

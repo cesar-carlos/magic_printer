@@ -12,3 +12,9 @@ const appName = 'Magic Printer';
 const appVersion = '1.0.0';
 
 const protocolVersion = '1.0';
+
+const defaultDiscoveryPort = 50052;
+const defaultMulticastAddress = '239.255.255.250';
+const defaultBroadcastInterval = Duration(seconds: 5);
+const defaultHeartbeatInterval = Duration(seconds: 15);
+const defaultHostTimeout = Duration(seconds: 30);

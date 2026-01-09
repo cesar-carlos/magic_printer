@@ -13,4 +13,6 @@ export 'printer_supply_service.dart';
 export 'dashboard_metrics_service.dart';
 export 'dashboard_cache_service.dart';
 export 'user_service.dart';
+export 'network_discovery_service.dart';
+export 'heartbeat_service.dart';
 

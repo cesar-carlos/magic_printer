@@ -1,4 +1,5 @@
 export 'host_provider.dart';
+export 'host_discovery_provider.dart';
 export 'log_provider.dart';
 export 'notification_provider.dart';
 export 'print_job_provider.dart';

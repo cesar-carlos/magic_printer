@@ -222,15 +222,6 @@ Antes de começar a implementação, verifique:
 
 ---
 
-## 📞 Contatos e Recursos
-
-### Documentação
-
-- [README Principal](./README.md)
-- [Alta Prioridade](./01_alta_prioridade.md)
-- [Média Prioridade](./02_media_prioridade.md)
-- [Baixa Prioridade](./03_baixa_prioridade.md)
-
 ### Referências
 
 - Arquitetura do projeto
@@ -248,6 +239,82 @@ Antes de começar a implementação, verifique:
 | **Alta**   | 🟡 Em Progresso | ~85%      | Dashboard completo com caching, coleta de dados avançada, manutenções automáticas |
 | **Média**  | 🔴 Não Iniciado | 0%        | Aguardando conclusão da Alta Prioridade                                           |
 | **Baixa**  | 🔴 Não Iniciado | 0%        | Aguardando conclusão da Média Prioridade                                          |
+
+### Status das Features MVP
+
+#### Features Essenciais (Must Have)
+
+1. **Descoberta de Hosts na Rede** - ✅ Implementado (~95%)
+
+   - ✅ gRPC HostDiscovery implementado (`HostDiscoveryClient`, `HostDiscoveryServiceImpl`)
+   - ✅ Conexão manual de hosts via gRPC
+   - ✅ Listagem de impressoras remotas via gRPC
+   - ✅ Multicast/broadcast automático implementado (`HostDiscoveryBroadcaster`)
+   - ✅ Heartbeat automático para detectar hosts offline (`HeartbeatService`)
+   - ✅ UI de descoberta automática implementada (`HostDiscoveryProvider`, `DiscoveredHostCard`)
+   - ✅ Integração com `HostsPage` (botão "Buscar na Rede", seção de hosts descobertos)
+   - ⚠️ Testes unitários e de integração pendentes
+
+2. **Catálogo de Impressoras Remotas** - ✅ Implementado (~95%)
+
+   - ✅ `ListRemotePrinters` use case implementado
+   - ✅ `PrinterService` com métodos para listar impressoras remotas
+   - ✅ `PrinterProvider` gerencia impressoras locais e remotas
+   - ✅ `HomePage` exibe impressoras em grid/lista
+   - ✅ Filtros e busca implementados
+   - ⚠️ Adicionar ao "Meu Catálogo" pode ser melhorado
+
+3. **Autenticação por Grupo** - 🟡 Parcial (~50%)
+
+   - ✅ `AuthenticationService` implementado
+   - ✅ `AuthorizationService` com grupos implementado
+   - ✅ Entidade `Group` existe
+   - ✅ Validação de token via gRPC
+   - ❌ UI de autenticação não existe
+   - ❌ UI de gerenciamento de grupos não existe
+   - ❌ Credential storage seguro não implementado
+
+4. **Impressão End-to-End** - ✅ Implementado (~90%)
+
+   - ✅ `PrintForwardingService` implementado
+   - ✅ `WindowsPrintJobCaptureService` para captura
+   - ✅ `SpoolerInjector` para injeção
+   - ✅ Transporte via gRPC com chunking
+   - ✅ Compressão de dados
+   - ⚠️ Verificação de integridade (hash) pode ser melhorada
+   - ⚠️ Retry automático básico existe, pode ser expandido
+
+5. **Histórico de Impressões** - ✅ Implementado (~85%)
+   - ✅ `PrintJobHistoryPage` implementada
+   - ✅ `GetJobHistory` use case implementado
+   - ✅ Filtros por status (pendente, em progresso, concluído, falhado)
+   - ❌ Exportação para CSV não implementada
+   - ❌ Limpeza automática de histórico antigo não implementada
+
+#### Features de UI (Must Have)
+
+6. **Tela Inicial / Dashboard** - ✅ Implementado (~95%)
+
+   - ✅ `DashboardPage` implementada como página inicial
+   - ✅ KPIs em tempo real
+   - ✅ Gráficos e visualizações
+   - ✅ Menu de navegação (AppShell)
+   - ✅ Cards de resumo (impressoras, hosts, jobs)
+   - ⚠️ Botões de ação rápida podem ser expandidos
+
+7. **Configurações** - ✅ Implementado (~70%)
+   - ✅ `SettingsPage` implementada
+   - ✅ Configurações básicas
+   - ⚠️ Algumas configurações avançadas podem estar faltando
+
+#### Features Avançadas (Nice to Have)
+
+8. **TLS/SSL para gRPC** - 🔴 Não Iniciado (0%)
+9. **Instalador Windows** - 🔴 Não Iniciado (0%)
+10. **Monitoramento e Alertas** - 🟡 Parcial (~30%)
+    - ✅ Dashboard com métricas básicas
+    - ✅ Sistema de logs implementado
+    - ❌ Alertas avançados não implementados
 
 ### Alta Prioridade - Detalhamento
 
@@ -311,9 +378,112 @@ Antes de começar a implementação, verifique:
 4. **Segurança Avançada** - Não iniciado
 5. **Performance e Otimizações** - Não iniciado
 
+### Status das Features MVP
+
+#### Features Essenciais (Must Have)
+
+1. **Descoberta de Hosts na Rede** - ✅ Implementado (~95%)
+
+   - ✅ gRPC HostDiscovery implementado (`HostDiscoveryClient`, `HostDiscoveryServiceImpl`)
+   - ✅ Conexão manual de hosts via gRPC
+   - ✅ Listagem de impressoras remotas via gRPC
+   - ✅ Multicast/broadcast automático implementado (`HostDiscoveryBroadcaster`)
+   - ✅ Heartbeat automático para detectar hosts offline (`HeartbeatService`)
+   - ✅ UI de descoberta automática implementada (`HostDiscoveryProvider`, `DiscoveredHostCard`)
+   - ✅ Integração com `HostsPage` (botão "Buscar na Rede", seção de hosts descobertos)
+   - ⚠️ Testes unitários e de integração pendentes
+
+2. **Catálogo de Impressoras Remotas** - ✅ Implementado (~95%)
+
+   - ✅ `ListRemotePrinters` use case implementado
+   - ✅ `PrinterService` com métodos para listar impressoras remotas
+   - ✅ `PrinterProvider` gerencia impressoras locais e remotas
+   - ✅ `HomePage` exibe impressoras em grid/lista
+   - ✅ Filtros e busca implementados
+   - ⚠️ Adicionar ao "Meu Catálogo" pode ser melhorado
+
+3. **Autenticação por Grupo** - 🟡 Parcial (~50%)
+
+   - ✅ `AuthenticationService` implementado
+   - ✅ `AuthorizationService` com grupos implementado
+   - ✅ Entidade `Group` existe
+   - ✅ Validação de token via gRPC
+   - ❌ UI de autenticação não existe
+   - ❌ UI de gerenciamento de grupos não existe
+   - ❌ Credential storage seguro não implementado
+
+4. **Impressão End-to-End** - ✅ Implementado (~90%)
+
+   - ✅ `PrintForwardingService` implementado
+   - ✅ `WindowsPrintJobCaptureService` para captura
+   - ✅ `SpoolerInjector` para injeção
+   - ✅ Transporte via gRPC com chunking
+   - ✅ Compressão de dados
+   - ⚠️ Verificação de integridade (hash) pode ser melhorada
+   - ⚠️ Retry automático básico existe, pode ser expandido
+
+5. **Histórico de Impressões** - ✅ Implementado (~85%)
+   - ✅ `PrintJobHistoryPage` implementada
+   - ✅ `GetJobHistory` use case implementado
+   - ✅ Filtros por status (pendente, em progresso, concluído, falhado)
+   - ❌ Exportação para CSV não implementada
+   - ❌ Limpeza automática de histórico antigo não implementada
+
+#### Features de UI (Must Have)
+
+6. **Tela Inicial / Dashboard** - ✅ Implementado (~95%)
+
+   - ✅ `DashboardPage` implementada como página inicial
+   - ✅ KPIs em tempo real
+   - ✅ Gráficos e visualizações
+   - ✅ Menu de navegação (AppShell)
+   - ✅ Cards de resumo (impressoras, hosts, jobs)
+   - ⚠️ Botões de ação rápida podem ser expandidos
+
+7. **Configurações** - ✅ Implementado (~70%)
+   - ✅ `SettingsPage` implementada
+   - ✅ Configurações básicas
+   - ⚠️ Algumas configurações avançadas podem estar faltando
+
+#### Features Avançadas (Nice to Have)
+
+8. **TLS/SSL para gRPC** - 🔴 Não Iniciado (0%)
+9. **Instalador Windows** - 🔴 Não Iniciado (0%)
+10. **Monitoramento e Alertas** - 🟡 Parcial (~30%)
+    - ✅ Dashboard com métricas básicas
+    - ✅ Sistema de logs implementado
+    - ❌ Alertas avançados não implementados
+
 ---
 
 ## 🎉 Implementações Recentes (09/01/2026)
+
+### ✅ Descoberta Automática de Hosts (10/01/2026)
+
+- **Arquivos Criados**:
+  - `lib/infrastructure/network/host_discovery_broadcaster.dart` - Envia anúncios UDP multicast/broadcast
+  - `lib/infrastructure/network/host_discovery_listener.dart` - Escuta anúncios UDP na rede
+  - `lib/application/services/network_discovery_service.dart` - Orquestra broadcaster e listener
+  - `lib/application/services/heartbeat_service.dart` - Verifica periodicamente status de hosts
+  - `lib/presentation/providers/host_discovery_provider.dart` - Provider para gerenciar estado da descoberta
+  - `lib/shared/widgets/discovered_host_card.dart` - Widget para exibir hosts descobertos
+  - `lib/core/utils/network_utils.dart` - Utilitário para obter IP local
+- **Funcionalidades**:
+  - Descoberta automática via UDP multicast/broadcast (porta 50052)
+  - Anúncios periódicos a cada 5 segundos com metadados do host
+  - Escuta de anúncios na rede e processamento automático
+  - Heartbeat automático a cada 15 segundos para verificar hosts conhecidos
+  - Detecção de hosts offline em até 30 segundos
+  - UI integrada em `HostsPage` com botão "Buscar na Rede"
+  - Seção separada para hosts descobertos automaticamente
+  - Adição de hosts descobertos ao catálogo com um clique
+  - Integração automática com `HostRepository` para persistir hosts descobertos
+- **Constantes Adicionadas**:
+  - `defaultDiscoveryPort = 50052` (porta UDP para descoberta)
+  - `defaultMulticastAddress = '239.255.255.250'` (endereço multicast)
+  - `defaultBroadcastInterval = Duration(seconds: 5)` (intervalo de anúncio)
+  - `defaultHeartbeatInterval = Duration(seconds: 15)` (intervalo de heartbeat)
+  - `defaultHostTimeout = Duration(seconds: 30)` (timeout para marcar host como perdido)
 
 ### ✅ Registro Automático de Manutenções
 
@@ -399,4 +569,4 @@ Antes de começar a implementação, verifique:
 
 ---
 
-**Última atualização**: 09 de janeiro de 2026
+**Última atualização**: 10 de janeiro de 2026

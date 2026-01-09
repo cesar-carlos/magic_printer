@@ -2,9 +2,13 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../application/application.dart';
 import '../../application/dtos/host_dto.dart';
+import '../../core/core.dart';
 import '../../core/routes/route_names.dart';
+import '../../infrastructure/network/host_discovery_listener.dart';
 import '../../shared/shared.dart';
+import '../providers/host_discovery_provider.dart';
 import '../providers/host_provider.dart';
 import '../widgets/widgets.dart';
 
@@ -41,27 +45,55 @@ class _HostsPageState extends State<HostsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HostProvider>(
-      builder: (context, provider, child) {
-        return ErrorListener(
-          error: provider.error,
-          onErrorShown: () => provider.clearError(),
-          child: LoadingOverlay(
-            isLoading: provider.isLoading,
-            message: 'Carregando hosts...',
-            child: _HostsContent(
-              provider: provider,
-              onRefresh: _loadHosts,
-              onAdd: _goToAddHost,
-              pagePadding: _pagePadding,
-              topActionsPadding: _topActionsPadding,
-              cardSpacing: _cardSpacing,
-              onShowDetails: (host) => _openHostDetails(context, host),
-            ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => HostDiscoveryProvider(
+            getIt<NetworkDiscoveryService>(),
           ),
-        );
-      },
+        ),
+      ],
+      child: Consumer2<HostProvider, HostDiscoveryProvider>(
+        builder: (context, hostProvider, discoveryProvider, child) {
+          return ErrorListener(
+            error: hostProvider.error ?? discoveryProvider.error,
+            onErrorShown: () {
+              hostProvider.clearError();
+              discoveryProvider.clearError();
+            },
+            child: LoadingOverlay(
+              isLoading: hostProvider.isLoading,
+              message: 'Carregando hosts...',
+              child: _HostsContent(
+                hostProvider: hostProvider,
+                discoveryProvider: discoveryProvider,
+                onRefresh: _loadHosts,
+                onAdd: _goToAddHost,
+                pagePadding: _pagePadding,
+                topActionsPadding: _topActionsPadding,
+                cardSpacing: _cardSpacing,
+                onShowDetails: (host) => _openHostDetails(context, host),
+                onAddDiscoveredHost: (discovered) => _addDiscoveredHost(context, discovered),
+              ),
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  Future<void> _addDiscoveredHost(BuildContext context, DiscoveredHost discovered) async {
+    final hostService = getIt<HostService>();
+    final addRequest = AddHostRequestDTO(
+      name: discovered.hostName,
+      host: discovered.ip,
+      port: discovered.port,
+    );
+
+    final result = await hostService.addHost(addRequest);
+    if (result.isSuccess() && mounted) {
+      _loadHosts();
+    }
   }
 
   void _openHostDetails(BuildContext context, HostDTO host) {
@@ -71,19 +103,23 @@ class _HostsPageState extends State<HostsPage> {
 }
 
 class _HostsContent extends StatelessWidget {
-  final HostProvider provider;
+  final HostProvider hostProvider;
+  final HostDiscoveryProvider discoveryProvider;
   final VoidCallback onRefresh;
   final Future<void> Function() onAdd;
   final void Function(HostDTO host) onShowDetails;
+  final void Function(DiscoveredHost discovered) onAddDiscoveredHost;
   final EdgeInsets pagePadding;
   final EdgeInsets topActionsPadding;
   final double cardSpacing;
 
   const _HostsContent({
-    required this.provider,
+    required this.hostProvider,
+    required this.discoveryProvider,
     required this.onRefresh,
     required this.onAdd,
     required this.onShowDetails,
+    required this.onAddDiscoveredHost,
     required this.pagePadding,
     required this.topActionsPadding,
     required this.cardSpacing,
@@ -91,7 +127,10 @@ class _HostsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (provider.hosts.isEmpty && !provider.isLoading) {
+    final hasHosts = hostProvider.hosts.isNotEmpty;
+    final hasDiscoveredHosts = discoveryProvider.discoveredHosts.isNotEmpty;
+
+    if (!hasHosts && !hasDiscoveredHosts && !hostProvider.isLoading) {
       return EmptyState(
         icon: FluentIcons.server,
         message: 'Nenhum host cadastrado\nAdicione um host para listar impressoras remotas.',
@@ -106,6 +145,17 @@ class _HostsContent extends StatelessWidget {
           padding: topActionsPadding,
           child: PageActionsRow(
             actions: [
+              PageAction(
+                label: discoveryProvider.isDiscovering ? 'Parar Busca' : 'Buscar na Rede',
+                icon: discoveryProvider.isDiscovering ? FluentIcons.stop : FluentIcons.search,
+                onPressed: () {
+                  if (discoveryProvider.isDiscovering) {
+                    discoveryProvider.stopDiscovery();
+                  } else {
+                    discoveryProvider.startDiscovery();
+                  }
+                },
+              ),
               PageAction(
                 label: 'Atualizar',
                 icon: FluentIcons.refresh,
@@ -125,16 +175,45 @@ class _HostsContent extends StatelessWidget {
           child: ListView(
             padding: pagePadding,
             children: [
-              for (final host in provider.hosts)
-                Padding(
-                  padding: EdgeInsets.only(bottom: cardSpacing),
-                  child: HostCard(
-                    host: host,
-                    onTap: () => onShowDetails(host),
-                    onRefresh: () => provider.refreshHost(host.id),
-                    onConfigure: onAdd,
+              if (hasDiscoveredHosts) ...[
+                Text(
+                  'Hosts Descobertos na Rede',
+                  style: FluentTheme.of(context).typography.subtitle?.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(height: 8),
+                for (final discovered in discoveryProvider.discoveredHosts)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: cardSpacing),
+                    child: DiscoveredHostCard(
+                      host: discovered,
+                      isAlreadyAdded: hostProvider.hosts.any((h) => h.id == discovered.hostId),
+                      onAdd: () => onAddDiscoveredHost(discovered),
+                    ),
+                  ),
+                const SizedBox(height: 24),
+              ],
+              if (hasHosts) ...[
+                if (hasDiscoveredHosts)
+                  Text(
+                    'Hosts Cadastrados',
+                    style: FluentTheme.of(context).typography.subtitle?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                if (hasDiscoveredHosts) const SizedBox(height: 8),
+                for (final host in hostProvider.hosts)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: cardSpacing),
+                    child: HostCard(
+                      host: host,
+                      onTap: () => onShowDetails(host),
+                      onRefresh: () => hostProvider.refreshHost(host.id),
+                      onConfigure: onAdd,
+                    ),
+                  ),
+              ],
             ],
           ),
         ),
