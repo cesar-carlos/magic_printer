@@ -28,6 +28,21 @@ void main() async {
   final printerStatusMonitor = getIt<PrinterStatusMonitorService>();
   printerStatusMonitor.setEnabled(true);
 
+  final healthMonitor = getIt<IHealthMonitorService>();
+  healthMonitor.setEnabled(true);
+
+  final alertRuleService = getIt<IAlertRuleService>();
+  alertRuleService.setEnabled(true);
+
+  final predictiveAnalyzer = getIt<IPredictiveAnalyzerService>();
+  predictiveAnalyzer.setEnabled(true);
+
+  final actionExecutor = getIt<IActionExecutorService>();
+  actionExecutor.setEnabled(true);
+
+  final queueMonitor = getIt<QueueMonitorService>();
+  queueMonitor.setEnabled(true);
+
   // Inicializar gerenciador de janela
   final windowManagerService = WindowManagerService();
   await windowManagerService.initialize(title: appName, center: true);

@@ -23,5 +23,25 @@ abstract class ILocalNotificationService {
   bool get isEnabled;
   
   Future<void> initialize();
+
+  Future<void> showHealthAlert({
+    required String printerId,
+    required int healthScore,
+    required String message,
+  });
+
+  Future<void> showPredictionAlert({
+    required Prediction prediction,
+  });
+
+  Future<void> showActionExecutedAlert({
+    required AutomatedAction action,
+  });
+
+  Future<void> showQueueAlert({
+    required String printerName,
+    required int queueSize,
+    required String message,
+  });
 }
 

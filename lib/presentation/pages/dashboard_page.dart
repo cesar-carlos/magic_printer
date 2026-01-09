@@ -246,6 +246,10 @@ class _BuildDashboardContent extends StatelessWidget {
                 _BuildHostsSection(metrics: metrics),
                 const SizedBox(height: 24),
                 _BuildAlertsSection(metrics: metrics),
+                const SizedBox(height: 24),
+                _BuildHealthSection(),
+                const SizedBox(height: 24),
+                _BuildPredictionsSection(),
               ],
             ),
           ),
@@ -1005,5 +1009,91 @@ class _BuildAlertsSection extends StatelessWidget {
     } else {
       return '${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
     }
+  }
+}
+
+class _BuildHealthSection extends StatelessWidget {
+  const _BuildHealthSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<DashboardProvider>();
+    final healthMetrics = provider.healthMetrics;
+    final printers = context.watch<PrinterProvider>().printers;
+
+    if (healthMetrics == null || healthMetrics.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Saúde das Impressoras',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: healthMetrics.map((health) {
+            final printer = printers.where((p) => p.id == health.printerId).firstOrNull;
+            return SizedBox(
+              width: 400,
+              child: PrinterHealthCard(
+                health: health,
+                printer: printer,
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+}
+
+class _BuildPredictionsSection extends StatelessWidget {
+  const _BuildPredictionsSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<DashboardProvider>();
+    final predictions = provider.predictions;
+    final printers = context.watch<PrinterProvider>().printers;
+
+    if (predictions == null || predictions.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Previsões',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: predictions.take(5).map((prediction) {
+            final printer = printers.where((p) => p.id == prediction.printerId).firstOrNull;
+            return SizedBox(
+              width: 400,
+              child: PredictionCard(
+                prediction: prediction,
+                printer: printer,
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
   }
 }

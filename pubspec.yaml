@@ -49,6 +49,9 @@ dependencies:
   crypto: ^3.0.6
   archive: ^3.6.1
 
+  # HTTP Client
+  dio: ^5.4.0
+
   # gRPC
   grpc: ^5.1.0
   protobuf: ^6.0.0

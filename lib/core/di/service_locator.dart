@@ -3,8 +3,8 @@ import 'package:logger/logger.dart';
 
 import '../../application/application.dart';
 import '../../core/constants/app_constants.dart';
-import '../../domain/domain.dart';
 import '../../infrastructure/infrastructure.dart';
+import '../../domain/domain.dart';
 
 final getIt = GetIt.instance;
 
@@ -63,6 +63,22 @@ void _registerRepositories() {
   );
   getIt.registerLazySingleton<IPrinterMaintenanceRepository>(
     () => PrinterMaintenanceRepository(getIt<AppDatabase>()),
+  );
+
+  getIt.registerLazySingleton<IPrinterHealthRepository>(
+    () => PrinterHealthRepository(getIt<AppDatabase>()),
+  );
+
+  getIt.registerLazySingleton<IPredictionRepository>(
+    () => PredictionRepository(getIt<AppDatabase>()),
+  );
+
+  getIt.registerLazySingleton<AlertRuleRepository>(
+    () => AlertRuleRepository(getIt<AppDatabase>()),
+  );
+
+  getIt.registerLazySingleton<IActionRuleRepository>(
+    () => ActionRuleRepository(getIt<AppDatabase>()),
   );
 
   // Windows spooler capture (Client-side)
@@ -210,6 +226,8 @@ void _registerApplicationServices() {
       jobRepository: getIt<IJobRepository>(),
       hostRepository: getIt<IHostRepository>(),
       logRepository: getIt<IAppLogRepository>(),
+      healthMonitorService: getIt<IHealthMonitorService>(),
+      predictiveAnalyzerService: getIt<IPredictiveAnalyzerService>(),
     ),
   );
 
@@ -255,6 +273,52 @@ void _registerApplicationServices() {
     () => HeartbeatService(
       hostRepository: getIt<IHostRepository>(),
       logger: getIt<Logger>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<IHealthMonitorService>(
+    () => HealthMonitorService(
+      printerRepository: getIt<IPrinterRepository>(),
+      healthRepository: getIt<IPrinterHealthRepository>(),
+      jobRepository: getIt<IJobRepository>(),
+      maintenanceRepository: getIt<IPrinterMaintenanceRepository>(),
+      supplyRepository: getIt<IPrinterSupplyRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<IAlertRuleService>(
+    () => AlertRuleService(
+      repository: getIt<AlertRuleRepository>(),
+      healthRepository: getIt<IPrinterHealthRepository>(),
+      printerRepository: getIt<IPrinterRepository>(),
+      notificationService: getIt<ILocalNotificationService>(),
+      jobRepository: getIt<IJobRepository>(),
+      webhookService: WebhookService(),
+    ),
+  );
+
+  getIt.registerLazySingleton<IPredictiveAnalyzerService>(
+    () => PredictiveAnalyzerService(
+      predictionRepository: getIt<IPredictionRepository>(),
+      printerRepository: getIt<IPrinterRepository>(),
+      jobRepository: getIt<IJobRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<IActionExecutorService>(
+    () => ActionExecutorService(
+      actionRuleRepository: getIt<IActionRuleRepository>(),
+      printerRepository: getIt<IPrinterRepository>(),
+      healthRepository: getIt<IPrinterHealthRepository>(),
+      notificationService: getIt<ILocalNotificationService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<QueueMonitorService>(
+    () => QueueMonitorService(
+      jobRepository: getIt<IJobRepository>(),
+      printerRepository: getIt<IPrinterRepository>(),
+      notificationService: getIt<ILocalNotificationService>(),
     ),
   );
 }

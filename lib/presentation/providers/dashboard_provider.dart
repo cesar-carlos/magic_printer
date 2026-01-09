@@ -10,6 +10,8 @@ class DashboardProvider extends ChangeNotifier {
 
   DashboardMetrics? _metrics;
   List<UsageTrend>? _usageTrends;
+  List<PrinterHealth>? _healthMetrics;
+  List<Prediction>? _predictions;
   bool _isLoading = false;
   String? _error;
   Timer? _refreshTimer;
@@ -18,6 +20,8 @@ class DashboardProvider extends ChangeNotifier {
 
   DashboardMetrics? get metrics => _metrics;
   List<UsageTrend>? get usageTrends => _usageTrends;
+  List<PrinterHealth>? get healthMetrics => _healthMetrics;
+  List<Prediction>? get predictions => _predictions;
   bool get isLoading => _isLoading;
   String? get error => _error;
   String? get selectedPrinterId => _selectedPrinterId;
@@ -94,6 +98,45 @@ class DashboardProvider extends ChangeNotifier {
             ? exception.message
             : exception.toString();
         _isLoading = false;
+      },
+    );
+
+    await loadHealthMetrics();
+    await loadPredictions();
+
+    notifyListeners();
+  }
+
+  Future<void> loadHealthMetrics() async {
+    final result = await _metricsService.getHealthMetrics(
+      printerId: _selectedPrinterId,
+    );
+
+    result.fold(
+      (health) {
+        _healthMetrics = health;
+      },
+      (_) {
+        _healthMetrics = [];
+      },
+    );
+
+    notifyListeners();
+  }
+
+  Future<void> loadPredictions() async {
+    final result = await _metricsService.getPredictions(
+      printerId: _selectedPrinterId,
+    );
+
+    result.fold(
+      (predictions) {
+        _predictions = predictions
+            .where((p) => p.status == PredictionStatus.pending)
+            .toList();
+      },
+      (_) {
+        _predictions = [];
       },
     );
 

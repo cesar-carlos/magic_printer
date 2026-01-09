@@ -10,6 +10,8 @@ class DashboardMetricsService {
   final IHostRepository _hostRepository;
   final IAppLogRepository _logRepository;
   final DashboardCacheService _cacheService;
+  final IHealthMonitorService? _healthMonitorService;
+  final IPredictiveAnalyzerService? _predictiveAnalyzerService;
 
   DashboardMetricsService({
     required IPrinterRepository printerRepository,
@@ -17,11 +19,15 @@ class DashboardMetricsService {
     required IHostRepository hostRepository,
     required IAppLogRepository logRepository,
     DashboardCacheService? cacheService,
+    IHealthMonitorService? healthMonitorService,
+    IPredictiveAnalyzerService? predictiveAnalyzerService,
   }) : _printerRepository = printerRepository,
        _jobRepository = jobRepository,
        _hostRepository = hostRepository,
        _logRepository = logRepository,
-       _cacheService = cacheService ?? DashboardCacheService();
+       _cacheService = cacheService ?? DashboardCacheService(),
+       _healthMonitorService = healthMonitorService,
+       _predictiveAnalyzerService = predictiveAnalyzerService;
 
   Future<Result<DashboardMetrics>> getMetrics({String? printerId}) async {
     final cached = _cacheService.getCachedMetrics(printerId: printerId);
@@ -364,5 +370,72 @@ class DashboardMetricsService {
     }
 
     return trends;
+  }
+
+  Future<Result<List<PrinterHealth>>> getHealthMetrics({String? printerId}) async {
+    final healthMonitor = _healthMonitorService;
+    if (healthMonitor == null) {
+      return Success([]);
+    }
+
+    try {
+      if (printerId != null) {
+        final healthResult = await healthMonitor.calculateHealth(printerId);
+        if (healthResult.isSuccess()) {
+          return Success([healthResult.getOrThrow()]);
+        }
+        return Failure(healthResult.exceptionOrNull()!);
+      }
+
+      final allHealthResult = await healthMonitor.calculateAllHealth();
+      if (allHealthResult.isSuccess()) {
+        return Success(allHealthResult.getOrThrow());
+      }
+      return Failure(allHealthResult.exceptionOrNull()!);
+    } catch (e) {
+      return Failure(
+        StorageException(
+          'E_HEALTH_METRICS_FAILED',
+          'Failed to get health metrics: ${e.toString()}',
+        ),
+      );
+    }
+  }
+
+  Future<Result<List<Prediction>>> getPredictions({String? printerId}) async {
+    final predictiveAnalyzer = _predictiveAnalyzerService;
+    if (predictiveAnalyzer == null) {
+      return Success([]);
+    }
+
+    try {
+      if (printerId != null) {
+        return await predictiveAnalyzer.analyze(printerId);
+      }
+
+      final printersResult = await _printerRepository.getAll();
+      if (printersResult.isError()) {
+        return Failure(printersResult.exceptionOrNull()!);
+      }
+
+      final printers = printersResult.getOrThrow();
+      final allPredictions = <Prediction>[];
+
+      for (final printer in printers) {
+        final predictionsResult = await predictiveAnalyzer.analyze(printer.id);
+        if (predictionsResult.isSuccess()) {
+          allPredictions.addAll(predictionsResult.getOrThrow());
+        }
+      }
+
+      return Success(allPredictions);
+    } catch (e) {
+      return Failure(
+        StorageException(
+          'E_PREDICTIONS_FAILED',
+          'Failed to get predictions: ${e.toString()}',
+        ),
+      );
+    }
   }
 }

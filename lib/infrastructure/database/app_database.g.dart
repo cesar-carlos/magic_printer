@@ -6716,6 +6716,3463 @@ class PrinterCountersCompanion extends UpdateCompanion<PrinterCounterData> {
   }
 }
 
+class $PrinterHealthTableTable extends PrinterHealthTable
+    with TableInfo<$PrinterHealthTableTable, PrinterHealthData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PrinterHealthTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _printerIdMeta = const VerificationMeta(
+    'printerId',
+  );
+  @override
+  late final GeneratedColumn<String> printerId = GeneratedColumn<String>(
+    'printer_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _healthScoreMeta = const VerificationMeta(
+    'healthScore',
+  );
+  @override
+  late final GeneratedColumn<int> healthScore = GeneratedColumn<int>(
+    'health_score',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _errorRateMeta = const VerificationMeta(
+    'errorRate',
+  );
+  @override
+  late final GeneratedColumn<double> errorRate = GeneratedColumn<double>(
+    'error_rate',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _availabilityMeta = const VerificationMeta(
+    'availability',
+  );
+  @override
+  late final GeneratedColumn<double> availability = GeneratedColumn<double>(
+    'availability',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _avgResponseTimeMsMeta = const VerificationMeta(
+    'avgResponseTimeMs',
+  );
+  @override
+  late final GeneratedColumn<int> avgResponseTimeMs = GeneratedColumn<int>(
+    'avg_response_time_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _supplyScoreMeta = const VerificationMeta(
+    'supplyScore',
+  );
+  @override
+  late final GeneratedColumn<int> supplyScore = GeneratedColumn<int>(
+    'supply_score',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastCheckMeta = const VerificationMeta(
+    'lastCheck',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastCheck = GeneratedColumn<DateTime>(
+    'last_check',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    printerId,
+    healthScore,
+    errorRate,
+    availability,
+    avgResponseTimeMs,
+    supplyScore,
+    lastCheck,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'printer_health_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PrinterHealthData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('printer_id')) {
+      context.handle(
+        _printerIdMeta,
+        printerId.isAcceptableOrUnknown(data['printer_id']!, _printerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_printerIdMeta);
+    }
+    if (data.containsKey('health_score')) {
+      context.handle(
+        _healthScoreMeta,
+        healthScore.isAcceptableOrUnknown(
+          data['health_score']!,
+          _healthScoreMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_healthScoreMeta);
+    }
+    if (data.containsKey('error_rate')) {
+      context.handle(
+        _errorRateMeta,
+        errorRate.isAcceptableOrUnknown(data['error_rate']!, _errorRateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_errorRateMeta);
+    }
+    if (data.containsKey('availability')) {
+      context.handle(
+        _availabilityMeta,
+        availability.isAcceptableOrUnknown(
+          data['availability']!,
+          _availabilityMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_availabilityMeta);
+    }
+    if (data.containsKey('avg_response_time_ms')) {
+      context.handle(
+        _avgResponseTimeMsMeta,
+        avgResponseTimeMs.isAcceptableOrUnknown(
+          data['avg_response_time_ms']!,
+          _avgResponseTimeMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_avgResponseTimeMsMeta);
+    }
+    if (data.containsKey('supply_score')) {
+      context.handle(
+        _supplyScoreMeta,
+        supplyScore.isAcceptableOrUnknown(
+          data['supply_score']!,
+          _supplyScoreMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_supplyScoreMeta);
+    }
+    if (data.containsKey('last_check')) {
+      context.handle(
+        _lastCheckMeta,
+        lastCheck.isAcceptableOrUnknown(data['last_check']!, _lastCheckMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_lastCheckMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {printerId};
+  @override
+  PrinterHealthData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PrinterHealthData(
+      printerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}printer_id'],
+      )!,
+      healthScore: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}health_score'],
+      )!,
+      errorRate: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}error_rate'],
+      )!,
+      availability: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}availability'],
+      )!,
+      avgResponseTimeMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}avg_response_time_ms'],
+      )!,
+      supplyScore: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}supply_score'],
+      )!,
+      lastCheck: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_check'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $PrinterHealthTableTable createAlias(String alias) {
+    return $PrinterHealthTableTable(attachedDatabase, alias);
+  }
+}
+
+class PrinterHealthData extends DataClass
+    implements Insertable<PrinterHealthData> {
+  final String printerId;
+  final int healthScore;
+  final double errorRate;
+  final double availability;
+  final int avgResponseTimeMs;
+  final int supplyScore;
+  final DateTime lastCheck;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const PrinterHealthData({
+    required this.printerId,
+    required this.healthScore,
+    required this.errorRate,
+    required this.availability,
+    required this.avgResponseTimeMs,
+    required this.supplyScore,
+    required this.lastCheck,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['printer_id'] = Variable<String>(printerId);
+    map['health_score'] = Variable<int>(healthScore);
+    map['error_rate'] = Variable<double>(errorRate);
+    map['availability'] = Variable<double>(availability);
+    map['avg_response_time_ms'] = Variable<int>(avgResponseTimeMs);
+    map['supply_score'] = Variable<int>(supplyScore);
+    map['last_check'] = Variable<DateTime>(lastCheck);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  PrinterHealthTableCompanion toCompanion(bool nullToAbsent) {
+    return PrinterHealthTableCompanion(
+      printerId: Value(printerId),
+      healthScore: Value(healthScore),
+      errorRate: Value(errorRate),
+      availability: Value(availability),
+      avgResponseTimeMs: Value(avgResponseTimeMs),
+      supplyScore: Value(supplyScore),
+      lastCheck: Value(lastCheck),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory PrinterHealthData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PrinterHealthData(
+      printerId: serializer.fromJson<String>(json['printerId']),
+      healthScore: serializer.fromJson<int>(json['healthScore']),
+      errorRate: serializer.fromJson<double>(json['errorRate']),
+      availability: serializer.fromJson<double>(json['availability']),
+      avgResponseTimeMs: serializer.fromJson<int>(json['avgResponseTimeMs']),
+      supplyScore: serializer.fromJson<int>(json['supplyScore']),
+      lastCheck: serializer.fromJson<DateTime>(json['lastCheck']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'printerId': serializer.toJson<String>(printerId),
+      'healthScore': serializer.toJson<int>(healthScore),
+      'errorRate': serializer.toJson<double>(errorRate),
+      'availability': serializer.toJson<double>(availability),
+      'avgResponseTimeMs': serializer.toJson<int>(avgResponseTimeMs),
+      'supplyScore': serializer.toJson<int>(supplyScore),
+      'lastCheck': serializer.toJson<DateTime>(lastCheck),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  PrinterHealthData copyWith({
+    String? printerId,
+    int? healthScore,
+    double? errorRate,
+    double? availability,
+    int? avgResponseTimeMs,
+    int? supplyScore,
+    DateTime? lastCheck,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => PrinterHealthData(
+    printerId: printerId ?? this.printerId,
+    healthScore: healthScore ?? this.healthScore,
+    errorRate: errorRate ?? this.errorRate,
+    availability: availability ?? this.availability,
+    avgResponseTimeMs: avgResponseTimeMs ?? this.avgResponseTimeMs,
+    supplyScore: supplyScore ?? this.supplyScore,
+    lastCheck: lastCheck ?? this.lastCheck,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  PrinterHealthData copyWithCompanion(PrinterHealthTableCompanion data) {
+    return PrinterHealthData(
+      printerId: data.printerId.present ? data.printerId.value : this.printerId,
+      healthScore: data.healthScore.present
+          ? data.healthScore.value
+          : this.healthScore,
+      errorRate: data.errorRate.present ? data.errorRate.value : this.errorRate,
+      availability: data.availability.present
+          ? data.availability.value
+          : this.availability,
+      avgResponseTimeMs: data.avgResponseTimeMs.present
+          ? data.avgResponseTimeMs.value
+          : this.avgResponseTimeMs,
+      supplyScore: data.supplyScore.present
+          ? data.supplyScore.value
+          : this.supplyScore,
+      lastCheck: data.lastCheck.present ? data.lastCheck.value : this.lastCheck,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrinterHealthData(')
+          ..write('printerId: $printerId, ')
+          ..write('healthScore: $healthScore, ')
+          ..write('errorRate: $errorRate, ')
+          ..write('availability: $availability, ')
+          ..write('avgResponseTimeMs: $avgResponseTimeMs, ')
+          ..write('supplyScore: $supplyScore, ')
+          ..write('lastCheck: $lastCheck, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    printerId,
+    healthScore,
+    errorRate,
+    availability,
+    avgResponseTimeMs,
+    supplyScore,
+    lastCheck,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PrinterHealthData &&
+          other.printerId == this.printerId &&
+          other.healthScore == this.healthScore &&
+          other.errorRate == this.errorRate &&
+          other.availability == this.availability &&
+          other.avgResponseTimeMs == this.avgResponseTimeMs &&
+          other.supplyScore == this.supplyScore &&
+          other.lastCheck == this.lastCheck &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class PrinterHealthTableCompanion extends UpdateCompanion<PrinterHealthData> {
+  final Value<String> printerId;
+  final Value<int> healthScore;
+  final Value<double> errorRate;
+  final Value<double> availability;
+  final Value<int> avgResponseTimeMs;
+  final Value<int> supplyScore;
+  final Value<DateTime> lastCheck;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const PrinterHealthTableCompanion({
+    this.printerId = const Value.absent(),
+    this.healthScore = const Value.absent(),
+    this.errorRate = const Value.absent(),
+    this.availability = const Value.absent(),
+    this.avgResponseTimeMs = const Value.absent(),
+    this.supplyScore = const Value.absent(),
+    this.lastCheck = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PrinterHealthTableCompanion.insert({
+    required String printerId,
+    required int healthScore,
+    required double errorRate,
+    required double availability,
+    required int avgResponseTimeMs,
+    required int supplyScore,
+    required DateTime lastCheck,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : printerId = Value(printerId),
+       healthScore = Value(healthScore),
+       errorRate = Value(errorRate),
+       availability = Value(availability),
+       avgResponseTimeMs = Value(avgResponseTimeMs),
+       supplyScore = Value(supplyScore),
+       lastCheck = Value(lastCheck),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<PrinterHealthData> custom({
+    Expression<String>? printerId,
+    Expression<int>? healthScore,
+    Expression<double>? errorRate,
+    Expression<double>? availability,
+    Expression<int>? avgResponseTimeMs,
+    Expression<int>? supplyScore,
+    Expression<DateTime>? lastCheck,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (printerId != null) 'printer_id': printerId,
+      if (healthScore != null) 'health_score': healthScore,
+      if (errorRate != null) 'error_rate': errorRate,
+      if (availability != null) 'availability': availability,
+      if (avgResponseTimeMs != null) 'avg_response_time_ms': avgResponseTimeMs,
+      if (supplyScore != null) 'supply_score': supplyScore,
+      if (lastCheck != null) 'last_check': lastCheck,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PrinterHealthTableCompanion copyWith({
+    Value<String>? printerId,
+    Value<int>? healthScore,
+    Value<double>? errorRate,
+    Value<double>? availability,
+    Value<int>? avgResponseTimeMs,
+    Value<int>? supplyScore,
+    Value<DateTime>? lastCheck,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return PrinterHealthTableCompanion(
+      printerId: printerId ?? this.printerId,
+      healthScore: healthScore ?? this.healthScore,
+      errorRate: errorRate ?? this.errorRate,
+      availability: availability ?? this.availability,
+      avgResponseTimeMs: avgResponseTimeMs ?? this.avgResponseTimeMs,
+      supplyScore: supplyScore ?? this.supplyScore,
+      lastCheck: lastCheck ?? this.lastCheck,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (printerId.present) {
+      map['printer_id'] = Variable<String>(printerId.value);
+    }
+    if (healthScore.present) {
+      map['health_score'] = Variable<int>(healthScore.value);
+    }
+    if (errorRate.present) {
+      map['error_rate'] = Variable<double>(errorRate.value);
+    }
+    if (availability.present) {
+      map['availability'] = Variable<double>(availability.value);
+    }
+    if (avgResponseTimeMs.present) {
+      map['avg_response_time_ms'] = Variable<int>(avgResponseTimeMs.value);
+    }
+    if (supplyScore.present) {
+      map['supply_score'] = Variable<int>(supplyScore.value);
+    }
+    if (lastCheck.present) {
+      map['last_check'] = Variable<DateTime>(lastCheck.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrinterHealthTableCompanion(')
+          ..write('printerId: $printerId, ')
+          ..write('healthScore: $healthScore, ')
+          ..write('errorRate: $errorRate, ')
+          ..write('availability: $availability, ')
+          ..write('avgResponseTimeMs: $avgResponseTimeMs, ')
+          ..write('supplyScore: $supplyScore, ')
+          ..write('lastCheck: $lastCheck, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AlertRulesTableTable extends AlertRulesTable
+    with TableInfo<$AlertRulesTableTable, AlertRuleData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AlertRulesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<int> type = GeneratedColumn<int>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _enabledMeta = const VerificationMeta(
+    'enabled',
+  );
+  @override
+  late final GeneratedColumn<bool> enabled = GeneratedColumn<bool>(
+    'enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _severityMeta = const VerificationMeta(
+    'severity',
+  );
+  @override
+  late final GeneratedColumn<int> severity = GeneratedColumn<int>(
+    'severity',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _thresholdsMeta = const VerificationMeta(
+    'thresholds',
+  );
+  @override
+  late final GeneratedColumn<String> thresholds = GeneratedColumn<String>(
+    'thresholds',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _actionsMeta = const VerificationMeta(
+    'actions',
+  );
+  @override
+  late final GeneratedColumn<String> actions = GeneratedColumn<String>(
+    'actions',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _suppressionTimeMinutesMeta =
+      const VerificationMeta('suppressionTimeMinutes');
+  @override
+  late final GeneratedColumn<int> suppressionTimeMinutes = GeneratedColumn<int>(
+    'suppression_time_minutes',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    description,
+    type,
+    enabled,
+    severity,
+    thresholds,
+    actions,
+    suppressionTimeMinutes,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'alert_rules_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AlertRuleData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('enabled')) {
+      context.handle(
+        _enabledMeta,
+        enabled.isAcceptableOrUnknown(data['enabled']!, _enabledMeta),
+      );
+    }
+    if (data.containsKey('severity')) {
+      context.handle(
+        _severityMeta,
+        severity.isAcceptableOrUnknown(data['severity']!, _severityMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_severityMeta);
+    }
+    if (data.containsKey('thresholds')) {
+      context.handle(
+        _thresholdsMeta,
+        thresholds.isAcceptableOrUnknown(data['thresholds']!, _thresholdsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_thresholdsMeta);
+    }
+    if (data.containsKey('actions')) {
+      context.handle(
+        _actionsMeta,
+        actions.isAcceptableOrUnknown(data['actions']!, _actionsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_actionsMeta);
+    }
+    if (data.containsKey('suppression_time_minutes')) {
+      context.handle(
+        _suppressionTimeMinutesMeta,
+        suppressionTimeMinutes.isAcceptableOrUnknown(
+          data['suppression_time_minutes']!,
+          _suppressionTimeMinutesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AlertRuleData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AlertRuleData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}type'],
+      )!,
+      enabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}enabled'],
+      )!,
+      severity: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}severity'],
+      )!,
+      thresholds: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}thresholds'],
+      )!,
+      actions: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}actions'],
+      )!,
+      suppressionTimeMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}suppression_time_minutes'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AlertRulesTableTable createAlias(String alias) {
+    return $AlertRulesTableTable(attachedDatabase, alias);
+  }
+}
+
+class AlertRuleData extends DataClass implements Insertable<AlertRuleData> {
+  final String id;
+  final String name;
+  final String description;
+  final int type;
+  final bool enabled;
+  final int severity;
+  final String thresholds;
+  final String actions;
+  final int? suppressionTimeMinutes;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const AlertRuleData({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.type,
+    required this.enabled,
+    required this.severity,
+    required this.thresholds,
+    required this.actions,
+    this.suppressionTimeMinutes,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['description'] = Variable<String>(description);
+    map['type'] = Variable<int>(type);
+    map['enabled'] = Variable<bool>(enabled);
+    map['severity'] = Variable<int>(severity);
+    map['thresholds'] = Variable<String>(thresholds);
+    map['actions'] = Variable<String>(actions);
+    if (!nullToAbsent || suppressionTimeMinutes != null) {
+      map['suppression_time_minutes'] = Variable<int>(suppressionTimeMinutes);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  AlertRulesTableCompanion toCompanion(bool nullToAbsent) {
+    return AlertRulesTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: Value(description),
+      type: Value(type),
+      enabled: Value(enabled),
+      severity: Value(severity),
+      thresholds: Value(thresholds),
+      actions: Value(actions),
+      suppressionTimeMinutes: suppressionTimeMinutes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(suppressionTimeMinutes),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory AlertRuleData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AlertRuleData(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String>(json['description']),
+      type: serializer.fromJson<int>(json['type']),
+      enabled: serializer.fromJson<bool>(json['enabled']),
+      severity: serializer.fromJson<int>(json['severity']),
+      thresholds: serializer.fromJson<String>(json['thresholds']),
+      actions: serializer.fromJson<String>(json['actions']),
+      suppressionTimeMinutes: serializer.fromJson<int?>(
+        json['suppressionTimeMinutes'],
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String>(description),
+      'type': serializer.toJson<int>(type),
+      'enabled': serializer.toJson<bool>(enabled),
+      'severity': serializer.toJson<int>(severity),
+      'thresholds': serializer.toJson<String>(thresholds),
+      'actions': serializer.toJson<String>(actions),
+      'suppressionTimeMinutes': serializer.toJson<int?>(suppressionTimeMinutes),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  AlertRuleData copyWith({
+    String? id,
+    String? name,
+    String? description,
+    int? type,
+    bool? enabled,
+    int? severity,
+    String? thresholds,
+    String? actions,
+    Value<int?> suppressionTimeMinutes = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => AlertRuleData(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    description: description ?? this.description,
+    type: type ?? this.type,
+    enabled: enabled ?? this.enabled,
+    severity: severity ?? this.severity,
+    thresholds: thresholds ?? this.thresholds,
+    actions: actions ?? this.actions,
+    suppressionTimeMinutes: suppressionTimeMinutes.present
+        ? suppressionTimeMinutes.value
+        : this.suppressionTimeMinutes,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  AlertRuleData copyWithCompanion(AlertRulesTableCompanion data) {
+    return AlertRuleData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      type: data.type.present ? data.type.value : this.type,
+      enabled: data.enabled.present ? data.enabled.value : this.enabled,
+      severity: data.severity.present ? data.severity.value : this.severity,
+      thresholds: data.thresholds.present
+          ? data.thresholds.value
+          : this.thresholds,
+      actions: data.actions.present ? data.actions.value : this.actions,
+      suppressionTimeMinutes: data.suppressionTimeMinutes.present
+          ? data.suppressionTimeMinutes.value
+          : this.suppressionTimeMinutes,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AlertRuleData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('type: $type, ')
+          ..write('enabled: $enabled, ')
+          ..write('severity: $severity, ')
+          ..write('thresholds: $thresholds, ')
+          ..write('actions: $actions, ')
+          ..write('suppressionTimeMinutes: $suppressionTimeMinutes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    description,
+    type,
+    enabled,
+    severity,
+    thresholds,
+    actions,
+    suppressionTimeMinutes,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AlertRuleData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.type == this.type &&
+          other.enabled == this.enabled &&
+          other.severity == this.severity &&
+          other.thresholds == this.thresholds &&
+          other.actions == this.actions &&
+          other.suppressionTimeMinutes == this.suppressionTimeMinutes &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class AlertRulesTableCompanion extends UpdateCompanion<AlertRuleData> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> description;
+  final Value<int> type;
+  final Value<bool> enabled;
+  final Value<int> severity;
+  final Value<String> thresholds;
+  final Value<String> actions;
+  final Value<int?> suppressionTimeMinutes;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const AlertRulesTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.type = const Value.absent(),
+    this.enabled = const Value.absent(),
+    this.severity = const Value.absent(),
+    this.thresholds = const Value.absent(),
+    this.actions = const Value.absent(),
+    this.suppressionTimeMinutes = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AlertRulesTableCompanion.insert({
+    required String id,
+    required String name,
+    required String description,
+    required int type,
+    this.enabled = const Value.absent(),
+    required int severity,
+    required String thresholds,
+    required String actions,
+    this.suppressionTimeMinutes = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       description = Value(description),
+       type = Value(type),
+       severity = Value(severity),
+       thresholds = Value(thresholds),
+       actions = Value(actions),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<AlertRuleData> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<int>? type,
+    Expression<bool>? enabled,
+    Expression<int>? severity,
+    Expression<String>? thresholds,
+    Expression<String>? actions,
+    Expression<int>? suppressionTimeMinutes,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (type != null) 'type': type,
+      if (enabled != null) 'enabled': enabled,
+      if (severity != null) 'severity': severity,
+      if (thresholds != null) 'thresholds': thresholds,
+      if (actions != null) 'actions': actions,
+      if (suppressionTimeMinutes != null)
+        'suppression_time_minutes': suppressionTimeMinutes,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AlertRulesTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? description,
+    Value<int>? type,
+    Value<bool>? enabled,
+    Value<int>? severity,
+    Value<String>? thresholds,
+    Value<String>? actions,
+    Value<int?>? suppressionTimeMinutes,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return AlertRulesTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      enabled: enabled ?? this.enabled,
+      severity: severity ?? this.severity,
+      thresholds: thresholds ?? this.thresholds,
+      actions: actions ?? this.actions,
+      suppressionTimeMinutes:
+          suppressionTimeMinutes ?? this.suppressionTimeMinutes,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<int>(type.value);
+    }
+    if (enabled.present) {
+      map['enabled'] = Variable<bool>(enabled.value);
+    }
+    if (severity.present) {
+      map['severity'] = Variable<int>(severity.value);
+    }
+    if (thresholds.present) {
+      map['thresholds'] = Variable<String>(thresholds.value);
+    }
+    if (actions.present) {
+      map['actions'] = Variable<String>(actions.value);
+    }
+    if (suppressionTimeMinutes.present) {
+      map['suppression_time_minutes'] = Variable<int>(
+        suppressionTimeMinutes.value,
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AlertRulesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('type: $type, ')
+          ..write('enabled: $enabled, ')
+          ..write('severity: $severity, ')
+          ..write('thresholds: $thresholds, ')
+          ..write('actions: $actions, ')
+          ..write('suppressionTimeMinutes: $suppressionTimeMinutes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PredictionsTableTable extends PredictionsTable
+    with TableInfo<$PredictionsTableTable, PredictionData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PredictionsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _printerIdMeta = const VerificationMeta(
+    'printerId',
+  );
+  @override
+  late final GeneratedColumn<String> printerId = GeneratedColumn<String>(
+    'printer_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<int> type = GeneratedColumn<int>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _predictedDateMeta = const VerificationMeta(
+    'predictedDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> predictedDate =
+      GeneratedColumn<DateTime>(
+        'predicted_date',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _confidenceMeta = const VerificationMeta(
+    'confidence',
+  );
+  @override
+  late final GeneratedColumn<double> confidence = GeneratedColumn<double>(
+    'confidence',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _factorsMeta = const VerificationMeta(
+    'factors',
+  );
+  @override
+  late final GeneratedColumn<String> factors = GeneratedColumn<String>(
+    'factors',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<int> status = GeneratedColumn<int>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    printerId,
+    type,
+    predictedDate,
+    confidence,
+    factors,
+    createdAt,
+    status,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'predictions_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PredictionData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('printer_id')) {
+      context.handle(
+        _printerIdMeta,
+        printerId.isAcceptableOrUnknown(data['printer_id']!, _printerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_printerIdMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('predicted_date')) {
+      context.handle(
+        _predictedDateMeta,
+        predictedDate.isAcceptableOrUnknown(
+          data['predicted_date']!,
+          _predictedDateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_predictedDateMeta);
+    }
+    if (data.containsKey('confidence')) {
+      context.handle(
+        _confidenceMeta,
+        confidence.isAcceptableOrUnknown(data['confidence']!, _confidenceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_confidenceMeta);
+    }
+    if (data.containsKey('factors')) {
+      context.handle(
+        _factorsMeta,
+        factors.isAcceptableOrUnknown(data['factors']!, _factorsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_factorsMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PredictionData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PredictionData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      printerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}printer_id'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}type'],
+      )!,
+      predictedDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}predicted_date'],
+      )!,
+      confidence: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}confidence'],
+      )!,
+      factors: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}factors'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}status'],
+      )!,
+    );
+  }
+
+  @override
+  $PredictionsTableTable createAlias(String alias) {
+    return $PredictionsTableTable(attachedDatabase, alias);
+  }
+}
+
+class PredictionData extends DataClass implements Insertable<PredictionData> {
+  final String id;
+  final String printerId;
+  final int type;
+  final DateTime predictedDate;
+  final double confidence;
+  final String factors;
+  final DateTime createdAt;
+  final int status;
+  const PredictionData({
+    required this.id,
+    required this.printerId,
+    required this.type,
+    required this.predictedDate,
+    required this.confidence,
+    required this.factors,
+    required this.createdAt,
+    required this.status,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['printer_id'] = Variable<String>(printerId);
+    map['type'] = Variable<int>(type);
+    map['predicted_date'] = Variable<DateTime>(predictedDate);
+    map['confidence'] = Variable<double>(confidence);
+    map['factors'] = Variable<String>(factors);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['status'] = Variable<int>(status);
+    return map;
+  }
+
+  PredictionsTableCompanion toCompanion(bool nullToAbsent) {
+    return PredictionsTableCompanion(
+      id: Value(id),
+      printerId: Value(printerId),
+      type: Value(type),
+      predictedDate: Value(predictedDate),
+      confidence: Value(confidence),
+      factors: Value(factors),
+      createdAt: Value(createdAt),
+      status: Value(status),
+    );
+  }
+
+  factory PredictionData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PredictionData(
+      id: serializer.fromJson<String>(json['id']),
+      printerId: serializer.fromJson<String>(json['printerId']),
+      type: serializer.fromJson<int>(json['type']),
+      predictedDate: serializer.fromJson<DateTime>(json['predictedDate']),
+      confidence: serializer.fromJson<double>(json['confidence']),
+      factors: serializer.fromJson<String>(json['factors']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      status: serializer.fromJson<int>(json['status']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'printerId': serializer.toJson<String>(printerId),
+      'type': serializer.toJson<int>(type),
+      'predictedDate': serializer.toJson<DateTime>(predictedDate),
+      'confidence': serializer.toJson<double>(confidence),
+      'factors': serializer.toJson<String>(factors),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'status': serializer.toJson<int>(status),
+    };
+  }
+
+  PredictionData copyWith({
+    String? id,
+    String? printerId,
+    int? type,
+    DateTime? predictedDate,
+    double? confidence,
+    String? factors,
+    DateTime? createdAt,
+    int? status,
+  }) => PredictionData(
+    id: id ?? this.id,
+    printerId: printerId ?? this.printerId,
+    type: type ?? this.type,
+    predictedDate: predictedDate ?? this.predictedDate,
+    confidence: confidence ?? this.confidence,
+    factors: factors ?? this.factors,
+    createdAt: createdAt ?? this.createdAt,
+    status: status ?? this.status,
+  );
+  PredictionData copyWithCompanion(PredictionsTableCompanion data) {
+    return PredictionData(
+      id: data.id.present ? data.id.value : this.id,
+      printerId: data.printerId.present ? data.printerId.value : this.printerId,
+      type: data.type.present ? data.type.value : this.type,
+      predictedDate: data.predictedDate.present
+          ? data.predictedDate.value
+          : this.predictedDate,
+      confidence: data.confidence.present
+          ? data.confidence.value
+          : this.confidence,
+      factors: data.factors.present ? data.factors.value : this.factors,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      status: data.status.present ? data.status.value : this.status,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PredictionData(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('type: $type, ')
+          ..write('predictedDate: $predictedDate, ')
+          ..write('confidence: $confidence, ')
+          ..write('factors: $factors, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('status: $status')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    printerId,
+    type,
+    predictedDate,
+    confidence,
+    factors,
+    createdAt,
+    status,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PredictionData &&
+          other.id == this.id &&
+          other.printerId == this.printerId &&
+          other.type == this.type &&
+          other.predictedDate == this.predictedDate &&
+          other.confidence == this.confidence &&
+          other.factors == this.factors &&
+          other.createdAt == this.createdAt &&
+          other.status == this.status);
+}
+
+class PredictionsTableCompanion extends UpdateCompanion<PredictionData> {
+  final Value<String> id;
+  final Value<String> printerId;
+  final Value<int> type;
+  final Value<DateTime> predictedDate;
+  final Value<double> confidence;
+  final Value<String> factors;
+  final Value<DateTime> createdAt;
+  final Value<int> status;
+  final Value<int> rowid;
+  const PredictionsTableCompanion({
+    this.id = const Value.absent(),
+    this.printerId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.predictedDate = const Value.absent(),
+    this.confidence = const Value.absent(),
+    this.factors = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.status = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PredictionsTableCompanion.insert({
+    required String id,
+    required String printerId,
+    required int type,
+    required DateTime predictedDate,
+    required double confidence,
+    required String factors,
+    required DateTime createdAt,
+    this.status = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       printerId = Value(printerId),
+       type = Value(type),
+       predictedDate = Value(predictedDate),
+       confidence = Value(confidence),
+       factors = Value(factors),
+       createdAt = Value(createdAt);
+  static Insertable<PredictionData> custom({
+    Expression<String>? id,
+    Expression<String>? printerId,
+    Expression<int>? type,
+    Expression<DateTime>? predictedDate,
+    Expression<double>? confidence,
+    Expression<String>? factors,
+    Expression<DateTime>? createdAt,
+    Expression<int>? status,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (printerId != null) 'printer_id': printerId,
+      if (type != null) 'type': type,
+      if (predictedDate != null) 'predicted_date': predictedDate,
+      if (confidence != null) 'confidence': confidence,
+      if (factors != null) 'factors': factors,
+      if (createdAt != null) 'created_at': createdAt,
+      if (status != null) 'status': status,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PredictionsTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? printerId,
+    Value<int>? type,
+    Value<DateTime>? predictedDate,
+    Value<double>? confidence,
+    Value<String>? factors,
+    Value<DateTime>? createdAt,
+    Value<int>? status,
+    Value<int>? rowid,
+  }) {
+    return PredictionsTableCompanion(
+      id: id ?? this.id,
+      printerId: printerId ?? this.printerId,
+      type: type ?? this.type,
+      predictedDate: predictedDate ?? this.predictedDate,
+      confidence: confidence ?? this.confidence,
+      factors: factors ?? this.factors,
+      createdAt: createdAt ?? this.createdAt,
+      status: status ?? this.status,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (printerId.present) {
+      map['printer_id'] = Variable<String>(printerId.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<int>(type.value);
+    }
+    if (predictedDate.present) {
+      map['predicted_date'] = Variable<DateTime>(predictedDate.value);
+    }
+    if (confidence.present) {
+      map['confidence'] = Variable<double>(confidence.value);
+    }
+    if (factors.present) {
+      map['factors'] = Variable<String>(factors.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<int>(status.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PredictionsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('type: $type, ')
+          ..write('predictedDate: $predictedDate, ')
+          ..write('confidence: $confidence, ')
+          ..write('factors: $factors, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('status: $status, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PatternsTableTable extends PatternsTable
+    with TableInfo<$PatternsTableTable, PatternData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PatternsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _printerIdMeta = const VerificationMeta(
+    'printerId',
+  );
+  @override
+  late final GeneratedColumn<String> printerId = GeneratedColumn<String>(
+    'printer_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _patternTypeMeta = const VerificationMeta(
+    'patternType',
+  );
+  @override
+  late final GeneratedColumn<int> patternType = GeneratedColumn<int>(
+    'pattern_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _occurrenceCountMeta = const VerificationMeta(
+    'occurrenceCount',
+  );
+  @override
+  late final GeneratedColumn<int> occurrenceCount = GeneratedColumn<int>(
+    'occurrence_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastOccurrenceMeta = const VerificationMeta(
+    'lastOccurrence',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastOccurrence =
+      GeneratedColumn<DateTime>(
+        'last_occurrence',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _confidenceMeta = const VerificationMeta(
+    'confidence',
+  );
+  @override
+  late final GeneratedColumn<double> confidence = GeneratedColumn<double>(
+    'confidence',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    printerId,
+    patternType,
+    description,
+    occurrenceCount,
+    lastOccurrence,
+    confidence,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'patterns_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PatternData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('printer_id')) {
+      context.handle(
+        _printerIdMeta,
+        printerId.isAcceptableOrUnknown(data['printer_id']!, _printerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_printerIdMeta);
+    }
+    if (data.containsKey('pattern_type')) {
+      context.handle(
+        _patternTypeMeta,
+        patternType.isAcceptableOrUnknown(
+          data['pattern_type']!,
+          _patternTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_patternTypeMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('occurrence_count')) {
+      context.handle(
+        _occurrenceCountMeta,
+        occurrenceCount.isAcceptableOrUnknown(
+          data['occurrence_count']!,
+          _occurrenceCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_occurrenceCountMeta);
+    }
+    if (data.containsKey('last_occurrence')) {
+      context.handle(
+        _lastOccurrenceMeta,
+        lastOccurrence.isAcceptableOrUnknown(
+          data['last_occurrence']!,
+          _lastOccurrenceMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_lastOccurrenceMeta);
+    }
+    if (data.containsKey('confidence')) {
+      context.handle(
+        _confidenceMeta,
+        confidence.isAcceptableOrUnknown(data['confidence']!, _confidenceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_confidenceMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PatternData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PatternData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      printerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}printer_id'],
+      )!,
+      patternType: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pattern_type'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      occurrenceCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}occurrence_count'],
+      )!,
+      lastOccurrence: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_occurrence'],
+      )!,
+      confidence: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}confidence'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $PatternsTableTable createAlias(String alias) {
+    return $PatternsTableTable(attachedDatabase, alias);
+  }
+}
+
+class PatternData extends DataClass implements Insertable<PatternData> {
+  final String id;
+  final String printerId;
+  final int patternType;
+  final String description;
+  final int occurrenceCount;
+  final DateTime lastOccurrence;
+  final double confidence;
+  final DateTime createdAt;
+  const PatternData({
+    required this.id,
+    required this.printerId,
+    required this.patternType,
+    required this.description,
+    required this.occurrenceCount,
+    required this.lastOccurrence,
+    required this.confidence,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['printer_id'] = Variable<String>(printerId);
+    map['pattern_type'] = Variable<int>(patternType);
+    map['description'] = Variable<String>(description);
+    map['occurrence_count'] = Variable<int>(occurrenceCount);
+    map['last_occurrence'] = Variable<DateTime>(lastOccurrence);
+    map['confidence'] = Variable<double>(confidence);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  PatternsTableCompanion toCompanion(bool nullToAbsent) {
+    return PatternsTableCompanion(
+      id: Value(id),
+      printerId: Value(printerId),
+      patternType: Value(patternType),
+      description: Value(description),
+      occurrenceCount: Value(occurrenceCount),
+      lastOccurrence: Value(lastOccurrence),
+      confidence: Value(confidence),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory PatternData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PatternData(
+      id: serializer.fromJson<String>(json['id']),
+      printerId: serializer.fromJson<String>(json['printerId']),
+      patternType: serializer.fromJson<int>(json['patternType']),
+      description: serializer.fromJson<String>(json['description']),
+      occurrenceCount: serializer.fromJson<int>(json['occurrenceCount']),
+      lastOccurrence: serializer.fromJson<DateTime>(json['lastOccurrence']),
+      confidence: serializer.fromJson<double>(json['confidence']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'printerId': serializer.toJson<String>(printerId),
+      'patternType': serializer.toJson<int>(patternType),
+      'description': serializer.toJson<String>(description),
+      'occurrenceCount': serializer.toJson<int>(occurrenceCount),
+      'lastOccurrence': serializer.toJson<DateTime>(lastOccurrence),
+      'confidence': serializer.toJson<double>(confidence),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  PatternData copyWith({
+    String? id,
+    String? printerId,
+    int? patternType,
+    String? description,
+    int? occurrenceCount,
+    DateTime? lastOccurrence,
+    double? confidence,
+    DateTime? createdAt,
+  }) => PatternData(
+    id: id ?? this.id,
+    printerId: printerId ?? this.printerId,
+    patternType: patternType ?? this.patternType,
+    description: description ?? this.description,
+    occurrenceCount: occurrenceCount ?? this.occurrenceCount,
+    lastOccurrence: lastOccurrence ?? this.lastOccurrence,
+    confidence: confidence ?? this.confidence,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  PatternData copyWithCompanion(PatternsTableCompanion data) {
+    return PatternData(
+      id: data.id.present ? data.id.value : this.id,
+      printerId: data.printerId.present ? data.printerId.value : this.printerId,
+      patternType: data.patternType.present
+          ? data.patternType.value
+          : this.patternType,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      occurrenceCount: data.occurrenceCount.present
+          ? data.occurrenceCount.value
+          : this.occurrenceCount,
+      lastOccurrence: data.lastOccurrence.present
+          ? data.lastOccurrence.value
+          : this.lastOccurrence,
+      confidence: data.confidence.present
+          ? data.confidence.value
+          : this.confidence,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PatternData(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('patternType: $patternType, ')
+          ..write('description: $description, ')
+          ..write('occurrenceCount: $occurrenceCount, ')
+          ..write('lastOccurrence: $lastOccurrence, ')
+          ..write('confidence: $confidence, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    printerId,
+    patternType,
+    description,
+    occurrenceCount,
+    lastOccurrence,
+    confidence,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PatternData &&
+          other.id == this.id &&
+          other.printerId == this.printerId &&
+          other.patternType == this.patternType &&
+          other.description == this.description &&
+          other.occurrenceCount == this.occurrenceCount &&
+          other.lastOccurrence == this.lastOccurrence &&
+          other.confidence == this.confidence &&
+          other.createdAt == this.createdAt);
+}
+
+class PatternsTableCompanion extends UpdateCompanion<PatternData> {
+  final Value<String> id;
+  final Value<String> printerId;
+  final Value<int> patternType;
+  final Value<String> description;
+  final Value<int> occurrenceCount;
+  final Value<DateTime> lastOccurrence;
+  final Value<double> confidence;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const PatternsTableCompanion({
+    this.id = const Value.absent(),
+    this.printerId = const Value.absent(),
+    this.patternType = const Value.absent(),
+    this.description = const Value.absent(),
+    this.occurrenceCount = const Value.absent(),
+    this.lastOccurrence = const Value.absent(),
+    this.confidence = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PatternsTableCompanion.insert({
+    required String id,
+    required String printerId,
+    required int patternType,
+    required String description,
+    required int occurrenceCount,
+    required DateTime lastOccurrence,
+    required double confidence,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       printerId = Value(printerId),
+       patternType = Value(patternType),
+       description = Value(description),
+       occurrenceCount = Value(occurrenceCount),
+       lastOccurrence = Value(lastOccurrence),
+       confidence = Value(confidence),
+       createdAt = Value(createdAt);
+  static Insertable<PatternData> custom({
+    Expression<String>? id,
+    Expression<String>? printerId,
+    Expression<int>? patternType,
+    Expression<String>? description,
+    Expression<int>? occurrenceCount,
+    Expression<DateTime>? lastOccurrence,
+    Expression<double>? confidence,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (printerId != null) 'printer_id': printerId,
+      if (patternType != null) 'pattern_type': patternType,
+      if (description != null) 'description': description,
+      if (occurrenceCount != null) 'occurrence_count': occurrenceCount,
+      if (lastOccurrence != null) 'last_occurrence': lastOccurrence,
+      if (confidence != null) 'confidence': confidence,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PatternsTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? printerId,
+    Value<int>? patternType,
+    Value<String>? description,
+    Value<int>? occurrenceCount,
+    Value<DateTime>? lastOccurrence,
+    Value<double>? confidence,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return PatternsTableCompanion(
+      id: id ?? this.id,
+      printerId: printerId ?? this.printerId,
+      patternType: patternType ?? this.patternType,
+      description: description ?? this.description,
+      occurrenceCount: occurrenceCount ?? this.occurrenceCount,
+      lastOccurrence: lastOccurrence ?? this.lastOccurrence,
+      confidence: confidence ?? this.confidence,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (printerId.present) {
+      map['printer_id'] = Variable<String>(printerId.value);
+    }
+    if (patternType.present) {
+      map['pattern_type'] = Variable<int>(patternType.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (occurrenceCount.present) {
+      map['occurrence_count'] = Variable<int>(occurrenceCount.value);
+    }
+    if (lastOccurrence.present) {
+      map['last_occurrence'] = Variable<DateTime>(lastOccurrence.value);
+    }
+    if (confidence.present) {
+      map['confidence'] = Variable<double>(confidence.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PatternsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('patternType: $patternType, ')
+          ..write('description: $description, ')
+          ..write('occurrenceCount: $occurrenceCount, ')
+          ..write('lastOccurrence: $lastOccurrence, ')
+          ..write('confidence: $confidence, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ActionRulesTableTable extends ActionRulesTable
+    with TableInfo<$ActionRulesTableTable, ActionRuleData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ActionRulesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _triggerTypeMeta = const VerificationMeta(
+    'triggerType',
+  );
+  @override
+  late final GeneratedColumn<int> triggerType = GeneratedColumn<int>(
+    'trigger_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _actionTypeMeta = const VerificationMeta(
+    'actionType',
+  );
+  @override
+  late final GeneratedColumn<int> actionType = GeneratedColumn<int>(
+    'action_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _conditionsMeta = const VerificationMeta(
+    'conditions',
+  );
+  @override
+  late final GeneratedColumn<String> conditions = GeneratedColumn<String>(
+    'conditions',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _enabledMeta = const VerificationMeta(
+    'enabled',
+  );
+  @override
+  late final GeneratedColumn<bool> enabled = GeneratedColumn<bool>(
+    'enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _lastExecutedMeta = const VerificationMeta(
+    'lastExecuted',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastExecuted = GeneratedColumn<DateTime>(
+    'last_executed',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    description,
+    triggerType,
+    actionType,
+    conditions,
+    enabled,
+    lastExecuted,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'action_rules_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ActionRuleData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('trigger_type')) {
+      context.handle(
+        _triggerTypeMeta,
+        triggerType.isAcceptableOrUnknown(
+          data['trigger_type']!,
+          _triggerTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_triggerTypeMeta);
+    }
+    if (data.containsKey('action_type')) {
+      context.handle(
+        _actionTypeMeta,
+        actionType.isAcceptableOrUnknown(data['action_type']!, _actionTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_actionTypeMeta);
+    }
+    if (data.containsKey('conditions')) {
+      context.handle(
+        _conditionsMeta,
+        conditions.isAcceptableOrUnknown(data['conditions']!, _conditionsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_conditionsMeta);
+    }
+    if (data.containsKey('enabled')) {
+      context.handle(
+        _enabledMeta,
+        enabled.isAcceptableOrUnknown(data['enabled']!, _enabledMeta),
+      );
+    }
+    if (data.containsKey('last_executed')) {
+      context.handle(
+        _lastExecutedMeta,
+        lastExecuted.isAcceptableOrUnknown(
+          data['last_executed']!,
+          _lastExecutedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ActionRuleData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ActionRuleData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      triggerType: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}trigger_type'],
+      )!,
+      actionType: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}action_type'],
+      )!,
+      conditions: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}conditions'],
+      )!,
+      enabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}enabled'],
+      )!,
+      lastExecuted: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_executed'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ActionRulesTableTable createAlias(String alias) {
+    return $ActionRulesTableTable(attachedDatabase, alias);
+  }
+}
+
+class ActionRuleData extends DataClass implements Insertable<ActionRuleData> {
+  final String id;
+  final String name;
+  final String description;
+  final int triggerType;
+  final int actionType;
+  final String conditions;
+  final bool enabled;
+  final DateTime? lastExecuted;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const ActionRuleData({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.triggerType,
+    required this.actionType,
+    required this.conditions,
+    required this.enabled,
+    this.lastExecuted,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['description'] = Variable<String>(description);
+    map['trigger_type'] = Variable<int>(triggerType);
+    map['action_type'] = Variable<int>(actionType);
+    map['conditions'] = Variable<String>(conditions);
+    map['enabled'] = Variable<bool>(enabled);
+    if (!nullToAbsent || lastExecuted != null) {
+      map['last_executed'] = Variable<DateTime>(lastExecuted);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  ActionRulesTableCompanion toCompanion(bool nullToAbsent) {
+    return ActionRulesTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: Value(description),
+      triggerType: Value(triggerType),
+      actionType: Value(actionType),
+      conditions: Value(conditions),
+      enabled: Value(enabled),
+      lastExecuted: lastExecuted == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastExecuted),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory ActionRuleData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ActionRuleData(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String>(json['description']),
+      triggerType: serializer.fromJson<int>(json['triggerType']),
+      actionType: serializer.fromJson<int>(json['actionType']),
+      conditions: serializer.fromJson<String>(json['conditions']),
+      enabled: serializer.fromJson<bool>(json['enabled']),
+      lastExecuted: serializer.fromJson<DateTime?>(json['lastExecuted']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String>(description),
+      'triggerType': serializer.toJson<int>(triggerType),
+      'actionType': serializer.toJson<int>(actionType),
+      'conditions': serializer.toJson<String>(conditions),
+      'enabled': serializer.toJson<bool>(enabled),
+      'lastExecuted': serializer.toJson<DateTime?>(lastExecuted),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  ActionRuleData copyWith({
+    String? id,
+    String? name,
+    String? description,
+    int? triggerType,
+    int? actionType,
+    String? conditions,
+    bool? enabled,
+    Value<DateTime?> lastExecuted = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => ActionRuleData(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    description: description ?? this.description,
+    triggerType: triggerType ?? this.triggerType,
+    actionType: actionType ?? this.actionType,
+    conditions: conditions ?? this.conditions,
+    enabled: enabled ?? this.enabled,
+    lastExecuted: lastExecuted.present ? lastExecuted.value : this.lastExecuted,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  ActionRuleData copyWithCompanion(ActionRulesTableCompanion data) {
+    return ActionRuleData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      triggerType: data.triggerType.present
+          ? data.triggerType.value
+          : this.triggerType,
+      actionType: data.actionType.present
+          ? data.actionType.value
+          : this.actionType,
+      conditions: data.conditions.present
+          ? data.conditions.value
+          : this.conditions,
+      enabled: data.enabled.present ? data.enabled.value : this.enabled,
+      lastExecuted: data.lastExecuted.present
+          ? data.lastExecuted.value
+          : this.lastExecuted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActionRuleData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('triggerType: $triggerType, ')
+          ..write('actionType: $actionType, ')
+          ..write('conditions: $conditions, ')
+          ..write('enabled: $enabled, ')
+          ..write('lastExecuted: $lastExecuted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    description,
+    triggerType,
+    actionType,
+    conditions,
+    enabled,
+    lastExecuted,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ActionRuleData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.triggerType == this.triggerType &&
+          other.actionType == this.actionType &&
+          other.conditions == this.conditions &&
+          other.enabled == this.enabled &&
+          other.lastExecuted == this.lastExecuted &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class ActionRulesTableCompanion extends UpdateCompanion<ActionRuleData> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> description;
+  final Value<int> triggerType;
+  final Value<int> actionType;
+  final Value<String> conditions;
+  final Value<bool> enabled;
+  final Value<DateTime?> lastExecuted;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const ActionRulesTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.triggerType = const Value.absent(),
+    this.actionType = const Value.absent(),
+    this.conditions = const Value.absent(),
+    this.enabled = const Value.absent(),
+    this.lastExecuted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ActionRulesTableCompanion.insert({
+    required String id,
+    required String name,
+    required String description,
+    required int triggerType,
+    required int actionType,
+    required String conditions,
+    this.enabled = const Value.absent(),
+    this.lastExecuted = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       description = Value(description),
+       triggerType = Value(triggerType),
+       actionType = Value(actionType),
+       conditions = Value(conditions),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<ActionRuleData> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<int>? triggerType,
+    Expression<int>? actionType,
+    Expression<String>? conditions,
+    Expression<bool>? enabled,
+    Expression<DateTime>? lastExecuted,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (triggerType != null) 'trigger_type': triggerType,
+      if (actionType != null) 'action_type': actionType,
+      if (conditions != null) 'conditions': conditions,
+      if (enabled != null) 'enabled': enabled,
+      if (lastExecuted != null) 'last_executed': lastExecuted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ActionRulesTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? description,
+    Value<int>? triggerType,
+    Value<int>? actionType,
+    Value<String>? conditions,
+    Value<bool>? enabled,
+    Value<DateTime?>? lastExecuted,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ActionRulesTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      triggerType: triggerType ?? this.triggerType,
+      actionType: actionType ?? this.actionType,
+      conditions: conditions ?? this.conditions,
+      enabled: enabled ?? this.enabled,
+      lastExecuted: lastExecuted ?? this.lastExecuted,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (triggerType.present) {
+      map['trigger_type'] = Variable<int>(triggerType.value);
+    }
+    if (actionType.present) {
+      map['action_type'] = Variable<int>(actionType.value);
+    }
+    if (conditions.present) {
+      map['conditions'] = Variable<String>(conditions.value);
+    }
+    if (enabled.present) {
+      map['enabled'] = Variable<bool>(enabled.value);
+    }
+    if (lastExecuted.present) {
+      map['last_executed'] = Variable<DateTime>(lastExecuted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActionRulesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('triggerType: $triggerType, ')
+          ..write('actionType: $actionType, ')
+          ..write('conditions: $conditions, ')
+          ..write('enabled: $enabled, ')
+          ..write('lastExecuted: $lastExecuted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AutomatedActionsTableTable extends AutomatedActionsTable
+    with TableInfo<$AutomatedActionsTableTable, AutomatedActionData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AutomatedActionsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ruleIdMeta = const VerificationMeta('ruleId');
+  @override
+  late final GeneratedColumn<String> ruleId = GeneratedColumn<String>(
+    'rule_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _printerIdMeta = const VerificationMeta(
+    'printerId',
+  );
+  @override
+  late final GeneratedColumn<String> printerId = GeneratedColumn<String>(
+    'printer_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _actionTypeMeta = const VerificationMeta(
+    'actionType',
+  );
+  @override
+  late final GeneratedColumn<int> actionType = GeneratedColumn<int>(
+    'action_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _parametersMeta = const VerificationMeta(
+    'parameters',
+  );
+  @override
+  late final GeneratedColumn<String> parameters = GeneratedColumn<String>(
+    'parameters',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _resultMeta = const VerificationMeta('result');
+  @override
+  late final GeneratedColumn<int> result = GeneratedColumn<int>(
+    'result',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _errorMessageMeta = const VerificationMeta(
+    'errorMessage',
+  );
+  @override
+  late final GeneratedColumn<String> errorMessage = GeneratedColumn<String>(
+    'error_message',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _executedAtMeta = const VerificationMeta(
+    'executedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> executedAt = GeneratedColumn<DateTime>(
+    'executed_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    ruleId,
+    printerId,
+    actionType,
+    parameters,
+    result,
+    errorMessage,
+    executedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'automated_actions_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AutomatedActionData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('rule_id')) {
+      context.handle(
+        _ruleIdMeta,
+        ruleId.isAcceptableOrUnknown(data['rule_id']!, _ruleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_ruleIdMeta);
+    }
+    if (data.containsKey('printer_id')) {
+      context.handle(
+        _printerIdMeta,
+        printerId.isAcceptableOrUnknown(data['printer_id']!, _printerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_printerIdMeta);
+    }
+    if (data.containsKey('action_type')) {
+      context.handle(
+        _actionTypeMeta,
+        actionType.isAcceptableOrUnknown(data['action_type']!, _actionTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_actionTypeMeta);
+    }
+    if (data.containsKey('parameters')) {
+      context.handle(
+        _parametersMeta,
+        parameters.isAcceptableOrUnknown(data['parameters']!, _parametersMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_parametersMeta);
+    }
+    if (data.containsKey('result')) {
+      context.handle(
+        _resultMeta,
+        result.isAcceptableOrUnknown(data['result']!, _resultMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_resultMeta);
+    }
+    if (data.containsKey('error_message')) {
+      context.handle(
+        _errorMessageMeta,
+        errorMessage.isAcceptableOrUnknown(
+          data['error_message']!,
+          _errorMessageMeta,
+        ),
+      );
+    }
+    if (data.containsKey('executed_at')) {
+      context.handle(
+        _executedAtMeta,
+        executedAt.isAcceptableOrUnknown(data['executed_at']!, _executedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_executedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AutomatedActionData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AutomatedActionData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      ruleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}rule_id'],
+      )!,
+      printerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}printer_id'],
+      )!,
+      actionType: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}action_type'],
+      )!,
+      parameters: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parameters'],
+      )!,
+      result: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}result'],
+      )!,
+      errorMessage: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}error_message'],
+      ),
+      executedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}executed_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AutomatedActionsTableTable createAlias(String alias) {
+    return $AutomatedActionsTableTable(attachedDatabase, alias);
+  }
+}
+
+class AutomatedActionData extends DataClass
+    implements Insertable<AutomatedActionData> {
+  final String id;
+  final String ruleId;
+  final String printerId;
+  final int actionType;
+  final String parameters;
+  final int result;
+  final String? errorMessage;
+  final DateTime executedAt;
+  const AutomatedActionData({
+    required this.id,
+    required this.ruleId,
+    required this.printerId,
+    required this.actionType,
+    required this.parameters,
+    required this.result,
+    this.errorMessage,
+    required this.executedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['rule_id'] = Variable<String>(ruleId);
+    map['printer_id'] = Variable<String>(printerId);
+    map['action_type'] = Variable<int>(actionType);
+    map['parameters'] = Variable<String>(parameters);
+    map['result'] = Variable<int>(result);
+    if (!nullToAbsent || errorMessage != null) {
+      map['error_message'] = Variable<String>(errorMessage);
+    }
+    map['executed_at'] = Variable<DateTime>(executedAt);
+    return map;
+  }
+
+  AutomatedActionsTableCompanion toCompanion(bool nullToAbsent) {
+    return AutomatedActionsTableCompanion(
+      id: Value(id),
+      ruleId: Value(ruleId),
+      printerId: Value(printerId),
+      actionType: Value(actionType),
+      parameters: Value(parameters),
+      result: Value(result),
+      errorMessage: errorMessage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(errorMessage),
+      executedAt: Value(executedAt),
+    );
+  }
+
+  factory AutomatedActionData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AutomatedActionData(
+      id: serializer.fromJson<String>(json['id']),
+      ruleId: serializer.fromJson<String>(json['ruleId']),
+      printerId: serializer.fromJson<String>(json['printerId']),
+      actionType: serializer.fromJson<int>(json['actionType']),
+      parameters: serializer.fromJson<String>(json['parameters']),
+      result: serializer.fromJson<int>(json['result']),
+      errorMessage: serializer.fromJson<String?>(json['errorMessage']),
+      executedAt: serializer.fromJson<DateTime>(json['executedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'ruleId': serializer.toJson<String>(ruleId),
+      'printerId': serializer.toJson<String>(printerId),
+      'actionType': serializer.toJson<int>(actionType),
+      'parameters': serializer.toJson<String>(parameters),
+      'result': serializer.toJson<int>(result),
+      'errorMessage': serializer.toJson<String?>(errorMessage),
+      'executedAt': serializer.toJson<DateTime>(executedAt),
+    };
+  }
+
+  AutomatedActionData copyWith({
+    String? id,
+    String? ruleId,
+    String? printerId,
+    int? actionType,
+    String? parameters,
+    int? result,
+    Value<String?> errorMessage = const Value.absent(),
+    DateTime? executedAt,
+  }) => AutomatedActionData(
+    id: id ?? this.id,
+    ruleId: ruleId ?? this.ruleId,
+    printerId: printerId ?? this.printerId,
+    actionType: actionType ?? this.actionType,
+    parameters: parameters ?? this.parameters,
+    result: result ?? this.result,
+    errorMessage: errorMessage.present ? errorMessage.value : this.errorMessage,
+    executedAt: executedAt ?? this.executedAt,
+  );
+  AutomatedActionData copyWithCompanion(AutomatedActionsTableCompanion data) {
+    return AutomatedActionData(
+      id: data.id.present ? data.id.value : this.id,
+      ruleId: data.ruleId.present ? data.ruleId.value : this.ruleId,
+      printerId: data.printerId.present ? data.printerId.value : this.printerId,
+      actionType: data.actionType.present
+          ? data.actionType.value
+          : this.actionType,
+      parameters: data.parameters.present
+          ? data.parameters.value
+          : this.parameters,
+      result: data.result.present ? data.result.value : this.result,
+      errorMessage: data.errorMessage.present
+          ? data.errorMessage.value
+          : this.errorMessage,
+      executedAt: data.executedAt.present
+          ? data.executedAt.value
+          : this.executedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AutomatedActionData(')
+          ..write('id: $id, ')
+          ..write('ruleId: $ruleId, ')
+          ..write('printerId: $printerId, ')
+          ..write('actionType: $actionType, ')
+          ..write('parameters: $parameters, ')
+          ..write('result: $result, ')
+          ..write('errorMessage: $errorMessage, ')
+          ..write('executedAt: $executedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    ruleId,
+    printerId,
+    actionType,
+    parameters,
+    result,
+    errorMessage,
+    executedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AutomatedActionData &&
+          other.id == this.id &&
+          other.ruleId == this.ruleId &&
+          other.printerId == this.printerId &&
+          other.actionType == this.actionType &&
+          other.parameters == this.parameters &&
+          other.result == this.result &&
+          other.errorMessage == this.errorMessage &&
+          other.executedAt == this.executedAt);
+}
+
+class AutomatedActionsTableCompanion
+    extends UpdateCompanion<AutomatedActionData> {
+  final Value<String> id;
+  final Value<String> ruleId;
+  final Value<String> printerId;
+  final Value<int> actionType;
+  final Value<String> parameters;
+  final Value<int> result;
+  final Value<String?> errorMessage;
+  final Value<DateTime> executedAt;
+  final Value<int> rowid;
+  const AutomatedActionsTableCompanion({
+    this.id = const Value.absent(),
+    this.ruleId = const Value.absent(),
+    this.printerId = const Value.absent(),
+    this.actionType = const Value.absent(),
+    this.parameters = const Value.absent(),
+    this.result = const Value.absent(),
+    this.errorMessage = const Value.absent(),
+    this.executedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AutomatedActionsTableCompanion.insert({
+    required String id,
+    required String ruleId,
+    required String printerId,
+    required int actionType,
+    required String parameters,
+    required int result,
+    this.errorMessage = const Value.absent(),
+    required DateTime executedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       ruleId = Value(ruleId),
+       printerId = Value(printerId),
+       actionType = Value(actionType),
+       parameters = Value(parameters),
+       result = Value(result),
+       executedAt = Value(executedAt);
+  static Insertable<AutomatedActionData> custom({
+    Expression<String>? id,
+    Expression<String>? ruleId,
+    Expression<String>? printerId,
+    Expression<int>? actionType,
+    Expression<String>? parameters,
+    Expression<int>? result,
+    Expression<String>? errorMessage,
+    Expression<DateTime>? executedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ruleId != null) 'rule_id': ruleId,
+      if (printerId != null) 'printer_id': printerId,
+      if (actionType != null) 'action_type': actionType,
+      if (parameters != null) 'parameters': parameters,
+      if (result != null) 'result': result,
+      if (errorMessage != null) 'error_message': errorMessage,
+      if (executedAt != null) 'executed_at': executedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AutomatedActionsTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? ruleId,
+    Value<String>? printerId,
+    Value<int>? actionType,
+    Value<String>? parameters,
+    Value<int>? result,
+    Value<String?>? errorMessage,
+    Value<DateTime>? executedAt,
+    Value<int>? rowid,
+  }) {
+    return AutomatedActionsTableCompanion(
+      id: id ?? this.id,
+      ruleId: ruleId ?? this.ruleId,
+      printerId: printerId ?? this.printerId,
+      actionType: actionType ?? this.actionType,
+      parameters: parameters ?? this.parameters,
+      result: result ?? this.result,
+      errorMessage: errorMessage ?? this.errorMessage,
+      executedAt: executedAt ?? this.executedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (ruleId.present) {
+      map['rule_id'] = Variable<String>(ruleId.value);
+    }
+    if (printerId.present) {
+      map['printer_id'] = Variable<String>(printerId.value);
+    }
+    if (actionType.present) {
+      map['action_type'] = Variable<int>(actionType.value);
+    }
+    if (parameters.present) {
+      map['parameters'] = Variable<String>(parameters.value);
+    }
+    if (result.present) {
+      map['result'] = Variable<int>(result.value);
+    }
+    if (errorMessage.present) {
+      map['error_message'] = Variable<String>(errorMessage.value);
+    }
+    if (executedAt.present) {
+      map['executed_at'] = Variable<DateTime>(executedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AutomatedActionsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('ruleId: $ruleId, ')
+          ..write('printerId: $printerId, ')
+          ..write('actionType: $actionType, ')
+          ..write('parameters: $parameters, ')
+          ..write('result: $result, ')
+          ..write('errorMessage: $errorMessage, ')
+          ..write('executedAt: $executedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -6734,6 +10191,20 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $PrinterCountersTable printerCounters = $PrinterCountersTable(
     this,
   );
+  late final $PrinterHealthTableTable printerHealthTable =
+      $PrinterHealthTableTable(this);
+  late final $AlertRulesTableTable alertRulesTable = $AlertRulesTableTable(
+    this,
+  );
+  late final $PredictionsTableTable predictionsTable = $PredictionsTableTable(
+    this,
+  );
+  late final $PatternsTableTable patternsTable = $PatternsTableTable(this);
+  late final $ActionRulesTableTable actionRulesTable = $ActionRulesTableTable(
+    this,
+  );
+  late final $AutomatedActionsTableTable automatedActionsTable =
+      $AutomatedActionsTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6749,6 +10220,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     printerSupplies,
     printerMaintenances,
     printerCounters,
+    printerHealthTable,
+    alertRulesTable,
+    predictionsTable,
+    patternsTable,
+    actionRulesTable,
+    automatedActionsTable,
   ];
 }
 
@@ -9961,6 +13438,1754 @@ typedef $$PrinterCountersTableProcessedTableManager =
       PrinterCounterData,
       PrefetchHooks Function()
     >;
+typedef $$PrinterHealthTableTableCreateCompanionBuilder =
+    PrinterHealthTableCompanion Function({
+      required String printerId,
+      required int healthScore,
+      required double errorRate,
+      required double availability,
+      required int avgResponseTimeMs,
+      required int supplyScore,
+      required DateTime lastCheck,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$PrinterHealthTableTableUpdateCompanionBuilder =
+    PrinterHealthTableCompanion Function({
+      Value<String> printerId,
+      Value<int> healthScore,
+      Value<double> errorRate,
+      Value<double> availability,
+      Value<int> avgResponseTimeMs,
+      Value<int> supplyScore,
+      Value<DateTime> lastCheck,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$PrinterHealthTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PrinterHealthTableTable> {
+  $$PrinterHealthTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get healthScore => $composableBuilder(
+    column: $table.healthScore,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get errorRate => $composableBuilder(
+    column: $table.errorRate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get availability => $composableBuilder(
+    column: $table.availability,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get avgResponseTimeMs => $composableBuilder(
+    column: $table.avgResponseTimeMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get supplyScore => $composableBuilder(
+    column: $table.supplyScore,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastCheck => $composableBuilder(
+    column: $table.lastCheck,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PrinterHealthTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PrinterHealthTableTable> {
+  $$PrinterHealthTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get healthScore => $composableBuilder(
+    column: $table.healthScore,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get errorRate => $composableBuilder(
+    column: $table.errorRate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get availability => $composableBuilder(
+    column: $table.availability,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get avgResponseTimeMs => $composableBuilder(
+    column: $table.avgResponseTimeMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get supplyScore => $composableBuilder(
+    column: $table.supplyScore,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastCheck => $composableBuilder(
+    column: $table.lastCheck,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PrinterHealthTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PrinterHealthTableTable> {
+  $$PrinterHealthTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get printerId =>
+      $composableBuilder(column: $table.printerId, builder: (column) => column);
+
+  GeneratedColumn<int> get healthScore => $composableBuilder(
+    column: $table.healthScore,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get errorRate =>
+      $composableBuilder(column: $table.errorRate, builder: (column) => column);
+
+  GeneratedColumn<double> get availability => $composableBuilder(
+    column: $table.availability,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get avgResponseTimeMs => $composableBuilder(
+    column: $table.avgResponseTimeMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get supplyScore => $composableBuilder(
+    column: $table.supplyScore,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastCheck =>
+      $composableBuilder(column: $table.lastCheck, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$PrinterHealthTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PrinterHealthTableTable,
+          PrinterHealthData,
+          $$PrinterHealthTableTableFilterComposer,
+          $$PrinterHealthTableTableOrderingComposer,
+          $$PrinterHealthTableTableAnnotationComposer,
+          $$PrinterHealthTableTableCreateCompanionBuilder,
+          $$PrinterHealthTableTableUpdateCompanionBuilder,
+          (
+            PrinterHealthData,
+            BaseReferences<
+              _$AppDatabase,
+              $PrinterHealthTableTable,
+              PrinterHealthData
+            >,
+          ),
+          PrinterHealthData,
+          PrefetchHooks Function()
+        > {
+  $$PrinterHealthTableTableTableManager(
+    _$AppDatabase db,
+    $PrinterHealthTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PrinterHealthTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PrinterHealthTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PrinterHealthTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> printerId = const Value.absent(),
+                Value<int> healthScore = const Value.absent(),
+                Value<double> errorRate = const Value.absent(),
+                Value<double> availability = const Value.absent(),
+                Value<int> avgResponseTimeMs = const Value.absent(),
+                Value<int> supplyScore = const Value.absent(),
+                Value<DateTime> lastCheck = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PrinterHealthTableCompanion(
+                printerId: printerId,
+                healthScore: healthScore,
+                errorRate: errorRate,
+                availability: availability,
+                avgResponseTimeMs: avgResponseTimeMs,
+                supplyScore: supplyScore,
+                lastCheck: lastCheck,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String printerId,
+                required int healthScore,
+                required double errorRate,
+                required double availability,
+                required int avgResponseTimeMs,
+                required int supplyScore,
+                required DateTime lastCheck,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => PrinterHealthTableCompanion.insert(
+                printerId: printerId,
+                healthScore: healthScore,
+                errorRate: errorRate,
+                availability: availability,
+                avgResponseTimeMs: avgResponseTimeMs,
+                supplyScore: supplyScore,
+                lastCheck: lastCheck,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PrinterHealthTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PrinterHealthTableTable,
+      PrinterHealthData,
+      $$PrinterHealthTableTableFilterComposer,
+      $$PrinterHealthTableTableOrderingComposer,
+      $$PrinterHealthTableTableAnnotationComposer,
+      $$PrinterHealthTableTableCreateCompanionBuilder,
+      $$PrinterHealthTableTableUpdateCompanionBuilder,
+      (
+        PrinterHealthData,
+        BaseReferences<
+          _$AppDatabase,
+          $PrinterHealthTableTable,
+          PrinterHealthData
+        >,
+      ),
+      PrinterHealthData,
+      PrefetchHooks Function()
+    >;
+typedef $$AlertRulesTableTableCreateCompanionBuilder =
+    AlertRulesTableCompanion Function({
+      required String id,
+      required String name,
+      required String description,
+      required int type,
+      Value<bool> enabled,
+      required int severity,
+      required String thresholds,
+      required String actions,
+      Value<int?> suppressionTimeMinutes,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$AlertRulesTableTableUpdateCompanionBuilder =
+    AlertRulesTableCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> description,
+      Value<int> type,
+      Value<bool> enabled,
+      Value<int> severity,
+      Value<String> thresholds,
+      Value<String> actions,
+      Value<int?> suppressionTimeMinutes,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$AlertRulesTableTableFilterComposer
+    extends Composer<_$AppDatabase, $AlertRulesTableTable> {
+  $$AlertRulesTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get enabled => $composableBuilder(
+    column: $table.enabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get severity => $composableBuilder(
+    column: $table.severity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get thresholds => $composableBuilder(
+    column: $table.thresholds,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get actions => $composableBuilder(
+    column: $table.actions,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get suppressionTimeMinutes => $composableBuilder(
+    column: $table.suppressionTimeMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AlertRulesTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $AlertRulesTableTable> {
+  $$AlertRulesTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get enabled => $composableBuilder(
+    column: $table.enabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get severity => $composableBuilder(
+    column: $table.severity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get thresholds => $composableBuilder(
+    column: $table.thresholds,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get actions => $composableBuilder(
+    column: $table.actions,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get suppressionTimeMinutes => $composableBuilder(
+    column: $table.suppressionTimeMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AlertRulesTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AlertRulesTableTable> {
+  $$AlertRulesTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<bool> get enabled =>
+      $composableBuilder(column: $table.enabled, builder: (column) => column);
+
+  GeneratedColumn<int> get severity =>
+      $composableBuilder(column: $table.severity, builder: (column) => column);
+
+  GeneratedColumn<String> get thresholds => $composableBuilder(
+    column: $table.thresholds,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get actions =>
+      $composableBuilder(column: $table.actions, builder: (column) => column);
+
+  GeneratedColumn<int> get suppressionTimeMinutes => $composableBuilder(
+    column: $table.suppressionTimeMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$AlertRulesTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AlertRulesTableTable,
+          AlertRuleData,
+          $$AlertRulesTableTableFilterComposer,
+          $$AlertRulesTableTableOrderingComposer,
+          $$AlertRulesTableTableAnnotationComposer,
+          $$AlertRulesTableTableCreateCompanionBuilder,
+          $$AlertRulesTableTableUpdateCompanionBuilder,
+          (
+            AlertRuleData,
+            BaseReferences<_$AppDatabase, $AlertRulesTableTable, AlertRuleData>,
+          ),
+          AlertRuleData,
+          PrefetchHooks Function()
+        > {
+  $$AlertRulesTableTableTableManager(
+    _$AppDatabase db,
+    $AlertRulesTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AlertRulesTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AlertRulesTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AlertRulesTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<int> type = const Value.absent(),
+                Value<bool> enabled = const Value.absent(),
+                Value<int> severity = const Value.absent(),
+                Value<String> thresholds = const Value.absent(),
+                Value<String> actions = const Value.absent(),
+                Value<int?> suppressionTimeMinutes = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AlertRulesTableCompanion(
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                enabled: enabled,
+                severity: severity,
+                thresholds: thresholds,
+                actions: actions,
+                suppressionTimeMinutes: suppressionTimeMinutes,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                required String description,
+                required int type,
+                Value<bool> enabled = const Value.absent(),
+                required int severity,
+                required String thresholds,
+                required String actions,
+                Value<int?> suppressionTimeMinutes = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => AlertRulesTableCompanion.insert(
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                enabled: enabled,
+                severity: severity,
+                thresholds: thresholds,
+                actions: actions,
+                suppressionTimeMinutes: suppressionTimeMinutes,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AlertRulesTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AlertRulesTableTable,
+      AlertRuleData,
+      $$AlertRulesTableTableFilterComposer,
+      $$AlertRulesTableTableOrderingComposer,
+      $$AlertRulesTableTableAnnotationComposer,
+      $$AlertRulesTableTableCreateCompanionBuilder,
+      $$AlertRulesTableTableUpdateCompanionBuilder,
+      (
+        AlertRuleData,
+        BaseReferences<_$AppDatabase, $AlertRulesTableTable, AlertRuleData>,
+      ),
+      AlertRuleData,
+      PrefetchHooks Function()
+    >;
+typedef $$PredictionsTableTableCreateCompanionBuilder =
+    PredictionsTableCompanion Function({
+      required String id,
+      required String printerId,
+      required int type,
+      required DateTime predictedDate,
+      required double confidence,
+      required String factors,
+      required DateTime createdAt,
+      Value<int> status,
+      Value<int> rowid,
+    });
+typedef $$PredictionsTableTableUpdateCompanionBuilder =
+    PredictionsTableCompanion Function({
+      Value<String> id,
+      Value<String> printerId,
+      Value<int> type,
+      Value<DateTime> predictedDate,
+      Value<double> confidence,
+      Value<String> factors,
+      Value<DateTime> createdAt,
+      Value<int> status,
+      Value<int> rowid,
+    });
+
+class $$PredictionsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PredictionsTableTable> {
+  $$PredictionsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get predictedDate => $composableBuilder(
+    column: $table.predictedDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get confidence => $composableBuilder(
+    column: $table.confidence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get factors => $composableBuilder(
+    column: $table.factors,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PredictionsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PredictionsTableTable> {
+  $$PredictionsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get predictedDate => $composableBuilder(
+    column: $table.predictedDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get confidence => $composableBuilder(
+    column: $table.confidence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get factors => $composableBuilder(
+    column: $table.factors,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PredictionsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PredictionsTableTable> {
+  $$PredictionsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get printerId =>
+      $composableBuilder(column: $table.printerId, builder: (column) => column);
+
+  GeneratedColumn<int> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get predictedDate => $composableBuilder(
+    column: $table.predictedDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get confidence => $composableBuilder(
+    column: $table.confidence,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get factors =>
+      $composableBuilder(column: $table.factors, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+}
+
+class $$PredictionsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PredictionsTableTable,
+          PredictionData,
+          $$PredictionsTableTableFilterComposer,
+          $$PredictionsTableTableOrderingComposer,
+          $$PredictionsTableTableAnnotationComposer,
+          $$PredictionsTableTableCreateCompanionBuilder,
+          $$PredictionsTableTableUpdateCompanionBuilder,
+          (
+            PredictionData,
+            BaseReferences<
+              _$AppDatabase,
+              $PredictionsTableTable,
+              PredictionData
+            >,
+          ),
+          PredictionData,
+          PrefetchHooks Function()
+        > {
+  $$PredictionsTableTableTableManager(
+    _$AppDatabase db,
+    $PredictionsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PredictionsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PredictionsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PredictionsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> printerId = const Value.absent(),
+                Value<int> type = const Value.absent(),
+                Value<DateTime> predictedDate = const Value.absent(),
+                Value<double> confidence = const Value.absent(),
+                Value<String> factors = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> status = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PredictionsTableCompanion(
+                id: id,
+                printerId: printerId,
+                type: type,
+                predictedDate: predictedDate,
+                confidence: confidence,
+                factors: factors,
+                createdAt: createdAt,
+                status: status,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String printerId,
+                required int type,
+                required DateTime predictedDate,
+                required double confidence,
+                required String factors,
+                required DateTime createdAt,
+                Value<int> status = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PredictionsTableCompanion.insert(
+                id: id,
+                printerId: printerId,
+                type: type,
+                predictedDate: predictedDate,
+                confidence: confidence,
+                factors: factors,
+                createdAt: createdAt,
+                status: status,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PredictionsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PredictionsTableTable,
+      PredictionData,
+      $$PredictionsTableTableFilterComposer,
+      $$PredictionsTableTableOrderingComposer,
+      $$PredictionsTableTableAnnotationComposer,
+      $$PredictionsTableTableCreateCompanionBuilder,
+      $$PredictionsTableTableUpdateCompanionBuilder,
+      (
+        PredictionData,
+        BaseReferences<_$AppDatabase, $PredictionsTableTable, PredictionData>,
+      ),
+      PredictionData,
+      PrefetchHooks Function()
+    >;
+typedef $$PatternsTableTableCreateCompanionBuilder =
+    PatternsTableCompanion Function({
+      required String id,
+      required String printerId,
+      required int patternType,
+      required String description,
+      required int occurrenceCount,
+      required DateTime lastOccurrence,
+      required double confidence,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$PatternsTableTableUpdateCompanionBuilder =
+    PatternsTableCompanion Function({
+      Value<String> id,
+      Value<String> printerId,
+      Value<int> patternType,
+      Value<String> description,
+      Value<int> occurrenceCount,
+      Value<DateTime> lastOccurrence,
+      Value<double> confidence,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$PatternsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PatternsTableTable> {
+  $$PatternsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get patternType => $composableBuilder(
+    column: $table.patternType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get occurrenceCount => $composableBuilder(
+    column: $table.occurrenceCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastOccurrence => $composableBuilder(
+    column: $table.lastOccurrence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get confidence => $composableBuilder(
+    column: $table.confidence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PatternsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PatternsTableTable> {
+  $$PatternsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get patternType => $composableBuilder(
+    column: $table.patternType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get occurrenceCount => $composableBuilder(
+    column: $table.occurrenceCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastOccurrence => $composableBuilder(
+    column: $table.lastOccurrence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get confidence => $composableBuilder(
+    column: $table.confidence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PatternsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PatternsTableTable> {
+  $$PatternsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get printerId =>
+      $composableBuilder(column: $table.printerId, builder: (column) => column);
+
+  GeneratedColumn<int> get patternType => $composableBuilder(
+    column: $table.patternType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get occurrenceCount => $composableBuilder(
+    column: $table.occurrenceCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastOccurrence => $composableBuilder(
+    column: $table.lastOccurrence,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get confidence => $composableBuilder(
+    column: $table.confidence,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$PatternsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PatternsTableTable,
+          PatternData,
+          $$PatternsTableTableFilterComposer,
+          $$PatternsTableTableOrderingComposer,
+          $$PatternsTableTableAnnotationComposer,
+          $$PatternsTableTableCreateCompanionBuilder,
+          $$PatternsTableTableUpdateCompanionBuilder,
+          (
+            PatternData,
+            BaseReferences<_$AppDatabase, $PatternsTableTable, PatternData>,
+          ),
+          PatternData,
+          PrefetchHooks Function()
+        > {
+  $$PatternsTableTableTableManager(_$AppDatabase db, $PatternsTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PatternsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PatternsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PatternsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> printerId = const Value.absent(),
+                Value<int> patternType = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<int> occurrenceCount = const Value.absent(),
+                Value<DateTime> lastOccurrence = const Value.absent(),
+                Value<double> confidence = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PatternsTableCompanion(
+                id: id,
+                printerId: printerId,
+                patternType: patternType,
+                description: description,
+                occurrenceCount: occurrenceCount,
+                lastOccurrence: lastOccurrence,
+                confidence: confidence,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String printerId,
+                required int patternType,
+                required String description,
+                required int occurrenceCount,
+                required DateTime lastOccurrence,
+                required double confidence,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => PatternsTableCompanion.insert(
+                id: id,
+                printerId: printerId,
+                patternType: patternType,
+                description: description,
+                occurrenceCount: occurrenceCount,
+                lastOccurrence: lastOccurrence,
+                confidence: confidence,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PatternsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PatternsTableTable,
+      PatternData,
+      $$PatternsTableTableFilterComposer,
+      $$PatternsTableTableOrderingComposer,
+      $$PatternsTableTableAnnotationComposer,
+      $$PatternsTableTableCreateCompanionBuilder,
+      $$PatternsTableTableUpdateCompanionBuilder,
+      (
+        PatternData,
+        BaseReferences<_$AppDatabase, $PatternsTableTable, PatternData>,
+      ),
+      PatternData,
+      PrefetchHooks Function()
+    >;
+typedef $$ActionRulesTableTableCreateCompanionBuilder =
+    ActionRulesTableCompanion Function({
+      required String id,
+      required String name,
+      required String description,
+      required int triggerType,
+      required int actionType,
+      required String conditions,
+      Value<bool> enabled,
+      Value<DateTime?> lastExecuted,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$ActionRulesTableTableUpdateCompanionBuilder =
+    ActionRulesTableCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> description,
+      Value<int> triggerType,
+      Value<int> actionType,
+      Value<String> conditions,
+      Value<bool> enabled,
+      Value<DateTime?> lastExecuted,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$ActionRulesTableTableFilterComposer
+    extends Composer<_$AppDatabase, $ActionRulesTableTable> {
+  $$ActionRulesTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get triggerType => $composableBuilder(
+    column: $table.triggerType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get actionType => $composableBuilder(
+    column: $table.actionType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get conditions => $composableBuilder(
+    column: $table.conditions,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get enabled => $composableBuilder(
+    column: $table.enabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastExecuted => $composableBuilder(
+    column: $table.lastExecuted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ActionRulesTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $ActionRulesTableTable> {
+  $$ActionRulesTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get triggerType => $composableBuilder(
+    column: $table.triggerType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get actionType => $composableBuilder(
+    column: $table.actionType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get conditions => $composableBuilder(
+    column: $table.conditions,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get enabled => $composableBuilder(
+    column: $table.enabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastExecuted => $composableBuilder(
+    column: $table.lastExecuted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ActionRulesTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ActionRulesTableTable> {
+  $$ActionRulesTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get triggerType => $composableBuilder(
+    column: $table.triggerType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get actionType => $composableBuilder(
+    column: $table.actionType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get conditions => $composableBuilder(
+    column: $table.conditions,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get enabled =>
+      $composableBuilder(column: $table.enabled, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastExecuted => $composableBuilder(
+    column: $table.lastExecuted,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$ActionRulesTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ActionRulesTableTable,
+          ActionRuleData,
+          $$ActionRulesTableTableFilterComposer,
+          $$ActionRulesTableTableOrderingComposer,
+          $$ActionRulesTableTableAnnotationComposer,
+          $$ActionRulesTableTableCreateCompanionBuilder,
+          $$ActionRulesTableTableUpdateCompanionBuilder,
+          (
+            ActionRuleData,
+            BaseReferences<
+              _$AppDatabase,
+              $ActionRulesTableTable,
+              ActionRuleData
+            >,
+          ),
+          ActionRuleData,
+          PrefetchHooks Function()
+        > {
+  $$ActionRulesTableTableTableManager(
+    _$AppDatabase db,
+    $ActionRulesTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ActionRulesTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ActionRulesTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ActionRulesTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<int> triggerType = const Value.absent(),
+                Value<int> actionType = const Value.absent(),
+                Value<String> conditions = const Value.absent(),
+                Value<bool> enabled = const Value.absent(),
+                Value<DateTime?> lastExecuted = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ActionRulesTableCompanion(
+                id: id,
+                name: name,
+                description: description,
+                triggerType: triggerType,
+                actionType: actionType,
+                conditions: conditions,
+                enabled: enabled,
+                lastExecuted: lastExecuted,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                required String description,
+                required int triggerType,
+                required int actionType,
+                required String conditions,
+                Value<bool> enabled = const Value.absent(),
+                Value<DateTime?> lastExecuted = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ActionRulesTableCompanion.insert(
+                id: id,
+                name: name,
+                description: description,
+                triggerType: triggerType,
+                actionType: actionType,
+                conditions: conditions,
+                enabled: enabled,
+                lastExecuted: lastExecuted,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ActionRulesTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ActionRulesTableTable,
+      ActionRuleData,
+      $$ActionRulesTableTableFilterComposer,
+      $$ActionRulesTableTableOrderingComposer,
+      $$ActionRulesTableTableAnnotationComposer,
+      $$ActionRulesTableTableCreateCompanionBuilder,
+      $$ActionRulesTableTableUpdateCompanionBuilder,
+      (
+        ActionRuleData,
+        BaseReferences<_$AppDatabase, $ActionRulesTableTable, ActionRuleData>,
+      ),
+      ActionRuleData,
+      PrefetchHooks Function()
+    >;
+typedef $$AutomatedActionsTableTableCreateCompanionBuilder =
+    AutomatedActionsTableCompanion Function({
+      required String id,
+      required String ruleId,
+      required String printerId,
+      required int actionType,
+      required String parameters,
+      required int result,
+      Value<String?> errorMessage,
+      required DateTime executedAt,
+      Value<int> rowid,
+    });
+typedef $$AutomatedActionsTableTableUpdateCompanionBuilder =
+    AutomatedActionsTableCompanion Function({
+      Value<String> id,
+      Value<String> ruleId,
+      Value<String> printerId,
+      Value<int> actionType,
+      Value<String> parameters,
+      Value<int> result,
+      Value<String?> errorMessage,
+      Value<DateTime> executedAt,
+      Value<int> rowid,
+    });
+
+class $$AutomatedActionsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $AutomatedActionsTableTable> {
+  $$AutomatedActionsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ruleId => $composableBuilder(
+    column: $table.ruleId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get actionType => $composableBuilder(
+    column: $table.actionType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get parameters => $composableBuilder(
+    column: $table.parameters,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get result => $composableBuilder(
+    column: $table.result,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get errorMessage => $composableBuilder(
+    column: $table.errorMessage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get executedAt => $composableBuilder(
+    column: $table.executedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AutomatedActionsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $AutomatedActionsTableTable> {
+  $$AutomatedActionsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ruleId => $composableBuilder(
+    column: $table.ruleId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get actionType => $composableBuilder(
+    column: $table.actionType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get parameters => $composableBuilder(
+    column: $table.parameters,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get result => $composableBuilder(
+    column: $table.result,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get errorMessage => $composableBuilder(
+    column: $table.errorMessage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get executedAt => $composableBuilder(
+    column: $table.executedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AutomatedActionsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AutomatedActionsTableTable> {
+  $$AutomatedActionsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get ruleId =>
+      $composableBuilder(column: $table.ruleId, builder: (column) => column);
+
+  GeneratedColumn<String> get printerId =>
+      $composableBuilder(column: $table.printerId, builder: (column) => column);
+
+  GeneratedColumn<int> get actionType => $composableBuilder(
+    column: $table.actionType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get parameters => $composableBuilder(
+    column: $table.parameters,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get result =>
+      $composableBuilder(column: $table.result, builder: (column) => column);
+
+  GeneratedColumn<String> get errorMessage => $composableBuilder(
+    column: $table.errorMessage,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get executedAt => $composableBuilder(
+    column: $table.executedAt,
+    builder: (column) => column,
+  );
+}
+
+class $$AutomatedActionsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AutomatedActionsTableTable,
+          AutomatedActionData,
+          $$AutomatedActionsTableTableFilterComposer,
+          $$AutomatedActionsTableTableOrderingComposer,
+          $$AutomatedActionsTableTableAnnotationComposer,
+          $$AutomatedActionsTableTableCreateCompanionBuilder,
+          $$AutomatedActionsTableTableUpdateCompanionBuilder,
+          (
+            AutomatedActionData,
+            BaseReferences<
+              _$AppDatabase,
+              $AutomatedActionsTableTable,
+              AutomatedActionData
+            >,
+          ),
+          AutomatedActionData,
+          PrefetchHooks Function()
+        > {
+  $$AutomatedActionsTableTableTableManager(
+    _$AppDatabase db,
+    $AutomatedActionsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AutomatedActionsTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$AutomatedActionsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$AutomatedActionsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> ruleId = const Value.absent(),
+                Value<String> printerId = const Value.absent(),
+                Value<int> actionType = const Value.absent(),
+                Value<String> parameters = const Value.absent(),
+                Value<int> result = const Value.absent(),
+                Value<String?> errorMessage = const Value.absent(),
+                Value<DateTime> executedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AutomatedActionsTableCompanion(
+                id: id,
+                ruleId: ruleId,
+                printerId: printerId,
+                actionType: actionType,
+                parameters: parameters,
+                result: result,
+                errorMessage: errorMessage,
+                executedAt: executedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String ruleId,
+                required String printerId,
+                required int actionType,
+                required String parameters,
+                required int result,
+                Value<String?> errorMessage = const Value.absent(),
+                required DateTime executedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => AutomatedActionsTableCompanion.insert(
+                id: id,
+                ruleId: ruleId,
+                printerId: printerId,
+                actionType: actionType,
+                parameters: parameters,
+                result: result,
+                errorMessage: errorMessage,
+                executedAt: executedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AutomatedActionsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AutomatedActionsTableTable,
+      AutomatedActionData,
+      $$AutomatedActionsTableTableFilterComposer,
+      $$AutomatedActionsTableTableOrderingComposer,
+      $$AutomatedActionsTableTableAnnotationComposer,
+      $$AutomatedActionsTableTableCreateCompanionBuilder,
+      $$AutomatedActionsTableTableUpdateCompanionBuilder,
+      (
+        AutomatedActionData,
+        BaseReferences<
+          _$AppDatabase,
+          $AutomatedActionsTableTable,
+          AutomatedActionData
+        >,
+      ),
+      AutomatedActionData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -9983,4 +15208,16 @@ class $AppDatabaseManager {
       $$PrinterMaintenancesTableTableManager(_db, _db.printerMaintenances);
   $$PrinterCountersTableTableManager get printerCounters =>
       $$PrinterCountersTableTableManager(_db, _db.printerCounters);
+  $$PrinterHealthTableTableTableManager get printerHealthTable =>
+      $$PrinterHealthTableTableTableManager(_db, _db.printerHealthTable);
+  $$AlertRulesTableTableTableManager get alertRulesTable =>
+      $$AlertRulesTableTableTableManager(_db, _db.alertRulesTable);
+  $$PredictionsTableTableTableManager get predictionsTable =>
+      $$PredictionsTableTableTableManager(_db, _db.predictionsTable);
+  $$PatternsTableTableTableManager get patternsTable =>
+      $$PatternsTableTableTableManager(_db, _db.patternsTable);
+  $$ActionRulesTableTableTableManager get actionRulesTable =>
+      $$ActionRulesTableTableTableManager(_db, _db.actionRulesTable);
+  $$AutomatedActionsTableTableTableManager get automatedActionsTable =>
+      $$AutomatedActionsTableTableTableManager(_db, _db.automatedActionsTable);
 }
