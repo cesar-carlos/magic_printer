@@ -2,7 +2,7 @@
 
 **Data**: 09 de janeiro de 2026  
 **Projeto**: Magic Printer  
-**Status Geral**: 📋 Planejado
+**Status Geral**: 🟡 Em Progresso (~85% Alta Prioridade)
 
 ---
 
@@ -49,13 +49,13 @@ Criar um plano de implementação segmentado e detalhado para transformar o Magi
 
 ## 📊 Estatísticas do Plano
 
-| Métrica | Valor |
-|---------|-------|
-| **Total de Funcionalidades** | 13 |
-| **Total de Tarefas** | ~200+ |
-| **Tempo Total Estimado** | 67-97 dias |
-| **Arquivos a Criar** | ~80+ |
-| **Arquivos a Modificar** | ~15+ |
+| Métrica                      | Valor      |
+| ---------------------------- | ---------- |
+| **Total de Funcionalidades** | 13         |
+| **Total de Tarefas**         | ~200+      |
+| **Tempo Total Estimado**     | 67-97 dias |
+| **Arquivos a Criar**         | ~80+       |
+| **Arquivos a Modificar**     | ~15+       |
 
 ---
 
@@ -71,32 +71,52 @@ Semanas 12+:  [█████████████████████�
 
 ## 🎯 Principais Entregas
 
-### Fase 1: Dashboard (Semanas 1-2)
+### Fase 1: Dashboard (Semanas 1-2) - ✅ ~95% Completo
+
 - ✅ Dashboard como página inicial
 - ✅ KPIs em tempo real
-- ✅ Gráficos e visualizações
+- ✅ Gráficos e visualizações (Pie Chart, Line Chart)
 - ✅ Métricas de impressoras, filas e hosts
+- ✅ Filtros por dispositivo e período
+- ✅ Caching implementado (10 segundos)
+- ✅ Auto-refresh (30 segundos)
+- ❌ Testes unitários e de widgets (pendente)
+- ⚠️ Otimizações avançadas (melhorias futuras)
 
-### Fase 2: Dados (Semanas 3-4)
+### Fase 2: Dados (Semanas 3-4) - ✅ ~90% Completo
+
 - ✅ Entidade User implementada
-- ✅ Coleta de níveis de suprimentos
-- ✅ Histórico de manutenção
-- ✅ Sincronização com Windows
+- ✅ Entidade PrinterSupply implementada
+- ✅ Entidade PrinterMaintenance implementada
+- ✅ Coleta de níveis de suprimentos (PrinterSupplyCollector)
+- ✅ Histórico de manutenção (MaintenanceDetectorService)
+- ✅ Registro automático de manutenções
+- ✅ Sincronização com Windows (WindowsUserService)
+- ✅ Captura de userId, username, documentType em jobs
+- ✅ Atualização de totalPagesPrinted
+- ❌ Detecção de departamento (pendente)
+- ❌ Testes de integração (pendente)
 
-### Fase 3: Relatórios (Semanas 5-7)
-- ✅ Relatórios por usuário, impressora, departamento
-- ✅ Exportação em múltiplos formatos
-- ✅ Agendamento de relatórios
+### Fase 3: Relatórios (Semanas 5-7) - 🔴 Não Iniciado (0%)
 
-### Fase 4: Controle (Semanas 8-9)
-- ✅ Gerenciamento de usuários e grupos
-- ✅ Políticas de uso
-- ✅ Aplicação de permissões
+- ❌ Relatórios por usuário, impressora, departamento
+- ❌ Exportação em múltiplos formatos (PDF, CSV, Excel, JSON)
+- ❌ Agendamento de relatórios
+- ❌ UI de relatórios
 
-### Fase 5: Proatividade (Semanas 10-11)
-- ✅ Detecção preditiva de problemas
-- ✅ Ações automáticas
-- ✅ Monitoramento de saúde
+### Fase 4: Controle (Semanas 8-9) - 🔴 Não Iniciado (0%)
+
+- ❌ UI de gerenciamento de usuários (UsersPage)
+- ❌ UI de gerenciamento de grupos (GroupsPage)
+- ❌ Políticas de uso (Policy entity e service)
+- ⚠️ AuthorizationService existe, mas sem UI
+- ❌ Aplicação de permissões na UI
+
+### Fase 5: Proatividade (Semanas 10-11) - 🔴 Não Iniciado (0%)
+
+- ❌ Detecção preditiva de problemas (PredictiveAnalyzer)
+- ❌ Ações automáticas (ActionExecutor)
+- ❌ Monitoramento de saúde (HealthMonitor)
 
 ---
 
@@ -107,13 +127,13 @@ Semanas 12+:  [█████████████████████�
 ```
 Dashboard
   └── Depende de: Coleta de dados básicos (já existe)
-  
+
 Relatórios
   └── Depende de: Dados adicionais (Alta Prioridade)
-  
+
 Controle de Acesso
   └── Depende de: Entidade User (Alta Prioridade)
-  
+
 Ações Proativas
   └── Depende de: Métricas e dados (Alta Prioridade)
 ```
@@ -123,10 +143,10 @@ Ações Proativas
 ```
 Servidor Central
   └── Independente (opcional)
-  
+
 Integrações
   └── Independente
-  
+
 Melhorias UX
   └── Independente
 ```
@@ -150,16 +170,19 @@ Antes de começar a implementação, verifique:
 ## 🚀 Próximos Passos Imediatos
 
 ### 1. Revisar Documentação
+
 - [ ] Ler `01_alta_prioridade.md` completamente
 - [ ] Entender estrutura de Dashboard proposta
 - [ ] Revisar dados que precisam ser coletados
 
 ### 2. Preparar Ambiente
+
 - [ ] Verificar dependências do projeto
 - [ ] Configurar banco de dados para novas tabelas
 - [ ] Preparar estrutura de testes
 
 ### 3. Começar Implementação
+
 - [ ] Criar estrutura de arquivos do Dashboard
 - [ ] Implementar `DashboardPage` básica
 - [ ] Implementar `DashboardProvider`
@@ -172,11 +195,13 @@ Antes de começar a implementação, verifique:
 ### Decisões Técnicas
 
 1. **Dashboard como Página Inicial**
+
    - Rota `/` será redirecionada para dashboard
    - `HomePage` atual será movida ou integrada
    - Menu lateral terá "Dashboard" como primeiro item
 
 2. **Coleta de Dados**
+
    - Entidade `User` será criada no domínio
    - Sincronização com Windows será implementada
    - Novas tabelas serão adicionadas ao banco
@@ -188,35 +213,189 @@ Antes de começar a implementação, verifique:
 
 ### Riscos e Mitigações
 
-| Risco | Probabilidade | Impacto | Mitigação |
-|-------|---------------|---------|-----------|
-| Tempo subestimado | Média | Alto | Adicionar buffer de 20% |
-| Dependências externas | Baixa | Médio | Ter alternativas prontas |
-| Complexidade não prevista | Média | Médio | Revisar e ajustar plano |
-| Mudanças de requisitos | Baixa | Alto | Documentar decisões |
+| Risco                     | Probabilidade | Impacto | Mitigação                |
+| ------------------------- | ------------- | ------- | ------------------------ |
+| Tempo subestimado         | Média         | Alto    | Adicionar buffer de 20%  |
+| Dependências externas     | Baixa         | Médio   | Ter alternativas prontas |
+| Complexidade não prevista | Média         | Médio   | Revisar e ajustar plano  |
+| Mudanças de requisitos    | Baixa         | Alto    | Documentar decisões      |
 
 ---
 
 ## 📞 Contatos e Recursos
 
 ### Documentação
+
 - [README Principal](./README.md)
 - [Alta Prioridade](./01_alta_prioridade.md)
 - [Média Prioridade](./02_media_prioridade.md)
 - [Baixa Prioridade](./03_baixa_prioridade.md)
 
 ### Referências
+
 - Arquitetura do projeto
 - Código existente
 - Documentação de bibliotecas usadas
 
 ---
 
-## ✅ Status Atual
+## ✅ Status Atual Detalhado
 
-**Documentação**: ✅ Completa  
-**Planejamento**: ✅ Completo  
-**Implementação**: ⏳ Aguardando início
+### Progresso Geral
+
+| Prioridade | Status          | Progresso | Observações                                                                       |
+| ---------- | --------------- | --------- | --------------------------------------------------------------------------------- |
+| **Alta**   | 🟡 Em Progresso | ~85%      | Dashboard completo com caching, coleta de dados avançada, manutenções automáticas |
+| **Média**  | 🔴 Não Iniciado | 0%        | Aguardando conclusão da Alta Prioridade                                           |
+| **Baixa**  | 🔴 Não Iniciado | 0%        | Aguardando conclusão da Média Prioridade                                          |
+
+### Alta Prioridade - Detalhamento
+
+#### Dashboard Centralizado (~95% completo)
+
+**✅ Implementado:**
+
+- `DashboardPage` com layout responsivo Fluent UI
+- `DashboardProvider` com auto-refresh (30s)
+- `DashboardMetricsService` com todos os métodos de métricas
+- Componentes reutilizáveis: `DashboardCard`, `MetricCard`, `KPIBadge`, `ProgressMetricCard`, `DashboardPrinterCard`
+- Gráficos: `PrinterStatusPieChart`, `UsageTrendLineChart`
+- Filtros por dispositivo e período (24h, 7d, 30d, todo)
+- Caching implementado (`DashboardCacheService` - 10s)
+- Integração com rotas (dashboard como página inicial)
+
+**❌ Pendente:**
+
+- Testes unitários do `DashboardMetricsService`
+- Testes de widgets do dashboard
+- Testes de integração com providers
+- Testes de performance
+- Otimizações avançadas (lazy loading, virtualização)
+
+#### Coleta de Dados Adicionais (~90% completo)
+
+**✅ Implementado:**
+
+- Entidades: `User`, `PrinterSupply`, `PrinterMaintenance`
+- Tabelas no banco: `Users`, `PrinterSupplies`, `PrinterMaintenances`, `PrinterCounters`
+- Migrações Drift (schema version 3)
+- Repositories: `UserRepository`, `PrinterSupplyRepository`, `PrinterMaintenanceRepository`
+- Services: `UserService`, `PrinterSupplyService`, `PrinterMaintenanceService`
+- `PrinterSupplyCollector` - coleta níveis de suprimentos
+- `MaintenanceDetectorService` - registro automático de manutenções
+  - Detecta troca de toner (nível muda de baixo para alto)
+  - Detecta reabastecimento de papel (nível muda de baixo para alto)
+  - Detecta recuperação de erro (status muda de error para online)
+- `DocumentTypeDetector` - detecção de tipo de documento
+- Captura de userId, username, documentType, department em jobs
+- Atualização de totalPagesPrinted quando job é impresso
+
+**❌ Pendente:**
+
+- Serviço para detectar departamento (baseado em OU do AD ou config local)
+- Testes de integração para coleta de dados
+- Testes de sincronização de usuários Windows
+- Testes de coleta de suprimentos
+
+### Média Prioridade - Não Iniciado (0%)
+
+1. **Relatórios de Uso e Métricas Avançados** - Não iniciado
+2. **Controle por Usuário, Grupos e Políticas** - Não iniciado
+3. **Capacidade de Atuar Proativamente** - Não iniciado
+
+### Baixa Prioridade - Não Iniciado (0%)
+
+1. **Comunicação com Servidor Central** - Não iniciado
+2. **Integrações Corporativas** - Não iniciado
+3. **Melhorias de UX** - Não iniciado
+4. **Segurança Avançada** - Não iniciado
+5. **Performance e Otimizações** - Não iniciado
+
+---
+
+## 🎉 Implementações Recentes (09/01/2026)
+
+### ✅ Registro Automático de Manutenções
+
+- **Arquivo**: `lib/application/services/maintenance_detector_service.dart`
+- **Funcionalidades**:
+  - Detecta automaticamente quando toner é trocado (nível muda de baixo para alto)
+  - Detecta automaticamente quando papel é reabastecido (nível muda de baixo para alto)
+  - Detecta automaticamente quando impressora recupera de erro (status muda de error para online)
+  - Registra manutenção com informações do usuário atual
+  - Integrado ao `PrinterRepository.refreshStatus()` para detecção automática
+
+### ✅ Caching no Dashboard
+
+- **Arquivo**: `lib/application/services/dashboard_cache_service.dart`
+- **Funcionalidades**:
+  - Cache de métricas com validade de 10 segundos
+  - Cache de trends (gráficos de uso)
+  - Invalidação automática baseada em filtros (printerId, TimePeriod)
+  - Reduz recarregamentos excessivos do banco de dados
+  - Integrado ao `DashboardMetricsService`
+
+---
+
+## 📝 Próximos Passos Recomendados
+
+### Curto Prazo (1-2 semanas)
+
+1. **Completar Alta Prioridade:**
+
+   - ❌ Criar testes unitários básicos
+   - ❌ Implementar detecção de departamento
+   - ⚠️ Otimizar performance do dashboard (melhorias futuras)
+
+2. **Preparar para Média Prioridade:**
+   - ✅ Revisar estrutura de dados coletados
+   - ✅ Validar que todos os dados necessários estão sendo coletados
+
+### Médio Prazo (3-4 semanas)
+
+3. **Iniciar Média Prioridade:**
+   - Implementar sistema de relatórios básico
+   - Implementar controle de acesso por usuários/grupos
+   - Implementar ações proativas básicas
+
+---
+
+## 🔍 Observações Técnicas
+
+### Pontos Fortes
+
+- ✅ Arquitetura Clean Architecture bem implementada
+- ✅ Separação de responsabilidades clara
+- ✅ Uso consistente de Result pattern para tratamento de erros
+- ✅ Componentes reutilizáveis criados
+- ✅ Dashboard funcional e responsivo
+- ✅ Cache de métricas implementado
+- ✅ Registro automático de manutenções implementado
+
+### Pontos de Atenção
+
+- ⚠️ Falta de testes automatizados
+- ⚠️ Detecção de departamento não implementada
+- ⚠️ Otimizações de performance podem ser melhoradas (lazy loading, virtualização)
+
+### Melhorias Sugeridas
+
+1. **Performance:**
+
+   - ✅ Cache de métricas implementado
+   - ⚠️ Otimizar consultas ao banco de dados (melhorias futuras)
+   - ⚠️ Implementar lazy loading para listas grandes (melhorias futuras)
+
+2. **Testes:**
+
+   - Criar testes unitários para services
+   - Criar testes de widgets para componentes do dashboard
+   - Criar testes de integração para fluxos completos
+
+3. **Funcionalidades:**
+   - ✅ Registro automático de manutenções implementado
+   - ❌ Implementar detecção de departamento
+   - ⚠️ Melhorar coleta de suprimentos (SNMP se possível - melhorias futuras)
 
 ---
 

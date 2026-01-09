@@ -89,8 +89,8 @@ class _BuildFiltersSection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                SizedBox(
-                  width: 300,
+                Flexible(
+                  flex: 2,
                   child: printers.isEmpty
                       ? const Padding(
                           padding: EdgeInsets.symmetric(vertical: 8),
@@ -100,6 +100,7 @@ class _BuildFiltersSection extends StatelessWidget {
                               fontSize: 14,
                               color: Color(0xFF999999),
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         )
                       : ComboBox<PrinterDTO?>(
@@ -132,7 +133,7 @@ class _BuildFiltersSection extends StatelessWidget {
                     },
                   ),
                 ],
-                const Spacer(),
+                const SizedBox(width: 16),
                 const Text(
                   'Período:',
                   style: TextStyle(
