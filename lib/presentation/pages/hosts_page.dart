@@ -1,11 +1,11 @@
+import 'dart:io';
+
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../application/application.dart';
-import '../../application/dtos/host_dto.dart';
 import '../../core/core.dart';
-import '../../core/routes/route_names.dart';
 import '../../infrastructure/network/host_discovery_listener.dart';
 import '../../shared/shared.dart';
 import '../providers/host_discovery_provider.dart';
@@ -45,11 +45,15 @@ class _HostsPageState extends State<HostsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localHostName = Platform.localHostname;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => HostDiscoveryProvider(
-            getIt<NetworkDiscoveryService>(),
+            getIt<NetworkDiscoveryService>(
+              param1: localHostName,
+              param2: localHostName,
+            ),
           ),
         ),
       ],
