@@ -4,7 +4,7 @@ import '../../presentation/presentation.dart';
 import 'route_names.dart';
 
 final appRouter = GoRouter(
-  initialLocation: RouteNames.printers,
+  initialLocation: RouteNames.dashboard,
   routes: [
     ShellRoute(
       builder: (context, state, child) {
@@ -16,7 +16,11 @@ final appRouter = GoRouter(
       routes: [
         GoRoute(
           path: RouteNames.home,
-          redirect: (context, state) => RouteNames.printers,
+          redirect: (context, state) => RouteNames.dashboard,
+        ),
+        GoRoute(
+          path: RouteNames.dashboard,
+          builder: (context, state) => const DashboardPage(),
         ),
         GoRoute(
           path: RouteNames.printers,

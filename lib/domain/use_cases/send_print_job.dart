@@ -16,6 +16,10 @@ class SendPrintJobParams {
   final Uint8List payload;
   final int totalPages;
   final String datatype;
+  final String? userId;
+  final String? username;
+  final String? documentType;
+  final String? department;
 
   const SendPrintJobParams({
     required this.printerId,
@@ -23,6 +27,10 @@ class SendPrintJobParams {
     required this.payload,
     this.totalPages = 0,
     this.datatype = 'RAW',
+    this.userId,
+    this.username,
+    this.documentType,
+    this.department,
   });
 }
 
@@ -78,6 +86,10 @@ class SendPrintJob {
       totalSize: params.payload.length,
       totalPages: params.totalPages,
       createdAt: DateTime.now(),
+      userId: params.userId,
+      username: params.username,
+      documentType: params.documentType,
+      department: params.department,
     );
 
     final createResult = await _jobRepository.create(job);
@@ -88,7 +100,7 @@ class SendPrintJob {
     if (printer.isRemote && printer.hostId != null) {
       return _sendToRemotePrinter(job, printer, params);
     } else {
-      return _sendToLocalPrinter(job);
+      return _sendToLocalPrinter(job, printer);
     }
   }
 
@@ -170,17 +182,31 @@ class SendPrintJob {
       completedAt: DateTime.now(),
     );
     await _jobRepository.update(job);
+    await _updatePrinterPageCount(printer, job.totalPages);
     return Success(job);
   }
 
-  Future<Result<PrintJob>> _sendToLocalPrinter(PrintJob job) async {
+  Future<Result<PrintJob>> _sendToLocalPrinter(
+    PrintJob job,
+    Printer printer,
+  ) async {
     job = job.copyWith(
       status: PrintJobStatus.spooled,
       startedAt: DateTime.now(),
       completedAt: DateTime.now(),
     );
     await _jobRepository.update(job);
+    await _updatePrinterPageCount(printer, job.totalPages);
     return Success(job);
+  }
+
+  Future<void> _updatePrinterPageCount(Printer printer, int pages) async {
+    if (pages <= 0) return;
+
+    final updated = printer.copyWith(
+      totalPagesPrinted: printer.totalPagesPrinted + pages,
+    );
+    await _printerRepository.update(updated);
   }
 
   Future<void> _updateJobStatus(

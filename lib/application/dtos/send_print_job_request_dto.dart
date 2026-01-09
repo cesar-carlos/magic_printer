@@ -6,6 +6,10 @@ class SendPrintJobRequestDTO {
   final Uint8List payload;
   final int totalPages;
   final String datatype;
+  final String? userId;
+  final String? username;
+  final String? documentType;
+  final String? department;
 
   const SendPrintJobRequestDTO({
     required this.printerId,
@@ -13,6 +17,10 @@ class SendPrintJobRequestDTO {
     required this.payload,
     this.totalPages = 0,
     this.datatype = 'RAW',
+    this.userId,
+    this.username,
+    this.documentType,
+    this.department,
   });
 
   Map<String, dynamic> toJson() {

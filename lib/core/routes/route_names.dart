@@ -1,5 +1,6 @@
 abstract class RouteNames {
   static const home = '/';
+  static const dashboard = '/dashboard';
   static const printers = '/printers';
   static const hosts = '/hosts';
   static const hostDetail = '/hosts/:id';

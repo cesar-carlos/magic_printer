@@ -27,6 +27,10 @@ class PrintJobService {
       payload: request.payload,
       totalPages: request.totalPages,
       datatype: request.datatype,
+      userId: request.userId,
+      username: request.username,
+      documentType: request.documentType,
+      department: request.department,
     );
 
     final result = await _sendPrintJob.call(params);

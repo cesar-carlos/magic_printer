@@ -25,6 +25,10 @@ abstract class IPrintQueueService {
     required Uint8List payload,
     int totalPages,
     String datatype,
+    String? userId,
+    String? username,
+    String? documentType,
+    String? department,
   });
 
   void cancel(JobId jobId);

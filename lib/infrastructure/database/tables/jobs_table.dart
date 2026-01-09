@@ -18,6 +18,11 @@ class Jobs extends Table {
   DateTimeColumn get completedAt => dateTime().nullable()();
   TextColumn get errorCode => text().nullable()();
   TextColumn get errorMessage => text().nullable()();
+  TextColumn get userId => text().nullable()();
+  TextColumn get username => text().nullable()();
+  TextColumn get documentType => text().nullable()();
+  TextColumn get department => text().nullable()();
+  IntColumn get estimatedCost => integer().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};

@@ -15,6 +15,13 @@ class Printers extends Table {
   BoolColumn get shared => boolean().withDefault(const Constant(true))();
   TextColumn get allowedGroups => text().withDefault(const Constant(''))();
   DateTimeColumn get lastSeen => dateTime().nullable()();
+  IntColumn get totalPagesPrinted =>
+      integer().withDefault(const Constant(0))();
+  TextColumn get tonerLevel =>
+      text().withDefault(const Constant('unknown'))();
+  TextColumn get paperLevel =>
+      text().withDefault(const Constant('unknown'))();
+  DateTimeColumn get lastMaintenanceDate => dateTime().nullable()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
 

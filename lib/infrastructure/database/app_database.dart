@@ -9,12 +9,25 @@ import 'tables/tables.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Hosts, Printers, Jobs, Groups, Logs, EmailConfigs])
+@DriftDatabase(
+  tables: [
+    Hosts,
+    Printers,
+    Jobs,
+    Groups,
+    Logs,
+    EmailConfigs,
+    Users,
+    PrinterSupplies,
+    PrinterMaintenances,
+    PrinterCounters,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -37,6 +50,23 @@ class AppDatabase extends _$AppDatabase {
           'logs_created_at_idx',
           'CREATE INDEX logs_created_at_idx ON logs(created_at)',
         ));
+      }
+      if (from <= 2 && to == 3) {
+        await m.createTable(users);
+        await m.createTable(printerSupplies);
+        await m.createTable(printerMaintenances);
+        await m.createTable(printerCounters);
+        
+        await m.addColumn(jobs, jobs.userId);
+        await m.addColumn(jobs, jobs.username);
+        await m.addColumn(jobs, jobs.documentType);
+        await m.addColumn(jobs, jobs.department);
+        await m.addColumn(jobs, jobs.estimatedCost);
+        
+        await m.addColumn(printers, printers.totalPagesPrinted);
+        await m.addColumn(printers, printers.tonerLevel);
+        await m.addColumn(printers, printers.paperLevel);
+        await m.addColumn(printers, printers.lastMaintenanceDate);
       }
     },
   );

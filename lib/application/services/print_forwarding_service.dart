@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import '../../domain/domain.dart';
 import '../../core/core.dart';
+import '../../core/utils/document_type_detector.dart';
+import '../../domain/domain.dart';
 
 class _CapturedJobInfo {
   final String printerName;
@@ -16,6 +17,7 @@ class _CapturedJobInfo {
 class PrintForwardingService {
   final IPrintJobCaptureService _captureService;
   final IPrintQueueService _printQueueService;
+  final IUserService? _userService;
   final SpoolJobBinaryCodec _codec = SpoolJobBinaryCodec();
 
   Timer? _timer;
@@ -34,8 +36,10 @@ class PrintForwardingService {
   PrintForwardingService({
     required IPrintJobCaptureService captureService,
     required IPrintQueueService printQueueService,
+    IUserService? userService,
   })  : _captureService = captureService,
-        _printQueueService = printQueueService;
+        _printQueueService = printQueueService,
+        _userService = userService;
 
   bool get isRunning => _isRunning;
 
@@ -113,6 +117,24 @@ class PrintForwardingService {
       datatype: job.datatype,
     );
 
+    String? userId;
+    String? username;
+    String? department;
+    if (_userService != null) {
+      final userResult = await _userService.getCurrentUser();
+      if (userResult.isSuccess()) {
+        final user = userResult.getOrThrow();
+        userId = user.id;
+        username = user.username;
+        department = user.department;
+      }
+    }
+
+    final documentType = DocumentTypeDetector.detect(
+      job.documentName,
+      job.datatype,
+    );
+
     final queueJobId = _printQueueService.enqueue(
       printerId: targetId,
       printerName: targetName,
@@ -120,6 +142,10 @@ class PrintForwardingService {
       payload: bundledPayload,
       totalPages: job.totalPages,
       datatype: job.datatype,
+      userId: userId,
+      username: username,
+      documentType: documentType,
+      department: department,
     );
 
     _queueToSpoolerMap[queueJobId.value] = _CapturedJobInfo(

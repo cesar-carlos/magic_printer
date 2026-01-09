@@ -181,6 +181,11 @@ class _MagicPrinterAppState extends State<MagicPrinterApp> {
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => DashboardProvider(
+            metricsService: getIt<DashboardMetricsService>(),
+          ),
+        ),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {

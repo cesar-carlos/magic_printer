@@ -38,8 +38,12 @@ void _registerRepositories() {
   getIt.registerLazySingleton<IHostRepository>(
     () => HostRepository(getIt<AppDatabase>()),
   );
+
   getIt.registerLazySingleton<IPrinterRepository>(
-    () => PrinterRepository(getIt<AppDatabase>()),
+    () => PrinterRepository(
+      getIt<AppDatabase>(),
+      maintenanceDetector: getIt<MaintenanceDetectorService>(),
+    ),
   );
   getIt.registerLazySingleton<IJobRepository>(
     () => JobRepository(getIt<AppDatabase>()),
@@ -49,6 +53,15 @@ void _registerRepositories() {
   );
   getIt.registerLazySingleton<IAppLogRepository>(
     () => LogRepository(getIt<AppDatabase>()),
+  );
+  getIt.registerLazySingleton<IUserRepository>(
+    () => UserRepository(getIt<AppDatabase>()),
+  );
+  getIt.registerLazySingleton<IPrinterSupplyRepository>(
+    () => PrinterSupplyRepository(getIt<AppDatabase>()),
+  );
+  getIt.registerLazySingleton<IPrinterMaintenanceRepository>(
+    () => PrinterMaintenanceRepository(getIt<AppDatabase>()),
   );
 
   // Windows spooler capture (Client-side)
@@ -179,6 +192,7 @@ void _registerApplicationServices() {
     () => PrintForwardingService(
       captureService: getIt<IPrintJobCaptureService>(),
       printQueueService: getIt<IPrintQueueService>(),
+      userService: getIt<IUserService>(),
     ),
   );
 
@@ -186,6 +200,41 @@ void _registerApplicationServices() {
     () => PrinterStatusMonitorService(
       notificationService: getIt<ILocalNotificationService>(),
       printerRepository: getIt<IPrinterRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<DashboardMetricsService>(
+    () => DashboardMetricsService(
+      printerRepository: getIt<IPrinterRepository>(),
+      jobRepository: getIt<IJobRepository>(),
+      hostRepository: getIt<IHostRepository>(),
+      logRepository: getIt<IAppLogRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<PrinterSupplyService>(
+    () => PrinterSupplyService(
+      supplyRepository: getIt<IPrinterSupplyRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<PrinterMaintenanceService>(
+    () => PrinterMaintenanceService(
+      maintenanceRepository: getIt<IPrinterMaintenanceRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<IUserService>(
+    () => UserService(
+      userRepository: getIt<IUserRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<MaintenanceDetectorService>(
+    () => MaintenanceDetectorService(
+      maintenanceRepository: getIt<IPrinterMaintenanceRepository>(),
+      supplyRepository: getIt<IPrinterSupplyRepository>(),
+      userService: getIt<IUserService>(),
     ),
   );
 }

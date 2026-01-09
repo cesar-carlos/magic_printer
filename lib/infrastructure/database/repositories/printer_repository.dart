@@ -4,16 +4,24 @@ import 'package:result_dart/result_dart.dart';
 import '../../../domain/domain.dart';
 import '../../datasources/windows/spooler_datasource.dart';
 import '../../datasources/windows/printer_info.dart';
+import '../../datasources/windows/printer_supply_collector.dart';
 import '../../grpc/client/host_discovery_client.dart';
 import '../../grpc/generated/generated.dart' as pb;
+import '../../../application/services/maintenance_detector_service.dart';
 
 import '../app_database.dart';
 import '../mappers/mappers.dart';
 
 class PrinterRepository implements IPrinterRepository {
   final AppDatabase _db;
+  final PrinterSupplyCollector _supplyCollector;
+  final MaintenanceDetectorService? _maintenanceDetector;
 
-  PrinterRepository(this._db);
+  PrinterRepository(
+    this._db, {
+    MaintenanceDetectorService? maintenanceDetector,
+  })  : _supplyCollector = PrinterSupplyCollector(),
+        _maintenanceDetector = maintenanceDetector;
 
   @override
   Future<Result<List<Printer>>> getAll() async {
@@ -157,6 +165,37 @@ class PrinterRepository implements IPrinterRepository {
 
         final info = match.first;
 
+        final supplies = await _supplyCollector.collectSupplies(
+          current.id,
+          current.name,
+        );
+        final tonerLevel = _supplyCollector.getTonerLevelString(
+          supplies.firstWhere(
+            (s) => s.type == SupplyType.toner,
+            orElse: () => PrinterSupply(
+              id: '',
+              printerId: current.id,
+              type: SupplyType.toner,
+              level: 100,
+              unit: '%',
+              lastChecked: now,
+            ),
+          ).level,
+        );
+        final paperLevel = _supplyCollector.getPaperLevelString(
+          supplies.firstWhere(
+            (s) => s.type == SupplyType.paper,
+            orElse: () => PrinterSupply(
+              id: '',
+              printerId: current.id,
+              type: SupplyType.paper,
+              level: 100,
+              unit: '%',
+              lastChecked: now,
+            ),
+          ).level,
+        );
+
         final updated = current.copyWith(
           status: _mapLocalStatus(info),
           jobCount: info.jobCount,
@@ -165,11 +204,34 @@ class PrinterRepository implements IPrinterRepository {
           locationDescription: info.location,
           comment: info.comment,
           lastSeen: now,
+          tonerLevel: tonerLevel,
+          paperLevel: paperLevel,
         );
 
         await (_db.update(_db.printers)
               ..where((tbl) => tbl.id.equals(updated.id)))
             .write(PrinterMapper.toUpdateCompanion(updated));
+
+        await _saveSupplies(supplies);
+
+        if (_maintenanceDetector != null) {
+          await _maintenanceDetector.detectAndRecordMaintenance(
+            printer: updated,
+            previousPrinter: current,
+            currentSupplies: supplies,
+          );
+        }
+
+        if (updated.tonerLevel != current.tonerLevel ||
+            updated.paperLevel != current.paperLevel) {
+          final updatedWithMaintenance = updated.copyWith(
+            lastMaintenanceDate: DateTime.now(),
+          );
+          await (_db.update(_db.printers)
+                ..where((tbl) => tbl.id.equals(updatedWithMaintenance.id)))
+              .write(PrinterMapper.toUpdateCompanion(updatedWithMaintenance));
+          return Success(updatedWithMaintenance);
+        }
 
         return Success(updated);
       }
@@ -356,6 +418,32 @@ class PrinterRepository implements IPrinterRepository {
         return PrinterStatus.unknown;
       default:
         return PrinterStatus.unknown;
+    }
+  }
+
+  Future<void> _saveSupplies(List<PrinterSupply> supplies) async {
+    if (supplies.isEmpty) return;
+
+    try {
+      final existingSupplies = await (_db.select(_db.printerSupplies)
+            ..where((tbl) => tbl.printerId.equals(supplies.first.printerId)))
+          .get();
+
+      final existingIds = existingSupplies.map((s) => s.id).toSet();
+
+      for (final supply in supplies) {
+        if (existingIds.contains(supply.id)) {
+          await (_db.update(_db.printerSupplies)
+                ..where((tbl) => tbl.id.equals(supply.id)))
+              .write(PrinterSupplyMapper.toUpdateCompanion(supply));
+        } else {
+          await _db
+              .into(_db.printerSupplies)
+              .insert(PrinterSupplyMapper.toCompanion(supply));
+        }
+      }
+    } catch (e) {
+      // Ignore errors during supply save
     }
   }
 }

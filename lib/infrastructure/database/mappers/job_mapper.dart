@@ -22,6 +22,11 @@ class JobMapper {
       completedAt: data.completedAt,
       errorCode: data.errorCode,
       errorMessage: data.errorMessage,
+      userId: data.userId,
+      username: data.username,
+      documentType: data.documentType,
+      department: data.department,
+      estimatedCost: data.estimatedCost,
     );
   }
 
@@ -43,6 +48,11 @@ class JobMapper {
       completedAt: Value(entity.completedAt),
       errorCode: Value(entity.errorCode),
       errorMessage: Value(entity.errorMessage),
+      userId: Value(entity.userId),
+      username: Value(entity.username),
+      documentType: Value(entity.documentType),
+      department: Value(entity.department),
+      estimatedCost: Value(entity.estimatedCost),
     );
   }
 
@@ -63,6 +73,11 @@ class JobMapper {
       completedAt: Value(entity.completedAt),
       errorCode: Value(entity.errorCode),
       errorMessage: Value(entity.errorMessage),
+      userId: Value(entity.userId),
+      username: Value(entity.username),
+      documentType: Value(entity.documentType),
+      department: Value(entity.department),
+      estimatedCost: Value(entity.estimatedCost),
     );
   }
 }

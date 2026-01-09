@@ -27,6 +27,10 @@ class PrintQueueItem {
   final String? errorCode;
   final String? errorMessage;
   final String? lastPrinterStatus;
+  final String? userId;
+  final String? username;
+  final String? documentType;
+  final String? department;
 
   const PrintQueueItem({
     required this.id,
@@ -44,6 +48,10 @@ class PrintQueueItem {
     this.errorCode,
     this.errorMessage,
     this.lastPrinterStatus,
+    this.userId,
+    this.username,
+    this.documentType,
+    this.department,
   });
 
   bool get isPending => status == PrintQueueItemStatus.pending;
@@ -70,6 +78,10 @@ class PrintQueueItem {
     String? errorCode,
     String? errorMessage,
     String? lastPrinterStatus,
+    String? userId,
+    String? username,
+    String? documentType,
+    String? department,
   }) {
     return PrintQueueItem(
       id: id ?? this.id,
@@ -87,6 +99,10 @@ class PrintQueueItem {
       errorCode: errorCode ?? this.errorCode,
       errorMessage: errorMessage ?? this.errorMessage,
       lastPrinterStatus: lastPrinterStatus ?? this.lastPrinterStatus,
+      userId: userId ?? this.userId,
+      username: username ?? this.username,
+      documentType: documentType ?? this.documentType,
+      department: department ?? this.department,
     );
   }
 

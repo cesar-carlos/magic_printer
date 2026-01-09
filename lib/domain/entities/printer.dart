@@ -27,6 +27,10 @@ class Printer {
   final bool shared;
   final List<String> allowedGroups;
   final DateTime? lastSeen;
+  final int totalPagesPrinted;
+  final String? tonerLevel;
+  final String? paperLevel;
+  final DateTime? lastMaintenanceDate;
 
   const Printer({
     required this.id,
@@ -43,6 +47,10 @@ class Printer {
     this.shared = true,
     this.allowedGroups = const [],
     this.lastSeen,
+    this.totalPagesPrinted = 0,
+    this.tonerLevel,
+    this.paperLevel,
+    this.lastMaintenanceDate,
   });
 
   bool get isLocal => location == PrinterLocation.local;
@@ -85,6 +93,10 @@ class Printer {
     bool? shared,
     List<String>? allowedGroups,
     DateTime? lastSeen,
+    int? totalPagesPrinted,
+    String? tonerLevel,
+    String? paperLevel,
+    DateTime? lastMaintenanceDate,
   }) {
     return Printer(
       id: id ?? this.id,
@@ -101,6 +113,11 @@ class Printer {
       shared: shared ?? this.shared,
       allowedGroups: allowedGroups ?? this.allowedGroups,
       lastSeen: lastSeen ?? this.lastSeen,
+      totalPagesPrinted: totalPagesPrinted ?? this.totalPagesPrinted,
+      tonerLevel: tonerLevel ?? this.tonerLevel,
+      paperLevel: paperLevel ?? this.paperLevel,
+      lastMaintenanceDate:
+          lastMaintenanceDate ?? this.lastMaintenanceDate,
     );
   }
 

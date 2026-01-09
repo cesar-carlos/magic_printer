@@ -29,6 +29,11 @@ class PrintJob {
   final DateTime? completedAt;
   final String? errorCode;
   final String? errorMessage;
+  final String? userId;
+  final String? username;
+  final String? documentType;
+  final String? department;
+  final int? estimatedCost;
 
   const PrintJob({
     required this.id,
@@ -47,6 +52,11 @@ class PrintJob {
     this.completedAt,
     this.errorCode,
     this.errorMessage,
+    this.userId,
+    this.username,
+    this.documentType,
+    this.department,
+    this.estimatedCost,
   });
 
   double get progress {
@@ -111,6 +121,11 @@ class PrintJob {
     DateTime? completedAt,
     String? errorCode,
     String? errorMessage,
+    String? userId,
+    String? username,
+    String? documentType,
+    String? department,
+    int? estimatedCost,
   }) {
     return PrintJob(
       id: id ?? this.id,
@@ -129,6 +144,11 @@ class PrintJob {
       completedAt: completedAt ?? this.completedAt,
       errorCode: errorCode ?? this.errorCode,
       errorMessage: errorMessage ?? this.errorMessage,
+      userId: userId ?? this.userId,
+      username: username ?? this.username,
+      documentType: documentType ?? this.documentType,
+      department: department ?? this.department,
+      estimatedCost: estimatedCost ?? this.estimatedCost,
     );
   }
 

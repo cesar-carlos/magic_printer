@@ -73,6 +73,10 @@ class PrintQueueService implements IPrintQueueService {
     required Uint8List payload,
     int totalPages = 0,
     String datatype = 'RAW',
+    String? userId,
+    String? username,
+    String? documentType,
+    String? department,
   }) {
     final jobId = JobId.generate();
     final item = PrintQueueItem(
@@ -84,6 +88,10 @@ class PrintQueueService implements IPrintQueueService {
       totalPages: totalPages,
       datatype: datatype,
       createdAt: DateTime.now(),
+      userId: userId,
+      username: username,
+      documentType: documentType,
+      department: department,
     );
 
     _queue.add(item);
@@ -366,6 +374,10 @@ class PrintQueueService implements IPrintQueueService {
       payload: item.payload,
       totalPages: item.totalPages,
       datatype: item.datatype,
+      userId: item.userId,
+      username: item.username,
+      documentType: item.documentType,
+      department: item.department,
     );
 
     final result = await _printJobService.sendPrintJob(request);

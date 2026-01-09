@@ -6,3 +6,4 @@ export 'i_local_notification_service.dart';
 export 'i_notification_service.dart';
 export 'i_print_job_capture_service.dart';
 export 'i_print_queue_service.dart';
+export 'i_user_service.dart';

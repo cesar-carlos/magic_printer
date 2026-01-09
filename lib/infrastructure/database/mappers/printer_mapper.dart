@@ -20,6 +20,10 @@ class PrinterMapper {
       allowedGroups:
           data.allowedGroups.isEmpty ? [] : data.allowedGroups.split(','),
       lastSeen: data.lastSeen,
+      totalPagesPrinted: data.totalPagesPrinted,
+      tonerLevel: data.tonerLevel == 'unknown' ? null : data.tonerLevel,
+      paperLevel: data.paperLevel == 'unknown' ? null : data.paperLevel,
+      lastMaintenanceDate: data.lastMaintenanceDate,
     );
   }
 
@@ -38,6 +42,10 @@ class PrinterMapper {
       shared: Value(entity.shared),
       allowedGroups: Value(entity.allowedGroups.join(',')),
       lastSeen: Value(entity.lastSeen),
+      totalPagesPrinted: Value(entity.totalPagesPrinted),
+      tonerLevel: Value(entity.tonerLevel ?? 'unknown'),
+      paperLevel: Value(entity.paperLevel ?? 'unknown'),
+      lastMaintenanceDate: Value(entity.lastMaintenanceDate),
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -58,6 +66,10 @@ class PrinterMapper {
       shared: Value(entity.shared),
       allowedGroups: Value(entity.allowedGroups.join(',')),
       lastSeen: Value(entity.lastSeen),
+      totalPagesPrinted: Value(entity.totalPagesPrinted),
+      tonerLevel: Value(entity.tonerLevel ?? 'unknown'),
+      paperLevel: Value(entity.paperLevel ?? 'unknown'),
+      lastMaintenanceDate: Value(entity.lastMaintenanceDate),
       updatedAt: Value(DateTime.now()),
     );
   }

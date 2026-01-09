@@ -911,6 +911,53 @@ class $PrintersTable extends Printers
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _totalPagesPrintedMeta = const VerificationMeta(
+    'totalPagesPrinted',
+  );
+  @override
+  late final GeneratedColumn<int> totalPagesPrinted = GeneratedColumn<int>(
+    'total_pages_printed',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _tonerLevelMeta = const VerificationMeta(
+    'tonerLevel',
+  );
+  @override
+  late final GeneratedColumn<String> tonerLevel = GeneratedColumn<String>(
+    'toner_level',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('unknown'),
+  );
+  static const VerificationMeta _paperLevelMeta = const VerificationMeta(
+    'paperLevel',
+  );
+  @override
+  late final GeneratedColumn<String> paperLevel = GeneratedColumn<String>(
+    'paper_level',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('unknown'),
+  );
+  static const VerificationMeta _lastMaintenanceDateMeta =
+      const VerificationMeta('lastMaintenanceDate');
+  @override
+  late final GeneratedColumn<DateTime> lastMaintenanceDate =
+      GeneratedColumn<DateTime>(
+        'last_maintenance_date',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -948,6 +995,10 @@ class $PrintersTable extends Printers
     shared,
     allowedGroups,
     lastSeen,
+    totalPagesPrinted,
+    tonerLevel,
+    paperLevel,
+    lastMaintenanceDate,
     createdAt,
     updatedAt,
   ];
@@ -1052,6 +1103,36 @@ class $PrintersTable extends Printers
         lastSeen.isAcceptableOrUnknown(data['last_seen']!, _lastSeenMeta),
       );
     }
+    if (data.containsKey('total_pages_printed')) {
+      context.handle(
+        _totalPagesPrintedMeta,
+        totalPagesPrinted.isAcceptableOrUnknown(
+          data['total_pages_printed']!,
+          _totalPagesPrintedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('toner_level')) {
+      context.handle(
+        _tonerLevelMeta,
+        tonerLevel.isAcceptableOrUnknown(data['toner_level']!, _tonerLevelMeta),
+      );
+    }
+    if (data.containsKey('paper_level')) {
+      context.handle(
+        _paperLevelMeta,
+        paperLevel.isAcceptableOrUnknown(data['paper_level']!, _paperLevelMeta),
+      );
+    }
+    if (data.containsKey('last_maintenance_date')) {
+      context.handle(
+        _lastMaintenanceDateMeta,
+        lastMaintenanceDate.isAcceptableOrUnknown(
+          data['last_maintenance_date']!,
+          _lastMaintenanceDateMeta,
+        ),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -1129,6 +1210,22 @@ class $PrintersTable extends Printers
         DriftSqlType.dateTime,
         data['${effectivePrefix}last_seen'],
       ),
+      totalPagesPrinted: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_pages_printed'],
+      )!,
+      tonerLevel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}toner_level'],
+      )!,
+      paperLevel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}paper_level'],
+      )!,
+      lastMaintenanceDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_maintenance_date'],
+      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -1160,6 +1257,10 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
   final bool shared;
   final String allowedGroups;
   final DateTime? lastSeen;
+  final int totalPagesPrinted;
+  final String tonerLevel;
+  final String paperLevel;
+  final DateTime? lastMaintenanceDate;
   final DateTime createdAt;
   final DateTime updatedAt;
   const PrinterData({
@@ -1176,6 +1277,10 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
     required this.shared,
     required this.allowedGroups,
     this.lastSeen,
+    required this.totalPagesPrinted,
+    required this.tonerLevel,
+    required this.paperLevel,
+    this.lastMaintenanceDate,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -1206,6 +1311,12 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
     map['allowed_groups'] = Variable<String>(allowedGroups);
     if (!nullToAbsent || lastSeen != null) {
       map['last_seen'] = Variable<DateTime>(lastSeen);
+    }
+    map['total_pages_printed'] = Variable<int>(totalPagesPrinted);
+    map['toner_level'] = Variable<String>(tonerLevel);
+    map['paper_level'] = Variable<String>(paperLevel);
+    if (!nullToAbsent || lastMaintenanceDate != null) {
+      map['last_maintenance_date'] = Variable<DateTime>(lastMaintenanceDate);
     }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
@@ -1239,6 +1350,12 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
       lastSeen: lastSeen == null && nullToAbsent
           ? const Value.absent()
           : Value(lastSeen),
+      totalPagesPrinted: Value(totalPagesPrinted),
+      tonerLevel: Value(tonerLevel),
+      paperLevel: Value(paperLevel),
+      lastMaintenanceDate: lastMaintenanceDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastMaintenanceDate),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -1265,6 +1382,12 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
       shared: serializer.fromJson<bool>(json['shared']),
       allowedGroups: serializer.fromJson<String>(json['allowedGroups']),
       lastSeen: serializer.fromJson<DateTime?>(json['lastSeen']),
+      totalPagesPrinted: serializer.fromJson<int>(json['totalPagesPrinted']),
+      tonerLevel: serializer.fromJson<String>(json['tonerLevel']),
+      paperLevel: serializer.fromJson<String>(json['paperLevel']),
+      lastMaintenanceDate: serializer.fromJson<DateTime?>(
+        json['lastMaintenanceDate'],
+      ),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -1286,6 +1409,10 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
       'shared': serializer.toJson<bool>(shared),
       'allowedGroups': serializer.toJson<String>(allowedGroups),
       'lastSeen': serializer.toJson<DateTime?>(lastSeen),
+      'totalPagesPrinted': serializer.toJson<int>(totalPagesPrinted),
+      'tonerLevel': serializer.toJson<String>(tonerLevel),
+      'paperLevel': serializer.toJson<String>(paperLevel),
+      'lastMaintenanceDate': serializer.toJson<DateTime?>(lastMaintenanceDate),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -1305,6 +1432,10 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
     bool? shared,
     String? allowedGroups,
     Value<DateTime?> lastSeen = const Value.absent(),
+    int? totalPagesPrinted,
+    String? tonerLevel,
+    String? paperLevel,
+    Value<DateTime?> lastMaintenanceDate = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => PrinterData(
@@ -1323,6 +1454,12 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
     shared: shared ?? this.shared,
     allowedGroups: allowedGroups ?? this.allowedGroups,
     lastSeen: lastSeen.present ? lastSeen.value : this.lastSeen,
+    totalPagesPrinted: totalPagesPrinted ?? this.totalPagesPrinted,
+    tonerLevel: tonerLevel ?? this.tonerLevel,
+    paperLevel: paperLevel ?? this.paperLevel,
+    lastMaintenanceDate: lastMaintenanceDate.present
+        ? lastMaintenanceDate.value
+        : this.lastMaintenanceDate,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
@@ -1347,6 +1484,18 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
           ? data.allowedGroups.value
           : this.allowedGroups,
       lastSeen: data.lastSeen.present ? data.lastSeen.value : this.lastSeen,
+      totalPagesPrinted: data.totalPagesPrinted.present
+          ? data.totalPagesPrinted.value
+          : this.totalPagesPrinted,
+      tonerLevel: data.tonerLevel.present
+          ? data.tonerLevel.value
+          : this.tonerLevel,
+      paperLevel: data.paperLevel.present
+          ? data.paperLevel.value
+          : this.paperLevel,
+      lastMaintenanceDate: data.lastMaintenanceDate.present
+          ? data.lastMaintenanceDate.value
+          : this.lastMaintenanceDate,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -1368,6 +1517,10 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
           ..write('shared: $shared, ')
           ..write('allowedGroups: $allowedGroups, ')
           ..write('lastSeen: $lastSeen, ')
+          ..write('totalPagesPrinted: $totalPagesPrinted, ')
+          ..write('tonerLevel: $tonerLevel, ')
+          ..write('paperLevel: $paperLevel, ')
+          ..write('lastMaintenanceDate: $lastMaintenanceDate, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -1389,6 +1542,10 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
     shared,
     allowedGroups,
     lastSeen,
+    totalPagesPrinted,
+    tonerLevel,
+    paperLevel,
+    lastMaintenanceDate,
     createdAt,
     updatedAt,
   );
@@ -1409,6 +1566,10 @@ class PrinterData extends DataClass implements Insertable<PrinterData> {
           other.shared == this.shared &&
           other.allowedGroups == this.allowedGroups &&
           other.lastSeen == this.lastSeen &&
+          other.totalPagesPrinted == this.totalPagesPrinted &&
+          other.tonerLevel == this.tonerLevel &&
+          other.paperLevel == this.paperLevel &&
+          other.lastMaintenanceDate == this.lastMaintenanceDate &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -1427,6 +1588,10 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
   final Value<bool> shared;
   final Value<String> allowedGroups;
   final Value<DateTime?> lastSeen;
+  final Value<int> totalPagesPrinted;
+  final Value<String> tonerLevel;
+  final Value<String> paperLevel;
+  final Value<DateTime?> lastMaintenanceDate;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
@@ -1444,6 +1609,10 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
     this.shared = const Value.absent(),
     this.allowedGroups = const Value.absent(),
     this.lastSeen = const Value.absent(),
+    this.totalPagesPrinted = const Value.absent(),
+    this.tonerLevel = const Value.absent(),
+    this.paperLevel = const Value.absent(),
+    this.lastMaintenanceDate = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1462,6 +1631,10 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
     this.shared = const Value.absent(),
     this.allowedGroups = const Value.absent(),
     this.lastSeen = const Value.absent(),
+    this.totalPagesPrinted = const Value.absent(),
+    this.tonerLevel = const Value.absent(),
+    this.paperLevel = const Value.absent(),
+    this.lastMaintenanceDate = const Value.absent(),
     required DateTime createdAt,
     required DateTime updatedAt,
     this.rowid = const Value.absent(),
@@ -1485,6 +1658,10 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
     Expression<bool>? shared,
     Expression<String>? allowedGroups,
     Expression<DateTime>? lastSeen,
+    Expression<int>? totalPagesPrinted,
+    Expression<String>? tonerLevel,
+    Expression<String>? paperLevel,
+    Expression<DateTime>? lastMaintenanceDate,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
@@ -1504,6 +1681,11 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
       if (shared != null) 'shared': shared,
       if (allowedGroups != null) 'allowed_groups': allowedGroups,
       if (lastSeen != null) 'last_seen': lastSeen,
+      if (totalPagesPrinted != null) 'total_pages_printed': totalPagesPrinted,
+      if (tonerLevel != null) 'toner_level': tonerLevel,
+      if (paperLevel != null) 'paper_level': paperLevel,
+      if (lastMaintenanceDate != null)
+        'last_maintenance_date': lastMaintenanceDate,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
@@ -1524,6 +1706,10 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
     Value<bool>? shared,
     Value<String>? allowedGroups,
     Value<DateTime?>? lastSeen,
+    Value<int>? totalPagesPrinted,
+    Value<String>? tonerLevel,
+    Value<String>? paperLevel,
+    Value<DateTime?>? lastMaintenanceDate,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<int>? rowid,
@@ -1542,6 +1728,10 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
       shared: shared ?? this.shared,
       allowedGroups: allowedGroups ?? this.allowedGroups,
       lastSeen: lastSeen ?? this.lastSeen,
+      totalPagesPrinted: totalPagesPrinted ?? this.totalPagesPrinted,
+      tonerLevel: tonerLevel ?? this.tonerLevel,
+      paperLevel: paperLevel ?? this.paperLevel,
+      lastMaintenanceDate: lastMaintenanceDate ?? this.lastMaintenanceDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
@@ -1590,6 +1780,20 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
     if (lastSeen.present) {
       map['last_seen'] = Variable<DateTime>(lastSeen.value);
     }
+    if (totalPagesPrinted.present) {
+      map['total_pages_printed'] = Variable<int>(totalPagesPrinted.value);
+    }
+    if (tonerLevel.present) {
+      map['toner_level'] = Variable<String>(tonerLevel.value);
+    }
+    if (paperLevel.present) {
+      map['paper_level'] = Variable<String>(paperLevel.value);
+    }
+    if (lastMaintenanceDate.present) {
+      map['last_maintenance_date'] = Variable<DateTime>(
+        lastMaintenanceDate.value,
+      );
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -1618,6 +1822,10 @@ class PrintersCompanion extends UpdateCompanion<PrinterData> {
           ..write('shared: $shared, ')
           ..write('allowedGroups: $allowedGroups, ')
           ..write('lastSeen: $lastSeen, ')
+          ..write('totalPagesPrinted: $totalPagesPrinted, ')
+          ..write('tonerLevel: $tonerLevel, ')
+          ..write('paperLevel: $paperLevel, ')
+          ..write('lastMaintenanceDate: $lastMaintenanceDate, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
@@ -1807,6 +2015,59 @@ class $JobsTable extends Jobs with TableInfo<$JobsTable, JobData> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _usernameMeta = const VerificationMeta(
+    'username',
+  );
+  @override
+  late final GeneratedColumn<String> username = GeneratedColumn<String>(
+    'username',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _documentTypeMeta = const VerificationMeta(
+    'documentType',
+  );
+  @override
+  late final GeneratedColumn<String> documentType = GeneratedColumn<String>(
+    'document_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _departmentMeta = const VerificationMeta(
+    'department',
+  );
+  @override
+  late final GeneratedColumn<String> department = GeneratedColumn<String>(
+    'department',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _estimatedCostMeta = const VerificationMeta(
+    'estimatedCost',
+  );
+  @override
+  late final GeneratedColumn<int> estimatedCost = GeneratedColumn<int>(
+    'estimated_cost',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1825,6 +2086,11 @@ class $JobsTable extends Jobs with TableInfo<$JobsTable, JobData> {
     completedAt,
     errorCode,
     errorMessage,
+    userId,
+    username,
+    documentType,
+    department,
+    estimatedCost,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1959,6 +2225,42 @@ class $JobsTable extends Jobs with TableInfo<$JobsTable, JobData> {
         ),
       );
     }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    }
+    if (data.containsKey('username')) {
+      context.handle(
+        _usernameMeta,
+        username.isAcceptableOrUnknown(data['username']!, _usernameMeta),
+      );
+    }
+    if (data.containsKey('document_type')) {
+      context.handle(
+        _documentTypeMeta,
+        documentType.isAcceptableOrUnknown(
+          data['document_type']!,
+          _documentTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('department')) {
+      context.handle(
+        _departmentMeta,
+        department.isAcceptableOrUnknown(data['department']!, _departmentMeta),
+      );
+    }
+    if (data.containsKey('estimated_cost')) {
+      context.handle(
+        _estimatedCostMeta,
+        estimatedCost.isAcceptableOrUnknown(
+          data['estimated_cost']!,
+          _estimatedCostMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -2032,6 +2334,26 @@ class $JobsTable extends Jobs with TableInfo<$JobsTable, JobData> {
         DriftSqlType.string,
         data['${effectivePrefix}error_message'],
       ),
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      ),
+      username: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}username'],
+      ),
+      documentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}document_type'],
+      ),
+      department: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}department'],
+      ),
+      estimatedCost: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}estimated_cost'],
+      ),
     );
   }
 
@@ -2058,6 +2380,11 @@ class JobData extends DataClass implements Insertable<JobData> {
   final DateTime? completedAt;
   final String? errorCode;
   final String? errorMessage;
+  final String? userId;
+  final String? username;
+  final String? documentType;
+  final String? department;
+  final int? estimatedCost;
   const JobData({
     required this.id,
     required this.documentName,
@@ -2075,6 +2402,11 @@ class JobData extends DataClass implements Insertable<JobData> {
     this.completedAt,
     this.errorCode,
     this.errorMessage,
+    this.userId,
+    this.username,
+    this.documentType,
+    this.department,
+    this.estimatedCost,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2104,6 +2436,21 @@ class JobData extends DataClass implements Insertable<JobData> {
     }
     if (!nullToAbsent || errorMessage != null) {
       map['error_message'] = Variable<String>(errorMessage);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    if (!nullToAbsent || username != null) {
+      map['username'] = Variable<String>(username);
+    }
+    if (!nullToAbsent || documentType != null) {
+      map['document_type'] = Variable<String>(documentType);
+    }
+    if (!nullToAbsent || department != null) {
+      map['department'] = Variable<String>(department);
+    }
+    if (!nullToAbsent || estimatedCost != null) {
+      map['estimated_cost'] = Variable<int>(estimatedCost);
     }
     return map;
   }
@@ -2136,6 +2483,21 @@ class JobData extends DataClass implements Insertable<JobData> {
       errorMessage: errorMessage == null && nullToAbsent
           ? const Value.absent()
           : Value(errorMessage),
+      userId: userId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(userId),
+      username: username == null && nullToAbsent
+          ? const Value.absent()
+          : Value(username),
+      documentType: documentType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(documentType),
+      department: department == null && nullToAbsent
+          ? const Value.absent()
+          : Value(department),
+      estimatedCost: estimatedCost == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estimatedCost),
     );
   }
 
@@ -2161,6 +2523,11 @@ class JobData extends DataClass implements Insertable<JobData> {
       completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
       errorCode: serializer.fromJson<String?>(json['errorCode']),
       errorMessage: serializer.fromJson<String?>(json['errorMessage']),
+      userId: serializer.fromJson<String?>(json['userId']),
+      username: serializer.fromJson<String?>(json['username']),
+      documentType: serializer.fromJson<String?>(json['documentType']),
+      department: serializer.fromJson<String?>(json['department']),
+      estimatedCost: serializer.fromJson<int?>(json['estimatedCost']),
     );
   }
   @override
@@ -2183,6 +2550,11 @@ class JobData extends DataClass implements Insertable<JobData> {
       'completedAt': serializer.toJson<DateTime?>(completedAt),
       'errorCode': serializer.toJson<String?>(errorCode),
       'errorMessage': serializer.toJson<String?>(errorMessage),
+      'userId': serializer.toJson<String?>(userId),
+      'username': serializer.toJson<String?>(username),
+      'documentType': serializer.toJson<String?>(documentType),
+      'department': serializer.toJson<String?>(department),
+      'estimatedCost': serializer.toJson<int?>(estimatedCost),
     };
   }
 
@@ -2203,6 +2575,11 @@ class JobData extends DataClass implements Insertable<JobData> {
     Value<DateTime?> completedAt = const Value.absent(),
     Value<String?> errorCode = const Value.absent(),
     Value<String?> errorMessage = const Value.absent(),
+    Value<String?> userId = const Value.absent(),
+    Value<String?> username = const Value.absent(),
+    Value<String?> documentType = const Value.absent(),
+    Value<String?> department = const Value.absent(),
+    Value<int?> estimatedCost = const Value.absent(),
   }) => JobData(
     id: id ?? this.id,
     documentName: documentName ?? this.documentName,
@@ -2220,6 +2597,13 @@ class JobData extends DataClass implements Insertable<JobData> {
     completedAt: completedAt.present ? completedAt.value : this.completedAt,
     errorCode: errorCode.present ? errorCode.value : this.errorCode,
     errorMessage: errorMessage.present ? errorMessage.value : this.errorMessage,
+    userId: userId.present ? userId.value : this.userId,
+    username: username.present ? username.value : this.username,
+    documentType: documentType.present ? documentType.value : this.documentType,
+    department: department.present ? department.value : this.department,
+    estimatedCost: estimatedCost.present
+        ? estimatedCost.value
+        : this.estimatedCost,
   );
   JobData copyWithCompanion(JobsCompanion data) {
     return JobData(
@@ -2255,6 +2639,17 @@ class JobData extends DataClass implements Insertable<JobData> {
       errorMessage: data.errorMessage.present
           ? data.errorMessage.value
           : this.errorMessage,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      username: data.username.present ? data.username.value : this.username,
+      documentType: data.documentType.present
+          ? data.documentType.value
+          : this.documentType,
+      department: data.department.present
+          ? data.department.value
+          : this.department,
+      estimatedCost: data.estimatedCost.present
+          ? data.estimatedCost.value
+          : this.estimatedCost,
     );
   }
 
@@ -2276,13 +2671,18 @@ class JobData extends DataClass implements Insertable<JobData> {
           ..write('startedAt: $startedAt, ')
           ..write('completedAt: $completedAt, ')
           ..write('errorCode: $errorCode, ')
-          ..write('errorMessage: $errorMessage')
+          ..write('errorMessage: $errorMessage, ')
+          ..write('userId: $userId, ')
+          ..write('username: $username, ')
+          ..write('documentType: $documentType, ')
+          ..write('department: $department, ')
+          ..write('estimatedCost: $estimatedCost')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     id,
     documentName,
     printerName,
@@ -2299,7 +2699,12 @@ class JobData extends DataClass implements Insertable<JobData> {
     completedAt,
     errorCode,
     errorMessage,
-  );
+    userId,
+    username,
+    documentType,
+    department,
+    estimatedCost,
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2319,7 +2724,12 @@ class JobData extends DataClass implements Insertable<JobData> {
           other.startedAt == this.startedAt &&
           other.completedAt == this.completedAt &&
           other.errorCode == this.errorCode &&
-          other.errorMessage == this.errorMessage);
+          other.errorMessage == this.errorMessage &&
+          other.userId == this.userId &&
+          other.username == this.username &&
+          other.documentType == this.documentType &&
+          other.department == this.department &&
+          other.estimatedCost == this.estimatedCost);
 }
 
 class JobsCompanion extends UpdateCompanion<JobData> {
@@ -2339,6 +2749,11 @@ class JobsCompanion extends UpdateCompanion<JobData> {
   final Value<DateTime?> completedAt;
   final Value<String?> errorCode;
   final Value<String?> errorMessage;
+  final Value<String?> userId;
+  final Value<String?> username;
+  final Value<String?> documentType;
+  final Value<String?> department;
+  final Value<int?> estimatedCost;
   final Value<int> rowid;
   const JobsCompanion({
     this.id = const Value.absent(),
@@ -2357,6 +2772,11 @@ class JobsCompanion extends UpdateCompanion<JobData> {
     this.completedAt = const Value.absent(),
     this.errorCode = const Value.absent(),
     this.errorMessage = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.username = const Value.absent(),
+    this.documentType = const Value.absent(),
+    this.department = const Value.absent(),
+    this.estimatedCost = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   JobsCompanion.insert({
@@ -2376,6 +2796,11 @@ class JobsCompanion extends UpdateCompanion<JobData> {
     this.completedAt = const Value.absent(),
     this.errorCode = const Value.absent(),
     this.errorMessage = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.username = const Value.absent(),
+    this.documentType = const Value.absent(),
+    this.department = const Value.absent(),
+    this.estimatedCost = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        documentName = Value(documentName),
@@ -2399,6 +2824,11 @@ class JobsCompanion extends UpdateCompanion<JobData> {
     Expression<DateTime>? completedAt,
     Expression<String>? errorCode,
     Expression<String>? errorMessage,
+    Expression<String>? userId,
+    Expression<String>? username,
+    Expression<String>? documentType,
+    Expression<String>? department,
+    Expression<int>? estimatedCost,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -2418,6 +2848,11 @@ class JobsCompanion extends UpdateCompanion<JobData> {
       if (completedAt != null) 'completed_at': completedAt,
       if (errorCode != null) 'error_code': errorCode,
       if (errorMessage != null) 'error_message': errorMessage,
+      if (userId != null) 'user_id': userId,
+      if (username != null) 'username': username,
+      if (documentType != null) 'document_type': documentType,
+      if (department != null) 'department': department,
+      if (estimatedCost != null) 'estimated_cost': estimatedCost,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2439,6 +2874,11 @@ class JobsCompanion extends UpdateCompanion<JobData> {
     Value<DateTime?>? completedAt,
     Value<String?>? errorCode,
     Value<String?>? errorMessage,
+    Value<String?>? userId,
+    Value<String?>? username,
+    Value<String?>? documentType,
+    Value<String?>? department,
+    Value<int?>? estimatedCost,
     Value<int>? rowid,
   }) {
     return JobsCompanion(
@@ -2458,6 +2898,11 @@ class JobsCompanion extends UpdateCompanion<JobData> {
       completedAt: completedAt ?? this.completedAt,
       errorCode: errorCode ?? this.errorCode,
       errorMessage: errorMessage ?? this.errorMessage,
+      userId: userId ?? this.userId,
+      username: username ?? this.username,
+      documentType: documentType ?? this.documentType,
+      department: department ?? this.department,
+      estimatedCost: estimatedCost ?? this.estimatedCost,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2513,6 +2958,21 @@ class JobsCompanion extends UpdateCompanion<JobData> {
     if (errorMessage.present) {
       map['error_message'] = Variable<String>(errorMessage.value);
     }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
+    }
+    if (documentType.present) {
+      map['document_type'] = Variable<String>(documentType.value);
+    }
+    if (department.present) {
+      map['department'] = Variable<String>(department.value);
+    }
+    if (estimatedCost.present) {
+      map['estimated_cost'] = Variable<int>(estimatedCost.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -2538,6 +2998,11 @@ class JobsCompanion extends UpdateCompanion<JobData> {
           ..write('completedAt: $completedAt, ')
           ..write('errorCode: $errorCode, ')
           ..write('errorMessage: $errorMessage, ')
+          ..write('userId: $userId, ')
+          ..write('username: $username, ')
+          ..write('documentType: $documentType, ')
+          ..write('department: $department, ')
+          ..write('estimatedCost: $estimatedCost, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -4405,6 +4870,1852 @@ class EmailConfigsCompanion extends UpdateCompanion<EmailConfigEntry> {
   }
 }
 
+class $UsersTable extends Users with TableInfo<$UsersTable, UserData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UsersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _usernameMeta = const VerificationMeta(
+    'username',
+  );
+  @override
+  late final GeneratedColumn<String> username = GeneratedColumn<String>(
+    'username',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _departmentMeta = const VerificationMeta(
+    'department',
+  );
+  @override
+  late final GeneratedColumn<String> department = GeneratedColumn<String>(
+    'department',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+    'email',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _groupIdsMeta = const VerificationMeta(
+    'groupIds',
+  );
+  @override
+  late final GeneratedColumn<String> groupIds = GeneratedColumn<String>(
+    'group_ids',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastSeenMeta = const VerificationMeta(
+    'lastSeen',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastSeen = GeneratedColumn<DateTime>(
+    'last_seen',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    username,
+    displayName,
+    department,
+    email,
+    groupIds,
+    createdAt,
+    lastSeen,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'users';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<UserData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('username')) {
+      context.handle(
+        _usernameMeta,
+        username.isAcceptableOrUnknown(data['username']!, _usernameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_usernameMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('department')) {
+      context.handle(
+        _departmentMeta,
+        department.isAcceptableOrUnknown(data['department']!, _departmentMeta),
+      );
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
+    }
+    if (data.containsKey('group_ids')) {
+      context.handle(
+        _groupIdsMeta,
+        groupIds.isAcceptableOrUnknown(data['group_ids']!, _groupIdsMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('last_seen')) {
+      context.handle(
+        _lastSeenMeta,
+        lastSeen.isAcceptableOrUnknown(data['last_seen']!, _lastSeenMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  UserData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return UserData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      username: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}username'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      ),
+      department: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}department'],
+      ),
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      ),
+      groupIds: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_ids'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      lastSeen: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_seen'],
+      ),
+    );
+  }
+
+  @override
+  $UsersTable createAlias(String alias) {
+    return $UsersTable(attachedDatabase, alias);
+  }
+}
+
+class UserData extends DataClass implements Insertable<UserData> {
+  final String id;
+  final String username;
+  final String? displayName;
+  final String? department;
+  final String? email;
+  final String groupIds;
+  final DateTime createdAt;
+  final DateTime? lastSeen;
+  const UserData({
+    required this.id,
+    required this.username,
+    this.displayName,
+    this.department,
+    this.email,
+    required this.groupIds,
+    required this.createdAt,
+    this.lastSeen,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['username'] = Variable<String>(username);
+    if (!nullToAbsent || displayName != null) {
+      map['display_name'] = Variable<String>(displayName);
+    }
+    if (!nullToAbsent || department != null) {
+      map['department'] = Variable<String>(department);
+    }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    map['group_ids'] = Variable<String>(groupIds);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || lastSeen != null) {
+      map['last_seen'] = Variable<DateTime>(lastSeen);
+    }
+    return map;
+  }
+
+  UsersCompanion toCompanion(bool nullToAbsent) {
+    return UsersCompanion(
+      id: Value(id),
+      username: Value(username),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
+      department: department == null && nullToAbsent
+          ? const Value.absent()
+          : Value(department),
+      email: email == null && nullToAbsent
+          ? const Value.absent()
+          : Value(email),
+      groupIds: Value(groupIds),
+      createdAt: Value(createdAt),
+      lastSeen: lastSeen == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSeen),
+    );
+  }
+
+  factory UserData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return UserData(
+      id: serializer.fromJson<String>(json['id']),
+      username: serializer.fromJson<String>(json['username']),
+      displayName: serializer.fromJson<String?>(json['displayName']),
+      department: serializer.fromJson<String?>(json['department']),
+      email: serializer.fromJson<String?>(json['email']),
+      groupIds: serializer.fromJson<String>(json['groupIds']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      lastSeen: serializer.fromJson<DateTime?>(json['lastSeen']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'username': serializer.toJson<String>(username),
+      'displayName': serializer.toJson<String?>(displayName),
+      'department': serializer.toJson<String?>(department),
+      'email': serializer.toJson<String?>(email),
+      'groupIds': serializer.toJson<String>(groupIds),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'lastSeen': serializer.toJson<DateTime?>(lastSeen),
+    };
+  }
+
+  UserData copyWith({
+    String? id,
+    String? username,
+    Value<String?> displayName = const Value.absent(),
+    Value<String?> department = const Value.absent(),
+    Value<String?> email = const Value.absent(),
+    String? groupIds,
+    DateTime? createdAt,
+    Value<DateTime?> lastSeen = const Value.absent(),
+  }) => UserData(
+    id: id ?? this.id,
+    username: username ?? this.username,
+    displayName: displayName.present ? displayName.value : this.displayName,
+    department: department.present ? department.value : this.department,
+    email: email.present ? email.value : this.email,
+    groupIds: groupIds ?? this.groupIds,
+    createdAt: createdAt ?? this.createdAt,
+    lastSeen: lastSeen.present ? lastSeen.value : this.lastSeen,
+  );
+  UserData copyWithCompanion(UsersCompanion data) {
+    return UserData(
+      id: data.id.present ? data.id.value : this.id,
+      username: data.username.present ? data.username.value : this.username,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      department: data.department.present
+          ? data.department.value
+          : this.department,
+      email: data.email.present ? data.email.value : this.email,
+      groupIds: data.groupIds.present ? data.groupIds.value : this.groupIds,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      lastSeen: data.lastSeen.present ? data.lastSeen.value : this.lastSeen,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserData(')
+          ..write('id: $id, ')
+          ..write('username: $username, ')
+          ..write('displayName: $displayName, ')
+          ..write('department: $department, ')
+          ..write('email: $email, ')
+          ..write('groupIds: $groupIds, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('lastSeen: $lastSeen')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    username,
+    displayName,
+    department,
+    email,
+    groupIds,
+    createdAt,
+    lastSeen,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserData &&
+          other.id == this.id &&
+          other.username == this.username &&
+          other.displayName == this.displayName &&
+          other.department == this.department &&
+          other.email == this.email &&
+          other.groupIds == this.groupIds &&
+          other.createdAt == this.createdAt &&
+          other.lastSeen == this.lastSeen);
+}
+
+class UsersCompanion extends UpdateCompanion<UserData> {
+  final Value<String> id;
+  final Value<String> username;
+  final Value<String?> displayName;
+  final Value<String?> department;
+  final Value<String?> email;
+  final Value<String> groupIds;
+  final Value<DateTime> createdAt;
+  final Value<DateTime?> lastSeen;
+  final Value<int> rowid;
+  const UsersCompanion({
+    this.id = const Value.absent(),
+    this.username = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.department = const Value.absent(),
+    this.email = const Value.absent(),
+    this.groupIds = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.lastSeen = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  UsersCompanion.insert({
+    required String id,
+    required String username,
+    this.displayName = const Value.absent(),
+    this.department = const Value.absent(),
+    this.email = const Value.absent(),
+    this.groupIds = const Value.absent(),
+    required DateTime createdAt,
+    this.lastSeen = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       username = Value(username),
+       createdAt = Value(createdAt);
+  static Insertable<UserData> custom({
+    Expression<String>? id,
+    Expression<String>? username,
+    Expression<String>? displayName,
+    Expression<String>? department,
+    Expression<String>? email,
+    Expression<String>? groupIds,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? lastSeen,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (username != null) 'username': username,
+      if (displayName != null) 'display_name': displayName,
+      if (department != null) 'department': department,
+      if (email != null) 'email': email,
+      if (groupIds != null) 'group_ids': groupIds,
+      if (createdAt != null) 'created_at': createdAt,
+      if (lastSeen != null) 'last_seen': lastSeen,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  UsersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? username,
+    Value<String?>? displayName,
+    Value<String?>? department,
+    Value<String?>? email,
+    Value<String>? groupIds,
+    Value<DateTime>? createdAt,
+    Value<DateTime?>? lastSeen,
+    Value<int>? rowid,
+  }) {
+    return UsersCompanion(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      displayName: displayName ?? this.displayName,
+      department: department ?? this.department,
+      email: email ?? this.email,
+      groupIds: groupIds ?? this.groupIds,
+      createdAt: createdAt ?? this.createdAt,
+      lastSeen: lastSeen ?? this.lastSeen,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (department.present) {
+      map['department'] = Variable<String>(department.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (groupIds.present) {
+      map['group_ids'] = Variable<String>(groupIds.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (lastSeen.present) {
+      map['last_seen'] = Variable<DateTime>(lastSeen.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UsersCompanion(')
+          ..write('id: $id, ')
+          ..write('username: $username, ')
+          ..write('displayName: $displayName, ')
+          ..write('department: $department, ')
+          ..write('email: $email, ')
+          ..write('groupIds: $groupIds, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('lastSeen: $lastSeen, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PrinterSuppliesTable extends PrinterSupplies
+    with TableInfo<$PrinterSuppliesTable, PrinterSupplyData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PrinterSuppliesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _printerIdMeta = const VerificationMeta(
+    'printerId',
+  );
+  @override
+  late final GeneratedColumn<String> printerId = GeneratedColumn<String>(
+    'printer_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _supplyTypeMeta = const VerificationMeta(
+    'supplyType',
+  );
+  @override
+  late final GeneratedColumn<String> supplyType = GeneratedColumn<String>(
+    'supply_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _levelMeta = const VerificationMeta('level');
+  @override
+  late final GeneratedColumn<int> level = GeneratedColumn<int>(
+    'level',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+    'unit',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastCheckedMeta = const VerificationMeta(
+    'lastChecked',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastChecked = GeneratedColumn<DateTime>(
+    'last_checked',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    printerId,
+    supplyType,
+    level,
+    unit,
+    lastChecked,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'printer_supplies';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PrinterSupplyData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('printer_id')) {
+      context.handle(
+        _printerIdMeta,
+        printerId.isAcceptableOrUnknown(data['printer_id']!, _printerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_printerIdMeta);
+    }
+    if (data.containsKey('supply_type')) {
+      context.handle(
+        _supplyTypeMeta,
+        supplyType.isAcceptableOrUnknown(data['supply_type']!, _supplyTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_supplyTypeMeta);
+    }
+    if (data.containsKey('level')) {
+      context.handle(
+        _levelMeta,
+        level.isAcceptableOrUnknown(data['level']!, _levelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_levelMeta);
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+        _unitMeta,
+        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_unitMeta);
+    }
+    if (data.containsKey('last_checked')) {
+      context.handle(
+        _lastCheckedMeta,
+        lastChecked.isAcceptableOrUnknown(
+          data['last_checked']!,
+          _lastCheckedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_lastCheckedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PrinterSupplyData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PrinterSupplyData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      printerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}printer_id'],
+      )!,
+      supplyType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}supply_type'],
+      )!,
+      level: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}level'],
+      )!,
+      unit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit'],
+      )!,
+      lastChecked: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_checked'],
+      )!,
+    );
+  }
+
+  @override
+  $PrinterSuppliesTable createAlias(String alias) {
+    return $PrinterSuppliesTable(attachedDatabase, alias);
+  }
+}
+
+class PrinterSupplyData extends DataClass
+    implements Insertable<PrinterSupplyData> {
+  final String id;
+  final String printerId;
+  final String supplyType;
+  final int level;
+  final String unit;
+  final DateTime lastChecked;
+  const PrinterSupplyData({
+    required this.id,
+    required this.printerId,
+    required this.supplyType,
+    required this.level,
+    required this.unit,
+    required this.lastChecked,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['printer_id'] = Variable<String>(printerId);
+    map['supply_type'] = Variable<String>(supplyType);
+    map['level'] = Variable<int>(level);
+    map['unit'] = Variable<String>(unit);
+    map['last_checked'] = Variable<DateTime>(lastChecked);
+    return map;
+  }
+
+  PrinterSuppliesCompanion toCompanion(bool nullToAbsent) {
+    return PrinterSuppliesCompanion(
+      id: Value(id),
+      printerId: Value(printerId),
+      supplyType: Value(supplyType),
+      level: Value(level),
+      unit: Value(unit),
+      lastChecked: Value(lastChecked),
+    );
+  }
+
+  factory PrinterSupplyData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PrinterSupplyData(
+      id: serializer.fromJson<String>(json['id']),
+      printerId: serializer.fromJson<String>(json['printerId']),
+      supplyType: serializer.fromJson<String>(json['supplyType']),
+      level: serializer.fromJson<int>(json['level']),
+      unit: serializer.fromJson<String>(json['unit']),
+      lastChecked: serializer.fromJson<DateTime>(json['lastChecked']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'printerId': serializer.toJson<String>(printerId),
+      'supplyType': serializer.toJson<String>(supplyType),
+      'level': serializer.toJson<int>(level),
+      'unit': serializer.toJson<String>(unit),
+      'lastChecked': serializer.toJson<DateTime>(lastChecked),
+    };
+  }
+
+  PrinterSupplyData copyWith({
+    String? id,
+    String? printerId,
+    String? supplyType,
+    int? level,
+    String? unit,
+    DateTime? lastChecked,
+  }) => PrinterSupplyData(
+    id: id ?? this.id,
+    printerId: printerId ?? this.printerId,
+    supplyType: supplyType ?? this.supplyType,
+    level: level ?? this.level,
+    unit: unit ?? this.unit,
+    lastChecked: lastChecked ?? this.lastChecked,
+  );
+  PrinterSupplyData copyWithCompanion(PrinterSuppliesCompanion data) {
+    return PrinterSupplyData(
+      id: data.id.present ? data.id.value : this.id,
+      printerId: data.printerId.present ? data.printerId.value : this.printerId,
+      supplyType: data.supplyType.present
+          ? data.supplyType.value
+          : this.supplyType,
+      level: data.level.present ? data.level.value : this.level,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      lastChecked: data.lastChecked.present
+          ? data.lastChecked.value
+          : this.lastChecked,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrinterSupplyData(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('supplyType: $supplyType, ')
+          ..write('level: $level, ')
+          ..write('unit: $unit, ')
+          ..write('lastChecked: $lastChecked')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, printerId, supplyType, level, unit, lastChecked);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PrinterSupplyData &&
+          other.id == this.id &&
+          other.printerId == this.printerId &&
+          other.supplyType == this.supplyType &&
+          other.level == this.level &&
+          other.unit == this.unit &&
+          other.lastChecked == this.lastChecked);
+}
+
+class PrinterSuppliesCompanion extends UpdateCompanion<PrinterSupplyData> {
+  final Value<String> id;
+  final Value<String> printerId;
+  final Value<String> supplyType;
+  final Value<int> level;
+  final Value<String> unit;
+  final Value<DateTime> lastChecked;
+  final Value<int> rowid;
+  const PrinterSuppliesCompanion({
+    this.id = const Value.absent(),
+    this.printerId = const Value.absent(),
+    this.supplyType = const Value.absent(),
+    this.level = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.lastChecked = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PrinterSuppliesCompanion.insert({
+    required String id,
+    required String printerId,
+    required String supplyType,
+    required int level,
+    required String unit,
+    required DateTime lastChecked,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       printerId = Value(printerId),
+       supplyType = Value(supplyType),
+       level = Value(level),
+       unit = Value(unit),
+       lastChecked = Value(lastChecked);
+  static Insertable<PrinterSupplyData> custom({
+    Expression<String>? id,
+    Expression<String>? printerId,
+    Expression<String>? supplyType,
+    Expression<int>? level,
+    Expression<String>? unit,
+    Expression<DateTime>? lastChecked,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (printerId != null) 'printer_id': printerId,
+      if (supplyType != null) 'supply_type': supplyType,
+      if (level != null) 'level': level,
+      if (unit != null) 'unit': unit,
+      if (lastChecked != null) 'last_checked': lastChecked,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PrinterSuppliesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? printerId,
+    Value<String>? supplyType,
+    Value<int>? level,
+    Value<String>? unit,
+    Value<DateTime>? lastChecked,
+    Value<int>? rowid,
+  }) {
+    return PrinterSuppliesCompanion(
+      id: id ?? this.id,
+      printerId: printerId ?? this.printerId,
+      supplyType: supplyType ?? this.supplyType,
+      level: level ?? this.level,
+      unit: unit ?? this.unit,
+      lastChecked: lastChecked ?? this.lastChecked,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (printerId.present) {
+      map['printer_id'] = Variable<String>(printerId.value);
+    }
+    if (supplyType.present) {
+      map['supply_type'] = Variable<String>(supplyType.value);
+    }
+    if (level.present) {
+      map['level'] = Variable<int>(level.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    if (lastChecked.present) {
+      map['last_checked'] = Variable<DateTime>(lastChecked.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrinterSuppliesCompanion(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('supplyType: $supplyType, ')
+          ..write('level: $level, ')
+          ..write('unit: $unit, ')
+          ..write('lastChecked: $lastChecked, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PrinterMaintenancesTable extends PrinterMaintenances
+    with TableInfo<$PrinterMaintenancesTable, PrinterMaintenanceData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PrinterMaintenancesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _printerIdMeta = const VerificationMeta(
+    'printerId',
+  );
+  @override
+  late final GeneratedColumn<String> printerId = GeneratedColumn<String>(
+    'printer_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _maintenanceTypeMeta = const VerificationMeta(
+    'maintenanceType',
+  );
+  @override
+  late final GeneratedColumn<String> maintenanceType = GeneratedColumn<String>(
+    'maintenance_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _performedByMeta = const VerificationMeta(
+    'performedBy',
+  );
+  @override
+  late final GeneratedColumn<String> performedBy = GeneratedColumn<String>(
+    'performed_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _performedAtMeta = const VerificationMeta(
+    'performedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> performedAt = GeneratedColumn<DateTime>(
+    'performed_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    printerId,
+    maintenanceType,
+    description,
+    performedBy,
+    performedAt,
+    notes,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'printer_maintenances';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PrinterMaintenanceData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('printer_id')) {
+      context.handle(
+        _printerIdMeta,
+        printerId.isAcceptableOrUnknown(data['printer_id']!, _printerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_printerIdMeta);
+    }
+    if (data.containsKey('maintenance_type')) {
+      context.handle(
+        _maintenanceTypeMeta,
+        maintenanceType.isAcceptableOrUnknown(
+          data['maintenance_type']!,
+          _maintenanceTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_maintenanceTypeMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('performed_by')) {
+      context.handle(
+        _performedByMeta,
+        performedBy.isAcceptableOrUnknown(
+          data['performed_by']!,
+          _performedByMeta,
+        ),
+      );
+    }
+    if (data.containsKey('performed_at')) {
+      context.handle(
+        _performedAtMeta,
+        performedAt.isAcceptableOrUnknown(
+          data['performed_at']!,
+          _performedAtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_performedAtMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PrinterMaintenanceData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PrinterMaintenanceData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      printerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}printer_id'],
+      )!,
+      maintenanceType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}maintenance_type'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      performedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}performed_by'],
+      ),
+      performedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}performed_at'],
+      )!,
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+    );
+  }
+
+  @override
+  $PrinterMaintenancesTable createAlias(String alias) {
+    return $PrinterMaintenancesTable(attachedDatabase, alias);
+  }
+}
+
+class PrinterMaintenanceData extends DataClass
+    implements Insertable<PrinterMaintenanceData> {
+  final String id;
+  final String printerId;
+  final String maintenanceType;
+  final String? description;
+  final String? performedBy;
+  final DateTime performedAt;
+  final String? notes;
+  const PrinterMaintenanceData({
+    required this.id,
+    required this.printerId,
+    required this.maintenanceType,
+    this.description,
+    this.performedBy,
+    required this.performedAt,
+    this.notes,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['printer_id'] = Variable<String>(printerId);
+    map['maintenance_type'] = Variable<String>(maintenanceType);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || performedBy != null) {
+      map['performed_by'] = Variable<String>(performedBy);
+    }
+    map['performed_at'] = Variable<DateTime>(performedAt);
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    return map;
+  }
+
+  PrinterMaintenancesCompanion toCompanion(bool nullToAbsent) {
+    return PrinterMaintenancesCompanion(
+      id: Value(id),
+      printerId: Value(printerId),
+      maintenanceType: Value(maintenanceType),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      performedBy: performedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(performedBy),
+      performedAt: Value(performedAt),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+    );
+  }
+
+  factory PrinterMaintenanceData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PrinterMaintenanceData(
+      id: serializer.fromJson<String>(json['id']),
+      printerId: serializer.fromJson<String>(json['printerId']),
+      maintenanceType: serializer.fromJson<String>(json['maintenanceType']),
+      description: serializer.fromJson<String?>(json['description']),
+      performedBy: serializer.fromJson<String?>(json['performedBy']),
+      performedAt: serializer.fromJson<DateTime>(json['performedAt']),
+      notes: serializer.fromJson<String?>(json['notes']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'printerId': serializer.toJson<String>(printerId),
+      'maintenanceType': serializer.toJson<String>(maintenanceType),
+      'description': serializer.toJson<String?>(description),
+      'performedBy': serializer.toJson<String?>(performedBy),
+      'performedAt': serializer.toJson<DateTime>(performedAt),
+      'notes': serializer.toJson<String?>(notes),
+    };
+  }
+
+  PrinterMaintenanceData copyWith({
+    String? id,
+    String? printerId,
+    String? maintenanceType,
+    Value<String?> description = const Value.absent(),
+    Value<String?> performedBy = const Value.absent(),
+    DateTime? performedAt,
+    Value<String?> notes = const Value.absent(),
+  }) => PrinterMaintenanceData(
+    id: id ?? this.id,
+    printerId: printerId ?? this.printerId,
+    maintenanceType: maintenanceType ?? this.maintenanceType,
+    description: description.present ? description.value : this.description,
+    performedBy: performedBy.present ? performedBy.value : this.performedBy,
+    performedAt: performedAt ?? this.performedAt,
+    notes: notes.present ? notes.value : this.notes,
+  );
+  PrinterMaintenanceData copyWithCompanion(PrinterMaintenancesCompanion data) {
+    return PrinterMaintenanceData(
+      id: data.id.present ? data.id.value : this.id,
+      printerId: data.printerId.present ? data.printerId.value : this.printerId,
+      maintenanceType: data.maintenanceType.present
+          ? data.maintenanceType.value
+          : this.maintenanceType,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      performedBy: data.performedBy.present
+          ? data.performedBy.value
+          : this.performedBy,
+      performedAt: data.performedAt.present
+          ? data.performedAt.value
+          : this.performedAt,
+      notes: data.notes.present ? data.notes.value : this.notes,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrinterMaintenanceData(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('maintenanceType: $maintenanceType, ')
+          ..write('description: $description, ')
+          ..write('performedBy: $performedBy, ')
+          ..write('performedAt: $performedAt, ')
+          ..write('notes: $notes')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    printerId,
+    maintenanceType,
+    description,
+    performedBy,
+    performedAt,
+    notes,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PrinterMaintenanceData &&
+          other.id == this.id &&
+          other.printerId == this.printerId &&
+          other.maintenanceType == this.maintenanceType &&
+          other.description == this.description &&
+          other.performedBy == this.performedBy &&
+          other.performedAt == this.performedAt &&
+          other.notes == this.notes);
+}
+
+class PrinterMaintenancesCompanion
+    extends UpdateCompanion<PrinterMaintenanceData> {
+  final Value<String> id;
+  final Value<String> printerId;
+  final Value<String> maintenanceType;
+  final Value<String?> description;
+  final Value<String?> performedBy;
+  final Value<DateTime> performedAt;
+  final Value<String?> notes;
+  final Value<int> rowid;
+  const PrinterMaintenancesCompanion({
+    this.id = const Value.absent(),
+    this.printerId = const Value.absent(),
+    this.maintenanceType = const Value.absent(),
+    this.description = const Value.absent(),
+    this.performedBy = const Value.absent(),
+    this.performedAt = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PrinterMaintenancesCompanion.insert({
+    required String id,
+    required String printerId,
+    required String maintenanceType,
+    this.description = const Value.absent(),
+    this.performedBy = const Value.absent(),
+    required DateTime performedAt,
+    this.notes = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       printerId = Value(printerId),
+       maintenanceType = Value(maintenanceType),
+       performedAt = Value(performedAt);
+  static Insertable<PrinterMaintenanceData> custom({
+    Expression<String>? id,
+    Expression<String>? printerId,
+    Expression<String>? maintenanceType,
+    Expression<String>? description,
+    Expression<String>? performedBy,
+    Expression<DateTime>? performedAt,
+    Expression<String>? notes,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (printerId != null) 'printer_id': printerId,
+      if (maintenanceType != null) 'maintenance_type': maintenanceType,
+      if (description != null) 'description': description,
+      if (performedBy != null) 'performed_by': performedBy,
+      if (performedAt != null) 'performed_at': performedAt,
+      if (notes != null) 'notes': notes,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PrinterMaintenancesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? printerId,
+    Value<String>? maintenanceType,
+    Value<String?>? description,
+    Value<String?>? performedBy,
+    Value<DateTime>? performedAt,
+    Value<String?>? notes,
+    Value<int>? rowid,
+  }) {
+    return PrinterMaintenancesCompanion(
+      id: id ?? this.id,
+      printerId: printerId ?? this.printerId,
+      maintenanceType: maintenanceType ?? this.maintenanceType,
+      description: description ?? this.description,
+      performedBy: performedBy ?? this.performedBy,
+      performedAt: performedAt ?? this.performedAt,
+      notes: notes ?? this.notes,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (printerId.present) {
+      map['printer_id'] = Variable<String>(printerId.value);
+    }
+    if (maintenanceType.present) {
+      map['maintenance_type'] = Variable<String>(maintenanceType.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (performedBy.present) {
+      map['performed_by'] = Variable<String>(performedBy.value);
+    }
+    if (performedAt.present) {
+      map['performed_at'] = Variable<DateTime>(performedAt.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrinterMaintenancesCompanion(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('maintenanceType: $maintenanceType, ')
+          ..write('description: $description, ')
+          ..write('performedBy: $performedBy, ')
+          ..write('performedAt: $performedAt, ')
+          ..write('notes: $notes, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PrinterCountersTable extends PrinterCounters
+    with TableInfo<$PrinterCountersTable, PrinterCounterData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PrinterCountersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _printerIdMeta = const VerificationMeta(
+    'printerId',
+  );
+  @override
+  late final GeneratedColumn<String> printerId = GeneratedColumn<String>(
+    'printer_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalPagesPrintedMeta = const VerificationMeta(
+    'totalPagesPrinted',
+  );
+  @override
+  late final GeneratedColumn<int> totalPagesPrinted = GeneratedColumn<int>(
+    'total_pages_printed',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _totalJobsProcessedMeta =
+      const VerificationMeta('totalJobsProcessed');
+  @override
+  late final GeneratedColumn<int> totalJobsProcessed = GeneratedColumn<int>(
+    'total_jobs_processed',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _totalBytesPrintedMeta = const VerificationMeta(
+    'totalBytesPrinted',
+  );
+  @override
+  late final GeneratedColumn<int> totalBytesPrinted = GeneratedColumn<int>(
+    'total_bytes_printed',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastResetMeta = const VerificationMeta(
+    'lastReset',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastReset = GeneratedColumn<DateTime>(
+    'last_reset',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    printerId,
+    totalPagesPrinted,
+    totalJobsProcessed,
+    totalBytesPrinted,
+    lastReset,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'printer_counters';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PrinterCounterData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('printer_id')) {
+      context.handle(
+        _printerIdMeta,
+        printerId.isAcceptableOrUnknown(data['printer_id']!, _printerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_printerIdMeta);
+    }
+    if (data.containsKey('total_pages_printed')) {
+      context.handle(
+        _totalPagesPrintedMeta,
+        totalPagesPrinted.isAcceptableOrUnknown(
+          data['total_pages_printed']!,
+          _totalPagesPrintedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('total_jobs_processed')) {
+      context.handle(
+        _totalJobsProcessedMeta,
+        totalJobsProcessed.isAcceptableOrUnknown(
+          data['total_jobs_processed']!,
+          _totalJobsProcessedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('total_bytes_printed')) {
+      context.handle(
+        _totalBytesPrintedMeta,
+        totalBytesPrinted.isAcceptableOrUnknown(
+          data['total_bytes_printed']!,
+          _totalBytesPrintedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_reset')) {
+      context.handle(
+        _lastResetMeta,
+        lastReset.isAcceptableOrUnknown(data['last_reset']!, _lastResetMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {printerId};
+  @override
+  PrinterCounterData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PrinterCounterData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      printerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}printer_id'],
+      )!,
+      totalPagesPrinted: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_pages_printed'],
+      )!,
+      totalJobsProcessed: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_jobs_processed'],
+      )!,
+      totalBytesPrinted: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_bytes_printed'],
+      )!,
+      lastReset: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_reset'],
+      ),
+    );
+  }
+
+  @override
+  $PrinterCountersTable createAlias(String alias) {
+    return $PrinterCountersTable(attachedDatabase, alias);
+  }
+}
+
+class PrinterCounterData extends DataClass
+    implements Insertable<PrinterCounterData> {
+  final String id;
+  final String printerId;
+  final int totalPagesPrinted;
+  final int totalJobsProcessed;
+  final int totalBytesPrinted;
+  final DateTime? lastReset;
+  const PrinterCounterData({
+    required this.id,
+    required this.printerId,
+    required this.totalPagesPrinted,
+    required this.totalJobsProcessed,
+    required this.totalBytesPrinted,
+    this.lastReset,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['printer_id'] = Variable<String>(printerId);
+    map['total_pages_printed'] = Variable<int>(totalPagesPrinted);
+    map['total_jobs_processed'] = Variable<int>(totalJobsProcessed);
+    map['total_bytes_printed'] = Variable<int>(totalBytesPrinted);
+    if (!nullToAbsent || lastReset != null) {
+      map['last_reset'] = Variable<DateTime>(lastReset);
+    }
+    return map;
+  }
+
+  PrinterCountersCompanion toCompanion(bool nullToAbsent) {
+    return PrinterCountersCompanion(
+      id: Value(id),
+      printerId: Value(printerId),
+      totalPagesPrinted: Value(totalPagesPrinted),
+      totalJobsProcessed: Value(totalJobsProcessed),
+      totalBytesPrinted: Value(totalBytesPrinted),
+      lastReset: lastReset == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastReset),
+    );
+  }
+
+  factory PrinterCounterData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PrinterCounterData(
+      id: serializer.fromJson<String>(json['id']),
+      printerId: serializer.fromJson<String>(json['printerId']),
+      totalPagesPrinted: serializer.fromJson<int>(json['totalPagesPrinted']),
+      totalJobsProcessed: serializer.fromJson<int>(json['totalJobsProcessed']),
+      totalBytesPrinted: serializer.fromJson<int>(json['totalBytesPrinted']),
+      lastReset: serializer.fromJson<DateTime?>(json['lastReset']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'printerId': serializer.toJson<String>(printerId),
+      'totalPagesPrinted': serializer.toJson<int>(totalPagesPrinted),
+      'totalJobsProcessed': serializer.toJson<int>(totalJobsProcessed),
+      'totalBytesPrinted': serializer.toJson<int>(totalBytesPrinted),
+      'lastReset': serializer.toJson<DateTime?>(lastReset),
+    };
+  }
+
+  PrinterCounterData copyWith({
+    String? id,
+    String? printerId,
+    int? totalPagesPrinted,
+    int? totalJobsProcessed,
+    int? totalBytesPrinted,
+    Value<DateTime?> lastReset = const Value.absent(),
+  }) => PrinterCounterData(
+    id: id ?? this.id,
+    printerId: printerId ?? this.printerId,
+    totalPagesPrinted: totalPagesPrinted ?? this.totalPagesPrinted,
+    totalJobsProcessed: totalJobsProcessed ?? this.totalJobsProcessed,
+    totalBytesPrinted: totalBytesPrinted ?? this.totalBytesPrinted,
+    lastReset: lastReset.present ? lastReset.value : this.lastReset,
+  );
+  PrinterCounterData copyWithCompanion(PrinterCountersCompanion data) {
+    return PrinterCounterData(
+      id: data.id.present ? data.id.value : this.id,
+      printerId: data.printerId.present ? data.printerId.value : this.printerId,
+      totalPagesPrinted: data.totalPagesPrinted.present
+          ? data.totalPagesPrinted.value
+          : this.totalPagesPrinted,
+      totalJobsProcessed: data.totalJobsProcessed.present
+          ? data.totalJobsProcessed.value
+          : this.totalJobsProcessed,
+      totalBytesPrinted: data.totalBytesPrinted.present
+          ? data.totalBytesPrinted.value
+          : this.totalBytesPrinted,
+      lastReset: data.lastReset.present ? data.lastReset.value : this.lastReset,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrinterCounterData(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('totalPagesPrinted: $totalPagesPrinted, ')
+          ..write('totalJobsProcessed: $totalJobsProcessed, ')
+          ..write('totalBytesPrinted: $totalBytesPrinted, ')
+          ..write('lastReset: $lastReset')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    printerId,
+    totalPagesPrinted,
+    totalJobsProcessed,
+    totalBytesPrinted,
+    lastReset,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PrinterCounterData &&
+          other.id == this.id &&
+          other.printerId == this.printerId &&
+          other.totalPagesPrinted == this.totalPagesPrinted &&
+          other.totalJobsProcessed == this.totalJobsProcessed &&
+          other.totalBytesPrinted == this.totalBytesPrinted &&
+          other.lastReset == this.lastReset);
+}
+
+class PrinterCountersCompanion extends UpdateCompanion<PrinterCounterData> {
+  final Value<String> id;
+  final Value<String> printerId;
+  final Value<int> totalPagesPrinted;
+  final Value<int> totalJobsProcessed;
+  final Value<int> totalBytesPrinted;
+  final Value<DateTime?> lastReset;
+  final Value<int> rowid;
+  const PrinterCountersCompanion({
+    this.id = const Value.absent(),
+    this.printerId = const Value.absent(),
+    this.totalPagesPrinted = const Value.absent(),
+    this.totalJobsProcessed = const Value.absent(),
+    this.totalBytesPrinted = const Value.absent(),
+    this.lastReset = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PrinterCountersCompanion.insert({
+    required String id,
+    required String printerId,
+    this.totalPagesPrinted = const Value.absent(),
+    this.totalJobsProcessed = const Value.absent(),
+    this.totalBytesPrinted = const Value.absent(),
+    this.lastReset = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       printerId = Value(printerId);
+  static Insertable<PrinterCounterData> custom({
+    Expression<String>? id,
+    Expression<String>? printerId,
+    Expression<int>? totalPagesPrinted,
+    Expression<int>? totalJobsProcessed,
+    Expression<int>? totalBytesPrinted,
+    Expression<DateTime>? lastReset,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (printerId != null) 'printer_id': printerId,
+      if (totalPagesPrinted != null) 'total_pages_printed': totalPagesPrinted,
+      if (totalJobsProcessed != null)
+        'total_jobs_processed': totalJobsProcessed,
+      if (totalBytesPrinted != null) 'total_bytes_printed': totalBytesPrinted,
+      if (lastReset != null) 'last_reset': lastReset,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PrinterCountersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? printerId,
+    Value<int>? totalPagesPrinted,
+    Value<int>? totalJobsProcessed,
+    Value<int>? totalBytesPrinted,
+    Value<DateTime?>? lastReset,
+    Value<int>? rowid,
+  }) {
+    return PrinterCountersCompanion(
+      id: id ?? this.id,
+      printerId: printerId ?? this.printerId,
+      totalPagesPrinted: totalPagesPrinted ?? this.totalPagesPrinted,
+      totalJobsProcessed: totalJobsProcessed ?? this.totalJobsProcessed,
+      totalBytesPrinted: totalBytesPrinted ?? this.totalBytesPrinted,
+      lastReset: lastReset ?? this.lastReset,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (printerId.present) {
+      map['printer_id'] = Variable<String>(printerId.value);
+    }
+    if (totalPagesPrinted.present) {
+      map['total_pages_printed'] = Variable<int>(totalPagesPrinted.value);
+    }
+    if (totalJobsProcessed.present) {
+      map['total_jobs_processed'] = Variable<int>(totalJobsProcessed.value);
+    }
+    if (totalBytesPrinted.present) {
+      map['total_bytes_printed'] = Variable<int>(totalBytesPrinted.value);
+    }
+    if (lastReset.present) {
+      map['last_reset'] = Variable<DateTime>(lastReset.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrinterCountersCompanion(')
+          ..write('id: $id, ')
+          ..write('printerId: $printerId, ')
+          ..write('totalPagesPrinted: $totalPagesPrinted, ')
+          ..write('totalJobsProcessed: $totalJobsProcessed, ')
+          ..write('totalBytesPrinted: $totalBytesPrinted, ')
+          ..write('lastReset: $lastReset, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -4414,6 +6725,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $GroupsTable groups = $GroupsTable(this);
   late final $LogsTable logs = $LogsTable(this);
   late final $EmailConfigsTable emailConfigs = $EmailConfigsTable(this);
+  late final $UsersTable users = $UsersTable(this);
+  late final $PrinterSuppliesTable printerSupplies = $PrinterSuppliesTable(
+    this,
+  );
+  late final $PrinterMaintenancesTable printerMaintenances =
+      $PrinterMaintenancesTable(this);
+  late final $PrinterCountersTable printerCounters = $PrinterCountersTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4425,6 +6745,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     groups,
     logs,
     emailConfigs,
+    users,
+    printerSupplies,
+    printerMaintenances,
+    printerCounters,
   ];
 }
 
@@ -4794,6 +7118,10 @@ typedef $$PrintersTableCreateCompanionBuilder =
       Value<bool> shared,
       Value<String> allowedGroups,
       Value<DateTime?> lastSeen,
+      Value<int> totalPagesPrinted,
+      Value<String> tonerLevel,
+      Value<String> paperLevel,
+      Value<DateTime?> lastMaintenanceDate,
       required DateTime createdAt,
       required DateTime updatedAt,
       Value<int> rowid,
@@ -4813,6 +7141,10 @@ typedef $$PrintersTableUpdateCompanionBuilder =
       Value<bool> shared,
       Value<String> allowedGroups,
       Value<DateTime?> lastSeen,
+      Value<int> totalPagesPrinted,
+      Value<String> tonerLevel,
+      Value<String> paperLevel,
+      Value<DateTime?> lastMaintenanceDate,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<int> rowid,
@@ -4889,6 +7221,26 @@ class $$PrintersTableFilterComposer
 
   ColumnFilters<DateTime> get lastSeen => $composableBuilder(
     column: $table.lastSeen,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalPagesPrinted => $composableBuilder(
+    column: $table.totalPagesPrinted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tonerLevel => $composableBuilder(
+    column: $table.tonerLevel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get paperLevel => $composableBuilder(
+    column: $table.paperLevel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastMaintenanceDate => $composableBuilder(
+    column: $table.lastMaintenanceDate,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4977,6 +7329,26 @@ class $$PrintersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get totalPagesPrinted => $composableBuilder(
+    column: $table.totalPagesPrinted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tonerLevel => $composableBuilder(
+    column: $table.tonerLevel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get paperLevel => $composableBuilder(
+    column: $table.paperLevel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastMaintenanceDate => $composableBuilder(
+    column: $table.lastMaintenanceDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -5042,6 +7414,26 @@ class $$PrintersTableAnnotationComposer
   GeneratedColumn<DateTime> get lastSeen =>
       $composableBuilder(column: $table.lastSeen, builder: (column) => column);
 
+  GeneratedColumn<int> get totalPagesPrinted => $composableBuilder(
+    column: $table.totalPagesPrinted,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get tonerLevel => $composableBuilder(
+    column: $table.tonerLevel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get paperLevel => $composableBuilder(
+    column: $table.paperLevel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastMaintenanceDate => $composableBuilder(
+    column: $table.lastMaintenanceDate,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
@@ -5093,6 +7485,10 @@ class $$PrintersTableTableManager
                 Value<bool> shared = const Value.absent(),
                 Value<String> allowedGroups = const Value.absent(),
                 Value<DateTime?> lastSeen = const Value.absent(),
+                Value<int> totalPagesPrinted = const Value.absent(),
+                Value<String> tonerLevel = const Value.absent(),
+                Value<String> paperLevel = const Value.absent(),
+                Value<DateTime?> lastMaintenanceDate = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -5110,6 +7506,10 @@ class $$PrintersTableTableManager
                 shared: shared,
                 allowedGroups: allowedGroups,
                 lastSeen: lastSeen,
+                totalPagesPrinted: totalPagesPrinted,
+                tonerLevel: tonerLevel,
+                paperLevel: paperLevel,
+                lastMaintenanceDate: lastMaintenanceDate,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,
@@ -5129,6 +7529,10 @@ class $$PrintersTableTableManager
                 Value<bool> shared = const Value.absent(),
                 Value<String> allowedGroups = const Value.absent(),
                 Value<DateTime?> lastSeen = const Value.absent(),
+                Value<int> totalPagesPrinted = const Value.absent(),
+                Value<String> tonerLevel = const Value.absent(),
+                Value<String> paperLevel = const Value.absent(),
+                Value<DateTime?> lastMaintenanceDate = const Value.absent(),
                 required DateTime createdAt,
                 required DateTime updatedAt,
                 Value<int> rowid = const Value.absent(),
@@ -5146,6 +7550,10 @@ class $$PrintersTableTableManager
                 shared: shared,
                 allowedGroups: allowedGroups,
                 lastSeen: lastSeen,
+                totalPagesPrinted: totalPagesPrinted,
+                tonerLevel: tonerLevel,
+                paperLevel: paperLevel,
+                lastMaintenanceDate: lastMaintenanceDate,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,
@@ -5190,6 +7598,11 @@ typedef $$JobsTableCreateCompanionBuilder =
       Value<DateTime?> completedAt,
       Value<String?> errorCode,
       Value<String?> errorMessage,
+      Value<String?> userId,
+      Value<String?> username,
+      Value<String?> documentType,
+      Value<String?> department,
+      Value<int?> estimatedCost,
       Value<int> rowid,
     });
 typedef $$JobsTableUpdateCompanionBuilder =
@@ -5210,6 +7623,11 @@ typedef $$JobsTableUpdateCompanionBuilder =
       Value<DateTime?> completedAt,
       Value<String?> errorCode,
       Value<String?> errorMessage,
+      Value<String?> userId,
+      Value<String?> username,
+      Value<String?> documentType,
+      Value<String?> department,
+      Value<int?> estimatedCost,
       Value<int> rowid,
     });
 
@@ -5298,6 +7716,31 @@ class $$JobsTableFilterComposer extends Composer<_$AppDatabase, $JobsTable> {
 
   ColumnFilters<String> get errorMessage => $composableBuilder(
     column: $table.errorMessage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get documentType => $composableBuilder(
+    column: $table.documentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get estimatedCost => $composableBuilder(
+    column: $table.estimatedCost,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -5389,6 +7832,31 @@ class $$JobsTableOrderingComposer extends Composer<_$AppDatabase, $JobsTable> {
     column: $table.errorMessage,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get documentType => $composableBuilder(
+    column: $table.documentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get estimatedCost => $composableBuilder(
+    column: $table.estimatedCost,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$JobsTableAnnotationComposer
@@ -5463,6 +7931,27 @@ class $$JobsTableAnnotationComposer
     column: $table.errorMessage,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get username =>
+      $composableBuilder(column: $table.username, builder: (column) => column);
+
+  GeneratedColumn<String> get documentType => $composableBuilder(
+    column: $table.documentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get estimatedCost => $composableBuilder(
+    column: $table.estimatedCost,
+    builder: (column) => column,
+  );
 }
 
 class $$JobsTableTableManager
@@ -5509,6 +7998,11 @@ class $$JobsTableTableManager
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<String?> errorCode = const Value.absent(),
                 Value<String?> errorMessage = const Value.absent(),
+                Value<String?> userId = const Value.absent(),
+                Value<String?> username = const Value.absent(),
+                Value<String?> documentType = const Value.absent(),
+                Value<String?> department = const Value.absent(),
+                Value<int?> estimatedCost = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JobsCompanion(
                 id: id,
@@ -5527,6 +8021,11 @@ class $$JobsTableTableManager
                 completedAt: completedAt,
                 errorCode: errorCode,
                 errorMessage: errorMessage,
+                userId: userId,
+                username: username,
+                documentType: documentType,
+                department: department,
+                estimatedCost: estimatedCost,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -5547,6 +8046,11 @@ class $$JobsTableTableManager
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<String?> errorCode = const Value.absent(),
                 Value<String?> errorMessage = const Value.absent(),
+                Value<String?> userId = const Value.absent(),
+                Value<String?> username = const Value.absent(),
+                Value<String?> documentType = const Value.absent(),
+                Value<String?> department = const Value.absent(),
+                Value<int?> estimatedCost = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JobsCompanion.insert(
                 id: id,
@@ -5565,6 +8069,11 @@ class $$JobsTableTableManager
                 completedAt: completedAt,
                 errorCode: errorCode,
                 errorMessage: errorMessage,
+                userId: userId,
+                username: username,
+                documentType: documentType,
+                department: department,
+                estimatedCost: estimatedCost,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -6472,6 +8981,986 @@ typedef $$EmailConfigsTableProcessedTableManager =
       EmailConfigEntry,
       PrefetchHooks Function()
     >;
+typedef $$UsersTableCreateCompanionBuilder =
+    UsersCompanion Function({
+      required String id,
+      required String username,
+      Value<String?> displayName,
+      Value<String?> department,
+      Value<String?> email,
+      Value<String> groupIds,
+      required DateTime createdAt,
+      Value<DateTime?> lastSeen,
+      Value<int> rowid,
+    });
+typedef $$UsersTableUpdateCompanionBuilder =
+    UsersCompanion Function({
+      Value<String> id,
+      Value<String> username,
+      Value<String?> displayName,
+      Value<String?> department,
+      Value<String?> email,
+      Value<String> groupIds,
+      Value<DateTime> createdAt,
+      Value<DateTime?> lastSeen,
+      Value<int> rowid,
+    });
+
+class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
+  $$UsersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get groupIds => $composableBuilder(
+    column: $table.groupIds,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastSeen => $composableBuilder(
+    column: $table.lastSeen,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$UsersTableOrderingComposer
+    extends Composer<_$AppDatabase, $UsersTable> {
+  $$UsersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get groupIds => $composableBuilder(
+    column: $table.groupIds,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastSeen => $composableBuilder(
+    column: $table.lastSeen,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$UsersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $UsersTable> {
+  $$UsersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get username =>
+      $composableBuilder(column: $table.username, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get groupIds =>
+      $composableBuilder(column: $table.groupIds, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastSeen =>
+      $composableBuilder(column: $table.lastSeen, builder: (column) => column);
+}
+
+class $$UsersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $UsersTable,
+          UserData,
+          $$UsersTableFilterComposer,
+          $$UsersTableOrderingComposer,
+          $$UsersTableAnnotationComposer,
+          $$UsersTableCreateCompanionBuilder,
+          $$UsersTableUpdateCompanionBuilder,
+          (UserData, BaseReferences<_$AppDatabase, $UsersTable, UserData>),
+          UserData,
+          PrefetchHooks Function()
+        > {
+  $$UsersTableTableManager(_$AppDatabase db, $UsersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$UsersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$UsersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$UsersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> username = const Value.absent(),
+                Value<String?> displayName = const Value.absent(),
+                Value<String?> department = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String> groupIds = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime?> lastSeen = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UsersCompanion(
+                id: id,
+                username: username,
+                displayName: displayName,
+                department: department,
+                email: email,
+                groupIds: groupIds,
+                createdAt: createdAt,
+                lastSeen: lastSeen,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String username,
+                Value<String?> displayName = const Value.absent(),
+                Value<String?> department = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String> groupIds = const Value.absent(),
+                required DateTime createdAt,
+                Value<DateTime?> lastSeen = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UsersCompanion.insert(
+                id: id,
+                username: username,
+                displayName: displayName,
+                department: department,
+                email: email,
+                groupIds: groupIds,
+                createdAt: createdAt,
+                lastSeen: lastSeen,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$UsersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $UsersTable,
+      UserData,
+      $$UsersTableFilterComposer,
+      $$UsersTableOrderingComposer,
+      $$UsersTableAnnotationComposer,
+      $$UsersTableCreateCompanionBuilder,
+      $$UsersTableUpdateCompanionBuilder,
+      (UserData, BaseReferences<_$AppDatabase, $UsersTable, UserData>),
+      UserData,
+      PrefetchHooks Function()
+    >;
+typedef $$PrinterSuppliesTableCreateCompanionBuilder =
+    PrinterSuppliesCompanion Function({
+      required String id,
+      required String printerId,
+      required String supplyType,
+      required int level,
+      required String unit,
+      required DateTime lastChecked,
+      Value<int> rowid,
+    });
+typedef $$PrinterSuppliesTableUpdateCompanionBuilder =
+    PrinterSuppliesCompanion Function({
+      Value<String> id,
+      Value<String> printerId,
+      Value<String> supplyType,
+      Value<int> level,
+      Value<String> unit,
+      Value<DateTime> lastChecked,
+      Value<int> rowid,
+    });
+
+class $$PrinterSuppliesTableFilterComposer
+    extends Composer<_$AppDatabase, $PrinterSuppliesTable> {
+  $$PrinterSuppliesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get supplyType => $composableBuilder(
+    column: $table.supplyType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get level => $composableBuilder(
+    column: $table.level,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastChecked => $composableBuilder(
+    column: $table.lastChecked,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PrinterSuppliesTableOrderingComposer
+    extends Composer<_$AppDatabase, $PrinterSuppliesTable> {
+  $$PrinterSuppliesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get supplyType => $composableBuilder(
+    column: $table.supplyType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get level => $composableBuilder(
+    column: $table.level,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastChecked => $composableBuilder(
+    column: $table.lastChecked,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PrinterSuppliesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PrinterSuppliesTable> {
+  $$PrinterSuppliesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get printerId =>
+      $composableBuilder(column: $table.printerId, builder: (column) => column);
+
+  GeneratedColumn<String> get supplyType => $composableBuilder(
+    column: $table.supplyType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get level =>
+      $composableBuilder(column: $table.level, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastChecked => $composableBuilder(
+    column: $table.lastChecked,
+    builder: (column) => column,
+  );
+}
+
+class $$PrinterSuppliesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PrinterSuppliesTable,
+          PrinterSupplyData,
+          $$PrinterSuppliesTableFilterComposer,
+          $$PrinterSuppliesTableOrderingComposer,
+          $$PrinterSuppliesTableAnnotationComposer,
+          $$PrinterSuppliesTableCreateCompanionBuilder,
+          $$PrinterSuppliesTableUpdateCompanionBuilder,
+          (
+            PrinterSupplyData,
+            BaseReferences<
+              _$AppDatabase,
+              $PrinterSuppliesTable,
+              PrinterSupplyData
+            >,
+          ),
+          PrinterSupplyData,
+          PrefetchHooks Function()
+        > {
+  $$PrinterSuppliesTableTableManager(
+    _$AppDatabase db,
+    $PrinterSuppliesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PrinterSuppliesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PrinterSuppliesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PrinterSuppliesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> printerId = const Value.absent(),
+                Value<String> supplyType = const Value.absent(),
+                Value<int> level = const Value.absent(),
+                Value<String> unit = const Value.absent(),
+                Value<DateTime> lastChecked = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PrinterSuppliesCompanion(
+                id: id,
+                printerId: printerId,
+                supplyType: supplyType,
+                level: level,
+                unit: unit,
+                lastChecked: lastChecked,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String printerId,
+                required String supplyType,
+                required int level,
+                required String unit,
+                required DateTime lastChecked,
+                Value<int> rowid = const Value.absent(),
+              }) => PrinterSuppliesCompanion.insert(
+                id: id,
+                printerId: printerId,
+                supplyType: supplyType,
+                level: level,
+                unit: unit,
+                lastChecked: lastChecked,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PrinterSuppliesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PrinterSuppliesTable,
+      PrinterSupplyData,
+      $$PrinterSuppliesTableFilterComposer,
+      $$PrinterSuppliesTableOrderingComposer,
+      $$PrinterSuppliesTableAnnotationComposer,
+      $$PrinterSuppliesTableCreateCompanionBuilder,
+      $$PrinterSuppliesTableUpdateCompanionBuilder,
+      (
+        PrinterSupplyData,
+        BaseReferences<_$AppDatabase, $PrinterSuppliesTable, PrinterSupplyData>,
+      ),
+      PrinterSupplyData,
+      PrefetchHooks Function()
+    >;
+typedef $$PrinterMaintenancesTableCreateCompanionBuilder =
+    PrinterMaintenancesCompanion Function({
+      required String id,
+      required String printerId,
+      required String maintenanceType,
+      Value<String?> description,
+      Value<String?> performedBy,
+      required DateTime performedAt,
+      Value<String?> notes,
+      Value<int> rowid,
+    });
+typedef $$PrinterMaintenancesTableUpdateCompanionBuilder =
+    PrinterMaintenancesCompanion Function({
+      Value<String> id,
+      Value<String> printerId,
+      Value<String> maintenanceType,
+      Value<String?> description,
+      Value<String?> performedBy,
+      Value<DateTime> performedAt,
+      Value<String?> notes,
+      Value<int> rowid,
+    });
+
+class $$PrinterMaintenancesTableFilterComposer
+    extends Composer<_$AppDatabase, $PrinterMaintenancesTable> {
+  $$PrinterMaintenancesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get maintenanceType => $composableBuilder(
+    column: $table.maintenanceType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get performedBy => $composableBuilder(
+    column: $table.performedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get performedAt => $composableBuilder(
+    column: $table.performedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PrinterMaintenancesTableOrderingComposer
+    extends Composer<_$AppDatabase, $PrinterMaintenancesTable> {
+  $$PrinterMaintenancesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get maintenanceType => $composableBuilder(
+    column: $table.maintenanceType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get performedBy => $composableBuilder(
+    column: $table.performedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get performedAt => $composableBuilder(
+    column: $table.performedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PrinterMaintenancesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PrinterMaintenancesTable> {
+  $$PrinterMaintenancesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get printerId =>
+      $composableBuilder(column: $table.printerId, builder: (column) => column);
+
+  GeneratedColumn<String> get maintenanceType => $composableBuilder(
+    column: $table.maintenanceType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get performedBy => $composableBuilder(
+    column: $table.performedBy,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get performedAt => $composableBuilder(
+    column: $table.performedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+}
+
+class $$PrinterMaintenancesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PrinterMaintenancesTable,
+          PrinterMaintenanceData,
+          $$PrinterMaintenancesTableFilterComposer,
+          $$PrinterMaintenancesTableOrderingComposer,
+          $$PrinterMaintenancesTableAnnotationComposer,
+          $$PrinterMaintenancesTableCreateCompanionBuilder,
+          $$PrinterMaintenancesTableUpdateCompanionBuilder,
+          (
+            PrinterMaintenanceData,
+            BaseReferences<
+              _$AppDatabase,
+              $PrinterMaintenancesTable,
+              PrinterMaintenanceData
+            >,
+          ),
+          PrinterMaintenanceData,
+          PrefetchHooks Function()
+        > {
+  $$PrinterMaintenancesTableTableManager(
+    _$AppDatabase db,
+    $PrinterMaintenancesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PrinterMaintenancesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PrinterMaintenancesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$PrinterMaintenancesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> printerId = const Value.absent(),
+                Value<String> maintenanceType = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String?> performedBy = const Value.absent(),
+                Value<DateTime> performedAt = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PrinterMaintenancesCompanion(
+                id: id,
+                printerId: printerId,
+                maintenanceType: maintenanceType,
+                description: description,
+                performedBy: performedBy,
+                performedAt: performedAt,
+                notes: notes,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String printerId,
+                required String maintenanceType,
+                Value<String?> description = const Value.absent(),
+                Value<String?> performedBy = const Value.absent(),
+                required DateTime performedAt,
+                Value<String?> notes = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PrinterMaintenancesCompanion.insert(
+                id: id,
+                printerId: printerId,
+                maintenanceType: maintenanceType,
+                description: description,
+                performedBy: performedBy,
+                performedAt: performedAt,
+                notes: notes,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PrinterMaintenancesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PrinterMaintenancesTable,
+      PrinterMaintenanceData,
+      $$PrinterMaintenancesTableFilterComposer,
+      $$PrinterMaintenancesTableOrderingComposer,
+      $$PrinterMaintenancesTableAnnotationComposer,
+      $$PrinterMaintenancesTableCreateCompanionBuilder,
+      $$PrinterMaintenancesTableUpdateCompanionBuilder,
+      (
+        PrinterMaintenanceData,
+        BaseReferences<
+          _$AppDatabase,
+          $PrinterMaintenancesTable,
+          PrinterMaintenanceData
+        >,
+      ),
+      PrinterMaintenanceData,
+      PrefetchHooks Function()
+    >;
+typedef $$PrinterCountersTableCreateCompanionBuilder =
+    PrinterCountersCompanion Function({
+      required String id,
+      required String printerId,
+      Value<int> totalPagesPrinted,
+      Value<int> totalJobsProcessed,
+      Value<int> totalBytesPrinted,
+      Value<DateTime?> lastReset,
+      Value<int> rowid,
+    });
+typedef $$PrinterCountersTableUpdateCompanionBuilder =
+    PrinterCountersCompanion Function({
+      Value<String> id,
+      Value<String> printerId,
+      Value<int> totalPagesPrinted,
+      Value<int> totalJobsProcessed,
+      Value<int> totalBytesPrinted,
+      Value<DateTime?> lastReset,
+      Value<int> rowid,
+    });
+
+class $$PrinterCountersTableFilterComposer
+    extends Composer<_$AppDatabase, $PrinterCountersTable> {
+  $$PrinterCountersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalPagesPrinted => $composableBuilder(
+    column: $table.totalPagesPrinted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalJobsProcessed => $composableBuilder(
+    column: $table.totalJobsProcessed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalBytesPrinted => $composableBuilder(
+    column: $table.totalBytesPrinted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastReset => $composableBuilder(
+    column: $table.lastReset,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PrinterCountersTableOrderingComposer
+    extends Composer<_$AppDatabase, $PrinterCountersTable> {
+  $$PrinterCountersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get printerId => $composableBuilder(
+    column: $table.printerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalPagesPrinted => $composableBuilder(
+    column: $table.totalPagesPrinted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalJobsProcessed => $composableBuilder(
+    column: $table.totalJobsProcessed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalBytesPrinted => $composableBuilder(
+    column: $table.totalBytesPrinted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastReset => $composableBuilder(
+    column: $table.lastReset,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PrinterCountersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PrinterCountersTable> {
+  $$PrinterCountersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get printerId =>
+      $composableBuilder(column: $table.printerId, builder: (column) => column);
+
+  GeneratedColumn<int> get totalPagesPrinted => $composableBuilder(
+    column: $table.totalPagesPrinted,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalJobsProcessed => $composableBuilder(
+    column: $table.totalJobsProcessed,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalBytesPrinted => $composableBuilder(
+    column: $table.totalBytesPrinted,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastReset =>
+      $composableBuilder(column: $table.lastReset, builder: (column) => column);
+}
+
+class $$PrinterCountersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PrinterCountersTable,
+          PrinterCounterData,
+          $$PrinterCountersTableFilterComposer,
+          $$PrinterCountersTableOrderingComposer,
+          $$PrinterCountersTableAnnotationComposer,
+          $$PrinterCountersTableCreateCompanionBuilder,
+          $$PrinterCountersTableUpdateCompanionBuilder,
+          (
+            PrinterCounterData,
+            BaseReferences<
+              _$AppDatabase,
+              $PrinterCountersTable,
+              PrinterCounterData
+            >,
+          ),
+          PrinterCounterData,
+          PrefetchHooks Function()
+        > {
+  $$PrinterCountersTableTableManager(
+    _$AppDatabase db,
+    $PrinterCountersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PrinterCountersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PrinterCountersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PrinterCountersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> printerId = const Value.absent(),
+                Value<int> totalPagesPrinted = const Value.absent(),
+                Value<int> totalJobsProcessed = const Value.absent(),
+                Value<int> totalBytesPrinted = const Value.absent(),
+                Value<DateTime?> lastReset = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PrinterCountersCompanion(
+                id: id,
+                printerId: printerId,
+                totalPagesPrinted: totalPagesPrinted,
+                totalJobsProcessed: totalJobsProcessed,
+                totalBytesPrinted: totalBytesPrinted,
+                lastReset: lastReset,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String printerId,
+                Value<int> totalPagesPrinted = const Value.absent(),
+                Value<int> totalJobsProcessed = const Value.absent(),
+                Value<int> totalBytesPrinted = const Value.absent(),
+                Value<DateTime?> lastReset = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PrinterCountersCompanion.insert(
+                id: id,
+                printerId: printerId,
+                totalPagesPrinted: totalPagesPrinted,
+                totalJobsProcessed: totalJobsProcessed,
+                totalBytesPrinted: totalBytesPrinted,
+                lastReset: lastReset,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PrinterCountersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PrinterCountersTable,
+      PrinterCounterData,
+      $$PrinterCountersTableFilterComposer,
+      $$PrinterCountersTableOrderingComposer,
+      $$PrinterCountersTableAnnotationComposer,
+      $$PrinterCountersTableCreateCompanionBuilder,
+      $$PrinterCountersTableUpdateCompanionBuilder,
+      (
+        PrinterCounterData,
+        BaseReferences<
+          _$AppDatabase,
+          $PrinterCountersTable,
+          PrinterCounterData
+        >,
+      ),
+      PrinterCounterData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -6486,4 +9975,12 @@ class $AppDatabaseManager {
   $$LogsTableTableManager get logs => $$LogsTableTableManager(_db, _db.logs);
   $$EmailConfigsTableTableManager get emailConfigs =>
       $$EmailConfigsTableTableManager(_db, _db.emailConfigs);
+  $$UsersTableTableManager get users =>
+      $$UsersTableTableManager(_db, _db.users);
+  $$PrinterSuppliesTableTableManager get printerSupplies =>
+      $$PrinterSuppliesTableTableManager(_db, _db.printerSupplies);
+  $$PrinterMaintenancesTableTableManager get printerMaintenances =>
+      $$PrinterMaintenancesTableTableManager(_db, _db.printerMaintenances);
+  $$PrinterCountersTableTableManager get printerCounters =>
+      $$PrinterCountersTableTableManager(_db, _db.printerCounters);
 }

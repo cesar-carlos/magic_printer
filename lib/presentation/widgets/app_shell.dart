@@ -88,15 +88,26 @@ class _BuiltPaneItem {
 }
 
 List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
-  const printerIndex = 0;
-  const hostIndex = 1;
-  const logIndex = 2;
-  const printQueueIndex = 3;
-  const printJobHistoryIndex = 4;
-  const notificationIndex = 5;
-  const settingsIndex = 6;
+  const dashboardIndex = 0;
+  const printerIndex = 1;
+  const hostIndex = 2;
+  const logIndex = 3;
+  const printQueueIndex = 4;
+  const printJobHistoryIndex = 5;
+  const notificationIndex = 6;
+  const settingsIndex = 7;
 
   final items = <_BuiltPaneItem>[
+    _BuiltPaneItem(
+      route: RouteNames.dashboard,
+      label: 'Dashboard',
+      paneItem: PaneItem(
+        key: ValueKey(RouteNames.dashboard),
+        icon: Icon(FluentIcons.view),
+        title: Text('Dashboard'),
+        body: selectedIndex == dashboardIndex ? child : const SizedBox.shrink(),
+      ),
+    ),
     _BuiltPaneItem(
       route: RouteNames.printers,
       label: 'Impressoras',
@@ -180,10 +191,11 @@ List<_BuiltPaneItem> _buildPaneItems(Widget child, int selectedIndex) {
 
 int _selectedIndexForLocation(String location) {
   final normalized = location == RouteNames.home
-      ? RouteNames.printers
+      ? RouteNames.dashboard
       : location;
 
   const routes = [
+    RouteNames.dashboard,
     RouteNames.printers,
     RouteNames.hosts,
     RouteNames.logs,

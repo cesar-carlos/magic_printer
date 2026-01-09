@@ -6,3 +6,6 @@ export 'host.dart';
 export 'print_job.dart';
 export 'print_queue_item.dart';
 export 'printer.dart';
+export 'printer_maintenance.dart';
+export 'printer_supply.dart';
+export 'user.dart';
